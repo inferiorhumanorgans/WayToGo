@@ -100,10 +100,10 @@ public class BadgeView extends View {
         fontSize = 20;
     }
 
-    private void drawTheCircle(Canvas aCanvas, Rect someBounds, int aColor) {
-        final Paint thePaint = new Paint();
-        thePaint.setColor(Color.LTGRAY);
-        thePaint.setAntiAlias(true);
+    private void drawTheCircle(final Canvas aCanvas, final Rect someBounds) {
+        final Paint ourPaint = new Paint();
+        ourPaint.setColor(Color.LTGRAY);
+        ourPaint.setAntiAlias(true);
 
         if (!isValid) {
             theRadius = (Math.min(someBounds.width(), someBounds.height()) / 2) - 8;
@@ -111,18 +111,21 @@ public class BadgeView extends View {
         }
 
         // Draw the first circle
-        thePaint.setStyle(Paint.Style.FILL);
-        aCanvas.drawCircle(someBounds.centerX(), someBounds.centerY(), theRadius+2, thePaint);
+        ourPaint.setStyle(Paint.Style.FILL);
+        aCanvas.drawCircle(someBounds.centerX(), someBounds.centerY(), theRadius + 2, ourPaint);
+    }
 
-        // Draw the semi-circle if needed
-        if (aColor == Color.LTGRAY)
-            return;
+    private void drawTheSplash(final Canvas aCanvas, final Rect someBounds, final int aColor, final int aTextHeight) {
+        final Paint ourPaint = new Paint();
+        ourPaint.setColor(aColor);
+        ourPaint.setAntiAlias(true);
+
         aCanvas.save(Canvas.CLIP_SAVE_FLAG);
-        aCanvas.clipRect(someBounds.left, someBounds.centerY()+10, someBounds.right, someBounds.bottom);
+        aCanvas.clipRect(someBounds.left, someBounds.centerY() + ((aTextHeight/2)+2), someBounds.right, someBounds.bottom);
 
-        thePaint.setColor(aColor);
-        thePaint.setStyle(Paint.Style.FILL);
-        aCanvas.drawCircle(someBounds.centerX(), someBounds.centerY(), theRadius, thePaint);
+        ourPaint.setColor(aColor);
+        ourPaint.setStyle(Paint.Style.FILL);
+        aCanvas.drawCircle(someBounds.centerX(), someBounds.centerY(), theRadius, ourPaint);
 
 
         aCanvas.restore();
@@ -142,7 +145,7 @@ public class BadgeView extends View {
             theBgColor = Color.LTGRAY;
         }
 
-        drawTheCircle(canvas, theBounds, theBgColor);
+        drawTheCircle(canvas, theBounds);
 
         final Paint thePaint = new Paint();
         thePaint.setAntiAlias(true);
@@ -164,7 +167,12 @@ public class BadgeView extends View {
                 }
             }
 
-            canvas.drawText(theSanitizedText, theBounds.centerX()+1f, theBounds.centerY() + (theTextBounds.height() / 2), thePaint);
+            canvas.drawText(theSanitizedText, theBounds.centerX() + 1f, theBounds.centerY() + (theTextBounds.height() / 2), thePaint);
+            // Draw the semi-circle if needed
+            if (theBgColor != Color.LTGRAY) {
+                thePaint.getTextBounds(theSanitizedText, 0, theSanitizedText.length(), theTextBounds);
+                drawTheSplash(canvas, theBounds, theBgColor, theTextBounds.height());
+            }
         } else if (theDrawable != null) {
             final Bitmap theBitmap = ((BitmapDrawable) theDrawable).getBitmap();
             canvas.drawBitmap(theBitmap, theBounds.centerX() - (theBitmap.getWidth() / 2), theBounds.centerY() - (theBitmap.getHeight() / 2), thePaint);
