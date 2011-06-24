@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/context_add_bookmark"
+        android:title="@string/text_add_bookmark"
+        />
+
+    <item
+        android:id="@+id/context_view_stop_on_map"
+        android:title="@string/text_show_on_map"
+        />
+
+    <item
+        android:id="@+id/context_directions_to"
+        android:title="@string/text_walking_directions"
+        />
+
+    <item
+        android:id="@+id/context_view_predictions_for_stop"
+        android:title="@string/text_show_predictions"
+        />
+</menu>

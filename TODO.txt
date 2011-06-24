@@ -1,0 +1,21 @@
+Bundle MUNI and BART data
+
+(done) Icon for bookmark
+(done) Icon for AC Transit
+(done) B&W icons for MUNI and BART
+Map clustering and predictions
+Fix up options menus
+(done) Implement BART reload
+(done)Fix all routes for stop pages
+(nah) add route specific bookmarks
+(done) Move menu strings into string resources
+Make the walking directions item conditional on a nav handler being installed.
+Fix the prediction activities so that they don't refresh on resume unless timer is null or the current time > when the last timer should have fired.
+(done) Have the favorites open agency specific prediction info in the agency's tab (if available).
+(done) Stop data lazy loading?  Load stops per bounding box?
+(done) Allow initializing agency database from top/tab view.
+Consider a re-extract if the database exists and is empty?
+Fix the stopadapter to have a ZoomToClosest function
+Fix the stopadapter to have a prefs listener to invalidate data on distance units change
+Move stop/route comparators into the agency
+Fix map thread pool getting exhausted...

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_bookmark_stop"
+          android:icon="@android:drawable/ic_menu_add"
+          android:title="@string/text_add_bookmark" />
+
+    <item android:id="@+id/menu_reload_predictions"
+          android:icon="@drawable/ic_menu_refresh"
+          android:title="@string/text_reload" />
+
+    <item android:id="@+id/menu_nearby_stops"
+          android:icon="@android:drawable/ic_menu_compass"
+          android:title="@string/text_nearby_stops" />
+
+    <item android:id="@+id/menu_settings"
+          android:icon="@android:drawable/ic_menu_preferences"
+          android:title="@string/text_settings" />
+
+    <item android:id="@+id/menu_help"
+          android:icon="@android:drawable/ic_menu_help"
+          android:title="@string/text_help" />
+</menu>

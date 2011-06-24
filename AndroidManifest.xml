@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.zippy.WayToGo"
+      android:versionCode="@integer/le_version_number"
+      android:versionName="@string/le_version_name">
+
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <supports-screens
+                  android:smallScreens="false"
+                  android:largeScreens="false" />
+    <application
+        android:name="TheApp"
+        android:label="@string/app_name"
+        android:icon="@drawable/icon"
+        >
+        <activity android:name="MainActivity" android:label="@string/app_name" android:configChanges="orientation|keyboardHidden">
+            <!-- http://stackoverflow.com/questions/5569055/prevent-imageview-reloading-when-change-of-orientation-in-android -->
+            <!-- this works wonders because we use activity groups and all the children inherit this and redraw automatically!! -->
+            <!-- android:theme="@android:style/Theme.NoTitleBar" -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ACRA -->
+        <activity android:name="org.acra.CrashReportDialog"
+            android:theme="@android:style/Theme.Dialog"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true" />
+
+        <!-- Favorites/Bookmarks -->
+        <activity android:name=".Bookmarks.BookmarkActivity" android:label="@string/settings_title">
+            <intent-filter>
+                <action android:name="w2g.action.BOOKMARKS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Map stuff -->
+        <activity android:name=".MapView.AllStopsActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.MAP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MapView.OneStopActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.MAP_STOP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- BART -->
+        <activity android:name=".Agency.BARTAgency$ActivityGroup" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.BART.GROUP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.BART.Station.StationActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.BART.STATIONS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.BART.Prediction.ShowPredictionsForStationActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.BART.PREDICTIONS_FOR_STATION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+       <!-- Caltrain -->
+        <activity android:name=".Agency.Caltrain$ActivityGroup" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.Caltrain.GROUP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.Caltrain$RootActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.Caltrain.ROUTE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- SF Muni -->
+        <activity android:name=".Agency.SFMuni$ActivityGroup" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.SFMuni.GROUP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.SFMuni$RootActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.SFMuni.ROUTE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- AC Transit -->
+        <activity android:name=".Agency.ACTransit$ActivityGroup" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.ACTransit.GROUP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.ACTransit$RootActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.ACTransit.ROUTE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- LA Metro -->
+        <activity android:name=".Agency.LAMetro$ActivityGroup" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.LAMetro.GROUP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.LAMetro$RootActivity" android:label="@string/app_name" android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.LAMetro.ROUTE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- MBTA -->
+        <activity android:name=".Agency.MBTA$ActivityGroup" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.MBTA.GROUP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.MBTA$RootActivity" android:label="@string/app_name" android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.MBTA.ROUTE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- NextBus -->
+        <activity android:name=".Agency.NextBus.Activity.SelectRouteActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.ROUTE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.NextBus.DebugNames" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.DEBUG" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.NextBus.Activity.SelectDirectionActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.DIRECTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.NextBus.Activity.SelectStopActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.STOP" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Agency.NextBus.Activity.ShowPredictionsForStopActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.NextBus.PREDICTIONS_ROUTE_SPECIFIC" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- GTFS -->
+        <activity android:name=".Agency.GTFS.ShowPredictionsActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="w2g.action.GTFS.PREDICTIONS_STOP_SPECIFIC" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <!-- Preferences -->
+        <!-- Predictions Prefs Action -->
+        <activity android:name=".Preference.GeneralActivity" android:label="@string/settings_title">
+            <intent-filter>
+                <action android:name="w2g.action.PREFERENCES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Preference.PredictionActivity" android:label="@string/settings_title">
+            <intent-filter>
+                <action android:name="w2g.action.Prefs.PREDICTIONS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Preference.TabsActivity" android:label="@string/settings_title">
+            <intent-filter>
+                <action android:name="w2g.action.Prefs.TABS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- GPS Service -->
+        <service android:enabled="true" android:name=".GPS.Service" />
+    </application>
+</manifest> 

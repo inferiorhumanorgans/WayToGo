@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings_title"
+    android:id="@+id/prefs_global">
+
+    <PreferenceCategory
+        android:id="@+id/pref_group_general"
+        android:title="General">
+        <Preference
+            android:title="@string/pref_activity_tabs_title"
+            android:summary="@string/pref_activity_tabs_summary">
+            <intent android:action="w2g.action.Prefs.TABS" />
+        </Preference>
+        <Preference
+            android:title="@string/pref_activity_predictions_title"
+            android:summary="@string/pref_activity_predictions_summary">
+            <intent android:action="w2g.action.Prefs.PREDICTIONS" />
+        </Preference>
+        <CheckBoxPreference
+            android:summaryOn="@string/pref_metric_units_summary_on"
+            android:summaryOff="@string/pref_metric_units_summary_off"
+            android:title="@string/pref_metric_units_title"
+            android:key="@string/pref_metric_units_key"
+            android:defaultValue="@bool/pref_metric_units_default"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:id="@+id/pref_group_bart"
+        android:title="BART Preferences">
+        <CheckBoxPreference
+            android:summaryOn="@string/pref_bart_station_sort_summary_on"
+            android:summaryOff="@string/pref_bart_station_sort_summary_off"
+            android:title="@string/pref_bart_station_sort_title"
+            android:key="@string/pref_bart_station_sort_key"
+            android:defaultValue="@bool/pref_bart_station_sort_default"/>
+        <CheckBoxPreference
+            android:summaryOn="@string/pref_bart_prediction_group_summary_on"
+            android:summaryOff="@string/pref_bart_prediction_group_summary_off"
+            android:title="@string/pref_bart_prediction_group_title"
+            android:key="@string/pref_bart_prediction_group_key"
+            android:defaultValue="@bool/pref_bart_prediction_group_default"/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,12 @@
+The following code is not licensed under the GPL:
+
+NaturalComparator.java (BSD-like)
+MapMarker.java (LGPL)
+LRUCache.java (public domain?)
+ListUtils.java (public domain?)
+IntPickerDialog.java (Apache 2.0)
+icon.png (Apache 2.0)
+
+Swansea font family:
+	http://www.fontspace.com/roger-white/swansea
+	Public domain

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings_title"
+    android:id="@+id/prefs_global">
+
+    <PreferenceCategory
+        android:id="@+id/pref_group_tabs"
+        android:title="Main Screen">
+        <ListPreference
+            android:summary="@string/pref_tab1_summary"
+            android:title="@string/pref_tab1_title"
+            android:key="@string/pref_tab1_key"
+            android:entries="@array/pref_tabs_names_list"
+            android:entryValues="@array/pref_tabs_values_list"
+            android:defaultValue="@string/pref_tab1_default"/>
+        <ListPreference
+            android:summary="@string/pref_tab2_summary"
+            android:title="@string/pref_tab2_title"
+            android:key="@string/pref_tab2_key"
+            android:entries="@array/pref_tabs_names_list"
+            android:entryValues="@array/pref_tabs_values_list"
+            android:defaultValue="@string/pref_tab2_default"/>
+        <ListPreference
+            android:summary="@string/pref_tab3_summary"
+            android:title="@string/pref_tab3_title"
+            android:key="@string/pref_tab3_key"
+            android:entries="@array/pref_tabs_names_list"
+            android:entryValues="@array/pref_tabs_values_list"
+            android:defaultValue="@string/pref_tab3_default"/>
+        <ListPreference
+            android:summary="@string/pref_tab4_summary"
+            android:title="@string/pref_tab4_title"
+            android:key="@string/pref_tab4_key"
+            android:entries="@array/pref_tabs_names_list"
+            android:entryValues="@array/pref_tabs_values_list"
+            android:defaultValue="@string/pref_tab4_default"/>
+        <ListPreference
+            android:summary="@string/pref_tab5_summary"
+            android:title="@string/pref_tab5_title"
+            android:key="@string/pref_tab5_key"
+            android:entries="@array/pref_tabs_names_list"
+            android:entryValues="@array/pref_tabs_values_list"
+            android:defaultValue="@string/pref_tab5_default"/>
+        <ListPreference
+            android:summary="@string/pref_tab6_summary"
+            android:title="@string/pref_tab6_title"
+            android:key="@string/pref_tab6_key"
+            android:entries="@array/pref_tabs_names_list"
+            android:entryValues="@array/pref_tabs_values_list"
+            android:defaultValue="@string/pref_tab6_default"/>
+        <ListPreference
+            android:summary="@string/pref_tab7_summary"
+            android:title="@string/pref_tab7_title"
+            android:key="@string/pref_tab7_key"
+            android:entries="@array/pref_tabs_names_list"
+            android:entryValues="@array/pref_tabs_values_list"
+            android:defaultValue="@string/pref_tab7_default"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

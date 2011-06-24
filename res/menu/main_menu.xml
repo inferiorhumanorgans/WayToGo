@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_agency_site"
+          android:icon="@android:drawable/ic_menu_set_as"
+          android:title="@string/text_view_agency_site" />
+
+<!--    <item android:id="@+id/menu_route_view"
+          android:icon="@android:drawable/ic_menu_directions"
+          android:title="Route View" /> -->
+
+    <item android:id="@+id/menu_settings"
+          android:icon="@android:drawable/ic_menu_preferences"
+          android:title="@string/text_settings" />
+
+    <item android:id="@+id/menu_help"
+          android:icon="@android:drawable/ic_menu_help"
+          android:title="@string/text_help" />
+
+    <!--<item android:id="@+id/menu_more"
+          android:icon="@android:drawable/ic_menu_more"
+          android:title="@string/text_more_agencies" /> -->
+
+    <!--<item android:id="@+id/menu_exit"
+          android:icon="@android:drawable/ic_menu_compass"
+          android:title="Exit" /> -->
+</menu>

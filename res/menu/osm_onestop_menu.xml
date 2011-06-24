@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/context_return_to_stop"
+          android:icon="@android:drawable/ic_menu_compass"
+          android:title="@string/text_return_to_stop"
+        />
+    <item android:id="@+id/context_return_to_location"
+          android:icon="@android:drawable/ic_menu_mylocation"
+          android:title="@string/text_return_to_location"
+        />
+
+</menu>

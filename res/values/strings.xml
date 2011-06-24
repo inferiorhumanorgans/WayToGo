@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Way To Go</string>
+    <string name="settings_title">Way To Go - Preferences</string>
+    <string name="google_map_api_key">0HwVvD5PC8erD9ZyxRJkTy4ya6RY9qOmOltVKkQ</string>
+
+
+    <string name="text_1st_run">It appears that this is the first time you\'ve run WayToGo.  We need to extract information about all of the transit agencies before we begin.  This may take a while.</string>
+    <string name="text_add_bookmark">Add bookmark</string>
+    <string name="text_delete">Delete</string>
+    <string name="text_help">Help</string>
+    <string name="text_more_agencies">More Agencies</string>
+    <string name="text_nearby_stops">Nearby Stops</string>
+    <string name="text_no_predictions">No predictions at this time.</string>
+    <string name="text_okay">Okay</string>
+    <string name="text_reload">Reload</string>
+    <string name="text_return_to_location">Go to Current Location</string>
+    <string name="text_return_to_stop">Return to Stop</string>
+    <string name="text_set">Set</string>
+    <string name="text_show_on_map">Show on map</string>
+    <string name="text_show_predictions">Show predictions</string>
+    <string name="text_settings">Settings</string>
+    <string name="text_view_agency_site">View Agency Site</string>
+    <string name="text_walking_directions">Get walking directions</string>
+
+    <string name="context_title_generic">What to do?</string>
+    <string name="widget_title_intpicker">Pick an Integer</string>
+
+    <!-- Crash reporting -->
+    <string name="acra_dialog_text">n unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click \'OK\'.</string>
+    <string name="acra_dialog_comment_prompt">You might add your comments about the problem below:</string>
+
+    <string name="loading_database">Extracting the database...</string>
+    <string name="loading_location">Determining our location...</string>
+    <string name="loading_predictions">Loading predictions...</string>
+    <string name="loading_route_list">Loading route list...</string>
+    <string name="loading_station_list">Loading station list...</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="agency_lametro">Los Angeles Metro</string>
+    <string name="agency_mbta">Boston MBTA</string>
+</resources>

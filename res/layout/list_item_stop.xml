@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- http://stackoverflow.com/questions/2099249/aligning-textviews-on-the-left-and-right-edges-in-android-layout -->
+<!-- http://www.curious-creature.org/2009/02/22/android-layout-tricks-1/ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/list_item_stop"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/list_item_distance"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:gravity="left|center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+    />
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/list_item_distance"
+        android:layout_width="80dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:gravity="left|center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+    />
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<!-- http://christian.krog-madsen.dk/2011/05/14/suppressing-trivial-findbugs-warnings-for-android-projects/ -->
+<FindBugsFilter>
+ <Match>
+  <Class name="~.*\.R\$.*"/>
+  <Bug pattern="NM_CLASS_NAMING_CONVENTION"/>
+ </Match>
+</FindBugsFilter>

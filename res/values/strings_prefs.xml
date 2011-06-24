@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- For the prediction related prefs -->
+    <string name="pref_activity_predictions_title">Prediction Settings</string>
+    <string name="pref_activity_predictions_summary">Predictions related options.</string>
+
+    <!-- For the tab related prefs -->
+    <string name="pref_activity_tabs_title">Main Screen Settings</string>
+    <string name="pref_activity_tabs_summary">Which agencies and other tabs to show.</string>
+    <string-array name="pref_tabs_names_list">
+        <item>AC Transit</item>
+        <item>BART</item>
+        <item>Caltrain</item>
+        <!--<item>LA Metro</item>-->
+        <!--<item>MBTA</item>-->
+        <item>Muni</item>
+        <item>Map</item>
+        <item>Favorites</item>
+        <item>None</item>
+    </string-array>
+    <string-array name="pref_tabs_values_list">
+        <item>com.zippy.WayToGo.Agency.ACTransit</item>
+        <item>com.zippy.WayToGo.Agency.BARTAgency</item>
+        <item>com.zippy.WayToGo.Agency.Caltrain</item>
+        <!--<item>com.zippy.WayToGo.Agency.LA Metro</item>-->
+        <!--<item>com.zippy.WayToGo.Agency.MBTA</item>-->
+        <item>com.zippy.WayToGo.Agency.SFMuni</item>
+        <item>Map</item>
+        <item>Favorites</item>
+        <item>None</item>
+    </string-array>
+
+    <string name="pref_tab1_summary">What to show on the first tab.</string>
+    <string name="pref_tab1_title">Tab 1</string>
+    <string name="pref_tab1_key">tab1Contents</string>
+    <string name="pref_tab1_default">Favorites</string>
+
+    <string name="pref_tab2_summary">What to show on the second tab.</string>
+    <string name="pref_tab2_title">Tab 2</string>
+    <string name="pref_tab2_key">tab2Contents</string>
+    <string name="pref_tab2_default">Map</string>
+
+    <string name="pref_tab3_summary">What to show on the third tab.</string>
+    <string name="pref_tab3_title">Tab 3</string>
+    <string name="pref_tab3_key">tab3Contents</string>
+    <string name="pref_tab3_default">com.zippy.WayToGo.Agency.SFMuni</string>
+
+    <string name="pref_tab4_summary">What to show on the fourth tab.</string>
+    <string name="pref_tab4_title">Tab 4</string>
+    <string name="pref_tab4_key">tab4Contents</string>
+    <string name="pref_tab4_default">com.zippy.WayToGo.Agency.BARTAgency</string>
+
+    <string name="pref_tab5_summary">What to show on the fifth tab.</string>
+    <string name="pref_tab5_title">Tab 5</string>
+    <string name="pref_tab5_key">tab5Contents</string>
+    <string name="pref_tab5_default">com.zippy.WayToGo.Agency.ACTransit</string>
+
+    <string name="pref_tab6_summary">What to show on the sixth tab.</string>
+    <string name="pref_tab6_title">Tab 6</string>
+    <string name="pref_tab6_key">tab6Contents</string>
+    <string name="pref_tab6_default">com.zippy.WayToGo.Agency.Caltrain</string>
+
+    <string name="pref_tab7_summary">What to show on the seventh tab.</string>
+    <string name="pref_tab7_title">Tab 7</string>
+    <string name="pref_tab7_key">tab7Contents</string>
+    <string name="pref_tab7_default">None</string>
+
+    <!-- For automatic reloading of predictions -->
+    <string name="pref_auto_refresh_key">autoRefreshPredictions</string>
+    <string name="pref_auto_refresh_title">Automatically Reload</string>
+    <string name="pref_auto_refresh_summary_on">Periodically reload predictions for currently selected stop.</string>
+    <string name="pref_auto_refresh_summary_off">Do not reload predictions for currently selected stop.</string>
+
+    <!-- For automatic reloading of predictions: how long do we wait -->
+    <string name="pref_auto_refresh_delay_key">autoRefreshPredictionsDelay</string>
+    <string name="pref_auto_refresh_delay_title">Reload Interval</string>
+    <string name="pref_auto_refresh_delay_summary">How long to wait between refreshing the predictions.</string>
+    <string name="pref_auto_refresh_delay_default">60</string>
+
+    <!-- Should we show distance from us when we show stops/stations -->
+    <string name="pref_show_distance_key">showDistanceToStop</string>
+    <string name="pref_show_distance_title">Show Distance</string>
+    <string name="pref_show_distance_summary_on">Show the distance from you to the station or stop where applicable.</string>
+    <string name="pref_show_distance_summary_off">Hide the distance from you to the station or stop where applicable.</string>
+
+    <!-- Should we show distance from us when we show stops/stations -->
+    <string name="pref_metric_units_key">useMetricUnits</string>
+    <string name="pref_metric_units_title">Use Metric Units</string>
+    <string name="pref_metric_units_summary_on">Use standard units when displaying distance.</string>
+    <string name="pref_metric_units_summary_off">Use American units when displaying distance.</string>
+
+    <!-- How many predictions per station/stop to show. -->
+    <string name="pref_predictions_per_stop_key">numberOfPredictionsPerStop</string>
+    <string name="pref_predictions_per_stop_title">Predictions per Stop</string>
+    <string name="pref_predictions_per_stop_summary">Specify how many predictions to show per stop/station.</string>
+    <string name="pref_predictions_per_stop_default">2</string>
+    <string-array name="pref_predictions_per_stop_list">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>All</item>
+    </string-array>
+
+    <!-- Should we sort BART stations by name or by distance from us -->
+    <string name="pref_bart_station_sort_key">bartSortStationsByDistance</string>
+    <string name="pref_bart_station_sort_title">Sort by Distance</string>
+    <string name="pref_bart_station_sort_summary_on">Sort the list of BART stations by their distance from you.</string>
+    <string name="pref_bart_station_sort_summary_off">Sort the list of BART stations alphabetically.</string>
+
+    <!--Should we group the predictions by destination or by platform-->
+    <string name="pref_bart_prediction_group_key">bartGroupPredictionsByPlatform</string>
+    <string name="pref_bart_prediction_group_title">Group by Platform</string>
+    <string name="pref_bart_prediction_group_summary_on">Group the list of predictions by platform.</string>
+    <string name="pref_bart_prediction_group_summary_off">Group the list of predictions by destination.</string>
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/context_agency_mbta"
+        android:title="@string/agency_mbta"
+        />
+
+    <item
+        android:id="@+id/context_agency_lametro"
+        android:title="@string/agency_lametro"
+        />
+</menu>

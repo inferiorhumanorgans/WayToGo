@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings_title"
+    android:id="@+id/prefs_predictions">
+
+    <PreferenceCategory
+        android:id="@+id/global_pref_group"
+        android:title="Predictions">
+        <CheckBoxPreference
+            android:summaryOn="@string/pref_auto_refresh_summary_on"
+            android:summaryOff="@string/pref_auto_refresh_summary_off"
+            android:title="@string/pref_auto_refresh_title"
+            android:key="@string/pref_auto_refresh_key"
+            android:defaultValue="@bool/pref_auto_refresh_default"/>
+        <EditTextPreference
+            android:summary="@string/pref_auto_refresh_delay_summary"
+            android:title="@string/pref_auto_refresh_delay_title"
+            android:key="@string/pref_auto_refresh_delay_key"
+            android:defaultValue="@string/pref_auto_refresh_delay_default"
+            android:dependency="@string/pref_auto_refresh_key"
+            android:numeric="integer" />
+        <CheckBoxPreference
+            android:summaryOn="@string/pref_show_distance_summary_on"
+            android:summaryOff="@string/pref_show_distance_summary_off"
+            android:title="@string/pref_show_distance_title"
+            android:key="@string/pref_show_distance_key"
+            android:defaultValue="@bool/pref_show_distance_default"/>
+        <ListPreference
+            android:summary="@string/pref_predictions_per_stop_summary"
+            android:title="@string/pref_predictions_per_stop_title"
+            android:key="@string/pref_predictions_per_stop_key"
+            android:entries="@array/pref_predictions_per_stop_list"
+            android:entryValues="@array/pref_predictions_per_stop_list"
+            android:defaultValue="@string/pref_predictions_per_stop_default"/>
+    </PreferenceCategory>
+</PreferenceScreen>
