@@ -27,9 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.zippy.WayToGo.ActivityGroup;
 import com.zippy.WayToGo.Agency.BART.BaseBARTActivity;
-import com.zippy.WayToGo.Agency.BART.Prediction.ShowPredictionsForStationActivity;
 import com.zippy.WayToGo.Agency.BART.Route.RouteFetchListener;
 import com.zippy.WayToGo.R;
 import com.zippy.WayToGo.TheApp;
@@ -116,14 +114,7 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final StopAdapter theAdapter = (StopAdapter) theListView.getAdapter();
         final Stop theStation = theAdapter.getItem(position);
-
-        Intent myIntent = new Intent(this, ShowPredictionsForStationActivity.class);
-        myIntent.putExtra("stationTitle", theStation.getTheName());
-        myIntent.putExtra("stationTag", theStation.getTheId());
-        myIntent.putExtra("AgencyClassName", theAgency().getClass().getCanonicalName());
-
-        ActivityGroup ag = (ActivityGroup) getParent();
-        ag.startChildActivity(ShowPredictionsForStationActivity.class.getCanonicalName(), myIntent);
+        launchIntent(theAgency().getPredictionIntentForStop(theStation));
     }
 
     public void copyingStarted() {
