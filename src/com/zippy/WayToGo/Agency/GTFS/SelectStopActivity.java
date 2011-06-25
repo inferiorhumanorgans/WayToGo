@@ -20,6 +20,7 @@ import android.app.ProgressDialog;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,6 +43,7 @@ public class SelectStopActivity extends GTFSActivity implements CopyDBListener, 
     private ProgressDialog theProgressDialog = null;
     private LocationFinder theFinder;
     private Location theLocation;
+    private long lastLocationUpdate = 0;
 
     @Override
     public void onCreate(Bundle inState) {
@@ -83,6 +85,17 @@ public class SelectStopActivity extends GTFSActivity implements CopyDBListener, 
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem anItem) {
+        switch (anItem.getItemId()) {
+            case R.id.menu_current_location:
+                startLocationSearch();
+                return true;
+            default:
+                return super.onOptionsItemSelected(anItem);
+        }
+    }
+
     public void copyingStarted() {
         if (theProgressDialog != null) {
             theProgressDialog.dismiss();
@@ -103,16 +116,20 @@ public class SelectStopActivity extends GTFSActivity implements CopyDBListener, 
     }
 
     protected void startLocationSearch() {
-        theProgressDialog = new ProgressDialog(getDialogContext());
-        theProgressDialog.setCancelable(true);
-        theProgressDialog.setMessage(TheApp.getResString(R.string.loading_location));
-        theProgressDialog.setIndeterminate(true);
+        if (lastLocationUpdate < (System.currentTimeMillis() - (TheApp.getPredictionRefreshDelay() / 2))) {
+            theProgressDialog = new ProgressDialog(getDialogContext());
+            theProgressDialog.setCancelable(true);
+            theProgressDialog.setMessage(TheApp.getResString(R.string.loading_location));
+            theProgressDialog.setIndeterminate(true);
 
 
-        if (theFinder.startLocationSearch()) {
-            theProgressDialog.show();
+            if (theFinder.startLocationSearch()) {
+                theProgressDialog.show();
+            } else {
+                theProgressDialog = null;
+            }
         } else {
-            theProgressDialog = null;
+            populateListView(true);
         }
     }
 
@@ -129,6 +146,7 @@ public class SelectStopActivity extends GTFSActivity implements CopyDBListener, 
             }
         }
         theLocation = aLocation;
+        lastLocationUpdate = System.currentTimeMillis();
         populateListView(true);
     }
 

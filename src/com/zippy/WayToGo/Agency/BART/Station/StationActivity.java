@@ -47,10 +47,11 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
     private static final String LOG_NAME = StationActivity.class.getCanonicalName();
     private LocationFinder theFinder;
     private Location theLocation;
+    private long lastLocationUpdate = 0;
 
     public StationActivity() {
         super();
-        this.theContextMenuId=R.menu.generic_stop_context;
+        this.theContextMenuId = R.menu.generic_stop_context;
     }
 
     @Override
@@ -102,6 +103,9 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
             case R.id.menu_agency_site:
                 final Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse(theAgency().getURL()));
                 startActivity(browserIntent);
+                return true;
+            case R.id.menu_current_location:
+                startLocationSearch();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -204,17 +208,21 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
     }
 
     protected void startLocationSearch() {
-        if (theProgressDialog != null) {
-            theProgressDialog.dismiss();
-        }
-        theProgressDialog = new ProgressDialog(getParent());
-        theProgressDialog.setCancelable(true);
-        theProgressDialog.setMessage(TheApp.getResString(R.string.loading_location));
-        theProgressDialog.setIndeterminate(true);
-        if (theFinder.startLocationSearch()) {
-            theProgressDialog.show();
+        if (lastLocationUpdate < (System.currentTimeMillis() - (TheApp.getPredictionRefreshDelay() / 2))) {
+            if (theProgressDialog != null) {
+                theProgressDialog.dismiss();
+            }
+            theProgressDialog = new ProgressDialog(getParent());
+            theProgressDialog.setCancelable(true);
+            theProgressDialog.setMessage(TheApp.getResString(R.string.loading_location));
+            theProgressDialog.setIndeterminate(true);
+            if (theFinder.startLocationSearch()) {
+                theProgressDialog.show();
+            } else {
+                theProgressDialog = null;
+            }
         } else {
-            theProgressDialog = null;
+            populateStationListView(true);
         }
 
     }
@@ -231,6 +239,8 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
         }
         theLocation = aLocation;
         populateStationListView(true);
+        lastLocationUpdate = System.currentTimeMillis();
+
     }
 
     public void locationNotFound() {

@@ -111,8 +111,19 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
         setupRefreshPredictionTimer();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem anItem) {
+        switch (anItem.getItemId()) {
+            case R.id.menu_current_location:
+                startLocationSearch();
+                return true;
+            default:
+                return super.onOptionsItemSelected(anItem);
+        }
+    }
+
     protected void startLocationSearch() {
-        if (lastLocationUpdate < (System.currentTimeMillis() - (TheApp.getPredictionRefreshDelay() / 1))) {
+        if (lastLocationUpdate < (System.currentTimeMillis() - (TheApp.getPredictionRefreshDelay() / 2))) {
             if (theFinder.startLocationSearch()) {
                 if (theProgressDialog != null) {
                     theProgressDialog.dismiss();
@@ -154,7 +165,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
     @Override
     public boolean onPrepareOptionsMenu(Menu aMenu) {
         super.onPrepareOptionsMenu(aMenu);
-        MenuItem theMenuItem = aMenu.findItem(R.id.menu_agency_site);
+        final MenuItem theMenuItem = aMenu.findItem(R.id.menu_agency_site);
         theMenuItem.setEnabled(false);
         theMenuItem.setVisible(false);
         return true;

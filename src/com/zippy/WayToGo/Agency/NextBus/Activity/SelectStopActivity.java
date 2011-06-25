@@ -48,6 +48,7 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
     private ArrayList<Stop> theStops = new ArrayList<Stop>();
     private LocationFinder theFinder;
     private Location theLocation;
+    private long lastLocationUpdate = 0;
 
     @Override
     public void onCreate(Bundle aSavedInstanceState) {
@@ -168,15 +169,19 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
     }
 
     protected void startLocationSearch() {
-        theProgressDialog = new ProgressDialog(getDialogContext());
-        theProgressDialog.setCancelable(true);
-        theProgressDialog.setMessage(TheApp.getResString(R.string.loading_location));
-        theProgressDialog.setIndeterminate(true);
+        if (lastLocationUpdate < (System.currentTimeMillis() - (TheApp.getPredictionRefreshDelay() / 2))) {
+            theProgressDialog = new ProgressDialog(getDialogContext());
+            theProgressDialog.setCancelable(true);
+            theProgressDialog.setMessage(TheApp.getResString(R.string.loading_location));
+            theProgressDialog.setIndeterminate(true);
 
-        if (theFinder.startLocationSearch()) {
-            theProgressDialog.show();
+            if (theFinder.startLocationSearch()) {
+                theProgressDialog.show();
+            } else {
+                theProgressDialog = null;
+            }
         } else {
-            theProgressDialog = null;
+            populateListView(true);
         }
     }
 
@@ -201,6 +206,7 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
         }
         theLocation = aLocation;
         populateListView(true);
+        lastLocationUpdate = System.currentTimeMillis();
     }
 
     @Override

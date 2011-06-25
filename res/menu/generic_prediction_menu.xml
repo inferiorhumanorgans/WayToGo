@@ -9,7 +9,7 @@
           android:title="@string/text_reload" />
 
     <item android:id="@+id/menu_nearby_stops"
-          android:icon="@android:drawable/ic_menu_compass"
+          android:icon="@android:drawable/ic_menu_mylocation"
           android:title="@string/text_nearby_stops" />
 
     <item android:id="@+id/menu_settings"

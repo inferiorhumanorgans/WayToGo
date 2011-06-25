@@ -3,6 +3,7 @@
     <item android:id="@+id/menu_current_location"
           android:icon="@android:drawable/ic_menu_mylocation"
           android:title="@string/text_return_to_location" />
+
     <item android:id="@+id/menu_settings"
           android:icon="@android:drawable/ic_menu_preferences"
           android:title="@string/text_settings" />

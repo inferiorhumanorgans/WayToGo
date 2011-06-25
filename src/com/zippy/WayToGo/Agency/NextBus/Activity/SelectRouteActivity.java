@@ -21,6 +21,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -76,6 +78,15 @@ public class SelectRouteActivity extends BaseNextBusActivity implements CopyDBLi
 
             theAgency().copyDatabase(this);
         }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu aMenu) {
+        super.onPrepareOptionsMenu(aMenu);
+        final MenuItem theMenuItem = aMenu.findItem(R.id.menu_current_location);
+        theMenuItem.setEnabled(false);
+        theMenuItem.setVisible(false);
+        return true;
     }
 
     public void copyingStarted() {
