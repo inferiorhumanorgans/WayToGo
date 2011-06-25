@@ -193,7 +193,7 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
     }
 
     @Override
-    public void locationFound(Location aLocation) {
+    public void onLocationFound(Location aLocation) {
         Log.d(LOG_NAME, "Probably have a GPS Fix");
         if (theProgressDialog != null) {
             try {
@@ -210,7 +210,7 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
     }
 
     @Override
-    public void locationNotFound() {
+    public void onLocationNotFound() {
         if (theProgressDialog != null) {
             try {
                 theProgressDialog.dismiss();

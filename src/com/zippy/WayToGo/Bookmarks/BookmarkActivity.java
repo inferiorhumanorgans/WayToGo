@@ -231,7 +231,8 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
 
     }
 
-    public void locationFound(Location aLocation) {
+    @Override
+    public void onLocationFound(Location aLocation) {
         if (theProgressDialog != null) {
             theProgressDialog.dismiss();
             theProgressDialog = null;
@@ -244,7 +245,8 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
         lastLocationUpdate = System.currentTimeMillis();
     }
 
-    public void locationNotFound() {
+    @Override
+    public void onLocationNotFound() {
         if (theProgressDialog != null) {
             theProgressDialog.dismiss();
             theProgressDialog = null;

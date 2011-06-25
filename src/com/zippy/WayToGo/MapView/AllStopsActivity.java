@@ -184,7 +184,7 @@ public class AllStopsActivity extends Activity implements OSMReadyListener, MapL
     }
 
     @Override
-    public synchronized void locationFound(Location aLocation) {
+    public synchronized void onLocationFound(Location aLocation) {
         Log.d(LOG_NAME, "Probably have a GPS Fix");
         isLookingForLocation = false;
         theLocation = aLocation;
@@ -205,7 +205,7 @@ public class AllStopsActivity extends Activity implements OSMReadyListener, MapL
     }
 
     @Override
-    public synchronized void locationNotFound() {
+    public synchronized void onLocationNotFound() {
         isLookingForLocation = false;
         theLocation = null;
         if (!this.isAddingStops) {

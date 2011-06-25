@@ -45,10 +45,8 @@ public class LocationFinder {
     private final Handler mHandler = new Handler();
 
     public static interface Listener {
-
-        public void locationFound(Location aLocation);
-
-        public void locationNotFound();
+        public void onLocationFound(Location aLocation);
+        public void onLocationNotFound();
     }
 
     public LocationFinder(Context aContext, LocationFinder.Listener aListener) {
@@ -140,9 +138,9 @@ public class LocationFinder {
                     Log.e(LOG_NAME, "Timed out, let's hope we don't do it again. Is fix is: " + theGPSService.isGPSFix());
                 }
                 if (theGPSService.isGPSFix()) {
-                    theListener.locationFound(theGPSService.location());
+                    theListener.onLocationFound(theGPSService.location());
                 } else {
-                    theListener.locationNotFound();
+                    theListener.onLocationNotFound();
                 }
             }
         });

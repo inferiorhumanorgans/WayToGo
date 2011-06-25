@@ -227,7 +227,8 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
 
     }
 
-    public void locationFound(Location aLocation) {
+    @Override
+    public void onLocationFound(Location aLocation) {
         if (theProgressDialog != null) {
             try {
                 theProgressDialog.dismiss();
@@ -243,7 +244,8 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
 
     }
 
-    public void locationNotFound() {
+    @Override
+    public void onLocationNotFound() {
         if (theProgressDialog != null) {
             try {
                 theProgressDialog.dismiss();
