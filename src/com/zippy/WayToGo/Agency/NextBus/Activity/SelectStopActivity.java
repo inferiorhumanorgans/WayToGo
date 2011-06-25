@@ -76,6 +76,8 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
         if (theStops.isEmpty()) {
             theStops = theAgency().getStopsForDirectionTag(theDirection.getTheTag());
             populateListView();
+        } else {
+            startLocationSearch();
         }
     }
 
