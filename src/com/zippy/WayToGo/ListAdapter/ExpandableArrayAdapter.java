@@ -19,6 +19,7 @@ package com.zippy.WayToGo.ListAdapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class ExpandableArrayAdapter<T> extends BaseExpandableListAdapter {
     public void clear() {
         theGroups.clear();
         theChildren.clear();
-        this.notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     public void addItemToGroup(final String aGroup, final T anItem) {
@@ -63,7 +64,7 @@ public class ExpandableArrayAdapter<T> extends BaseExpandableListAdapter {
         }
 
         theChildren.get(aGroup).add(anItem);
-        this.notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     public int getGroupCount() {
@@ -72,7 +73,11 @@ public class ExpandableArrayAdapter<T> extends BaseExpandableListAdapter {
 
     public int getChildrenCount(final int aPosition) {
         String theGroup = theGroups.get(aPosition);
-        return theChildren.get(theGroup).size();
+        if (theChildren.containsKey(theGroup)) {
+            return theChildren.get(theGroup).size();
+        } else {
+            return 0;
+        }
     }
 
     public Object getGroup(final int aPosition) {
@@ -102,6 +107,7 @@ public class ExpandableArrayAdapter<T> extends BaseExpandableListAdapter {
         ImageView expander = null;
         final LayoutInflater inflater = (LayoutInflater) theContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // Gingerbread is so very, very broken.  Sigh.
+        // http://code.google.com/p/android/issues/detail?id=12977
         if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.FROYO) {
             if (convertView == null) {
                 ll = (LinearLayout) inflater.inflate(R.layout.expandable_group_item_gingerbread, null);
@@ -120,13 +126,21 @@ public class ExpandableArrayAdapter<T> extends BaseExpandableListAdapter {
 
         // Gross hack for 2.3.x that has a buggy expandable list view. :(
         if (expander != null) {
-            if (isExpanded) {
-                expander.setImageDrawable(EXPANDED_DRAWABLE);
+
+            if (getChildrenCount(aGroupPosition) == 0) {
+                expander.setImageDrawable(null);
+                expander.setVisibility(View.GONE);
             } else {
-                expander.setImageDrawable(COLLAPSED_DRAWABLE);
+                expander.setImageDrawable(isExpanded ? EXPANDED_DRAWABLE : COLLAPSED_DRAWABLE);
+                expander.setVisibility(View.VISIBLE);
             }
         }
 
+        if (getChildrenCount(aGroupPosition) == 0) {
+            theView.setGravity(Gravity.CENTER_HORIZONTAL);
+        } else {
+            theView.setGravity(Gravity.LEFT);
+        }
         theView.setText(this.theGroups.get(aGroupPosition));
 
         if (ll == null) {

@@ -302,7 +302,7 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
         boolean groupByPlatform = TheApp.getPrefs().getBoolean(TheApp.getResString(R.string.pref_bart_prediction_group_key), TheApp.getResBool(R.bool.pref_bart_prediction_group_default));
 
         if (thePredictionGroups.isEmpty()) {
-            //addItem(TheApp.getResString(R.string.text_no_predictions));
+            theExpandableListAdapter.addEmptyPredictionGroup();
             return;
         }
 

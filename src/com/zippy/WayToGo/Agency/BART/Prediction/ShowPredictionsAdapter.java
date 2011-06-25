@@ -44,11 +44,6 @@ public class ShowPredictionsAdapter extends ExpandableArrayAdapter<Prediction> {
     }
 
     @Override
-    public void clear() {
-        super.clear();
-    }
-
-    @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final IconTextView v;
         if (convertView == null) {
@@ -94,5 +89,11 @@ public class ShowPredictionsAdapter extends ExpandableArrayAdapter<Prediction> {
         v.setBadgeDrawable(ourBadge);
         v.setText(ourText);
         return v;
+    }
+
+    void addEmptyPredictionGroup() {
+        Log.d(LOG_NAME, "Adding something to indicate we've got no predictions!");
+        theGroups.add(TheApp.getResString(R.string.text_no_predictions));
+        notifyDataSetChanged();
     }
 }
