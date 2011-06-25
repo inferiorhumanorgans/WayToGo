@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 import com.zippy.WayToGo.Agency.BART.BaseBARTActivity;
 import com.zippy.WayToGo.Agency.PredictionListener;
@@ -34,6 +33,7 @@ import com.zippy.WayToGo.R;
 import com.zippy.WayToGo.TheApp;
 import com.zippy.WayToGo.Util.Stop;
 import com.zippy.WayToGo.Widget.IconTextView;
+import com.zippy.WayToGo.Widget.WorkingExpandableListView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,7 +53,7 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
     private int timerDuration;
     private XMLTask thePredictionFetcher = null;
     private HashMap<String, ArrayList<Prediction>> thePredictionGroups;
-    private ExpandableListView theExpandableListView;
+    private WorkingExpandableListView theExpandableListView;
     private ShowPredictionsAdapter theExpandableListAdapter;
     private IconTextView theIconView;
 
@@ -66,7 +66,7 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
         parent.removeView(theListView);
         theListView = null;
         theListAdapter = null;
-        theExpandableListView = (ExpandableListView) new ExpandableListView(this);
+        theExpandableListView = new WorkingExpandableListView(this);
         if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.FROYO) {
             theExpandableListView.setGroupIndicator(null);
         }

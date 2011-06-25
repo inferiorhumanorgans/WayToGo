@@ -42,8 +42,10 @@ public class ExpandableArrayAdapter<T> extends BaseExpandableListAdapter {
     protected ArrayList<String> theGroups = new ArrayList<String>();
     protected Context theContext = null;
     protected HashMap<String, ArrayList<T>> theChildren = new HashMap<String, ArrayList<T>>();
-    final protected Drawable EXPANDED_DRAWABLE = TheApp.getResDrawable(R.drawable.expander_ic_minimized);
-    final protected Drawable COLLAPSED_DRAWABLE = TheApp.getResDrawable(R.drawable.expander_ic_maximized);
+    final protected Drawable EXPANDED_DRAWABLE = 
+            TheApp.getResDrawable((android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.FROYO) ? R.drawable.expander_ic_expanded_gingerbread : R.drawable.expander_ic_expanded_old);
+    final protected Drawable COLLAPSED_DRAWABLE =
+            TheApp.getResDrawable((android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.FROYO) ? R.drawable.expander_ic_collapsed_gingerbread : R.drawable.expander_ic_collapsed_old);;
 
     public ExpandableArrayAdapter(Context aContext) {
         theContext = aContext;
@@ -108,46 +110,28 @@ public class ExpandableArrayAdapter<T> extends BaseExpandableListAdapter {
         final LayoutInflater inflater = (LayoutInflater) theContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // Gingerbread is so very, very broken.  Sigh.
         // http://code.google.com/p/android/issues/detail?id=12977
-        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.FROYO) {
-            if (convertView == null) {
-                ll = (LinearLayout) inflater.inflate(R.layout.expandable_group_item_gingerbread, null);
-            } else {
-                ll = (LinearLayout) convertView;
-            }
-            expander = (ImageView) ll.findViewById(R.id.gingerbread_group_indicator);
-            theView = (TextView) ll.findViewById(R.id.expandable_list_view_item);
+        // Unfortunately so is Froyo.
+        if (convertView == null) {
+            ll = (LinearLayout) inflater.inflate(R.layout.expandable_group_item, null);
         } else {
-            if (convertView == null) {
-                theView = (TextView) inflater.inflate(R.layout.expandable_group_item, null);
-            } else {
-                theView = (TextView) convertView;
-            }
+            ll = (LinearLayout) convertView;
         }
+        expander = (ImageView) ll.findViewById(R.id.exp_group_indicator);
+        theView = (TextView) ll.findViewById(R.id.exp_list_view_item);
 
         // Gross hack for 2.3.x that has a buggy expandable list view. :(
-        if (expander != null) {
-
-            if (getChildrenCount(aGroupPosition) == 0) {
-                expander.setImageDrawable(null);
-                expander.setVisibility(View.GONE);
-            } else {
-                expander.setImageDrawable(isExpanded ? EXPANDED_DRAWABLE : COLLAPSED_DRAWABLE);
-                expander.setVisibility(View.VISIBLE);
-            }
-        }
-
         if (getChildrenCount(aGroupPosition) == 0) {
+            expander.setImageDrawable(null);
+            expander.setVisibility(View.GONE);
             theView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
         } else {
+            expander.setImageDrawable(isExpanded ? EXPANDED_DRAWABLE : COLLAPSED_DRAWABLE);
+            expander.setVisibility(View.VISIBLE);
             theView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         }
         theView.setText(this.theGroups.get(aGroupPosition));
 
-        if (ll == null) {
-            return theView;
-        } else {
-            return ll;
-        }
+        return ll;
     }
 
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {

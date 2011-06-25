@@ -18,7 +18,6 @@ package com.zippy.WayToGo.Agency.NextBus;
 
 import com.zippy.WayToGo.Agency.NextBus.Activity.BaseNextBusActivity;
 import android.os.Bundle;
-import android.widget.ExpandableListView;
 import com.zippy.WayToGo.ListAdapter.ExpandableArrayAdapter;
 import com.zippy.WayToGo.Comparator.RouteComparator;
 import com.zippy.WayToGo.Comparator.StopComparator;
@@ -26,6 +25,7 @@ import com.zippy.WayToGo.TheApp;
 import com.zippy.WayToGo.Util.Direction;
 import com.zippy.WayToGo.Util.Route;
 import com.zippy.WayToGo.Util.Stop;
+import com.zippy.WayToGo.Widget.WorkingExpandableListView;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -35,7 +35,7 @@ import java.util.Collections;
  */
 public class DebugNames extends BaseNextBusActivity {
 
-    protected ExpandableListView theExListView;
+    protected WorkingExpandableListView theExListView;
     protected ExpandableArrayAdapter<String> theExListAdapter;
 
     @Override
@@ -49,7 +49,7 @@ public class DebugNames extends BaseNextBusActivity {
         setTitle(TheApp.getAppTitle());
 
         theExListAdapter = new ExpandableArrayAdapter<String>(this);
-        theExListView = new ExpandableListView(this);
+        theExListView = new WorkingExpandableListView(this);
         //theExListView.setOnItemClickListener(this);
         //theExListView.setOnItemLongClickListener(this);
         theExListView.setAdapter(theExListAdapter);
