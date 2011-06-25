@@ -137,9 +137,9 @@ public class ExpandableArrayAdapter<T> extends BaseExpandableListAdapter {
         }
 
         if (getChildrenCount(aGroupPosition) == 0) {
-            theView.setGravity(Gravity.CENTER_HORIZONTAL);
+            theView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
         } else {
-            theView.setGravity(Gravity.LEFT);
+            theView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         }
         theView.setText(this.theGroups.get(aGroupPosition));
 
