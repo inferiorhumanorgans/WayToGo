@@ -38,6 +38,10 @@ import org.acra.annotation.*;
  * @author alex
  */
 @ReportsCrashes(formKey = "dFk2MXZtbjlLTzhobDhXaktjWTh1V2c6MQ",
+mode = ReportingInteractionMode.NOTIFICATION,
+resNotifTickerText = R.string.acra_crash_notif_ticker_text,
+resNotifTitle = R.string.acra_crash_notif_title,
+resNotifText = R.string.acra_crash_notif_text,
 resDialogText = R.string.acra_dialog_text,
 resDialogCommentPrompt = R.string.acra_dialog_comment_prompt)
 public final class TheApp extends Application {
