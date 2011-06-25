@@ -23,7 +23,7 @@ package com.zippy.WayToGo.Agency.NextBus;
 public interface NextBusRouteFetchListener {
     public void currentlyFetchingRouteList();
     public void finishedProcessingRouteList();
-    public void currentlyFetchingRouteConfig(int forThisManyRoutes);
+    public void currentlyFetchingRouteConfig(final int forThisManyRoutes);
     public void finishedProcessingOneRoute();
     public void finishedProcessingAllRoutes();
 

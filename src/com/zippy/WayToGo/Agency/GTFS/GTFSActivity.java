@@ -41,7 +41,7 @@ public class GTFSActivity extends BaseActivity {
     }
 
     @Override
-    public void onCreate(Bundle aSavedInstanceState) {
+    public void onCreate(final Bundle aSavedInstanceState) {
         super.onCreate(aSavedInstanceState);
         Log.d(LOG_NAME, "onCreate");
         setContentView(R.layout.nextbus_new_layout);
@@ -59,10 +59,10 @@ public class GTFSActivity extends BaseActivity {
         Log.d(LOG_NAME, "onResume");
         super.onResume();
 
-        final Intent theIntent = getIntent();
+        final Intent ourIntent = getIntent();
 
         if (theAgencyClassName == null) {
-            theAgencyClassName = theIntent.getStringExtra("AgencyClassName");
+            theAgencyClassName = ourIntent.getStringExtra("AgencyClassName");
 
 
             // TODO: Check if theAgency() is null, if so pop up a dialog box

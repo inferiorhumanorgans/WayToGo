@@ -46,9 +46,9 @@ public class SelectStopActivity extends GTFSActivity implements CopyDBListener, 
     private long lastLocationUpdate = 0;
 
     @Override
-    public void onCreate(Bundle inState) {
+    public void onCreate(final Bundle aSavedInstanceState) {
         Log.d(LOG_NAME, "onCreate");
-        super.onCreate(inState);
+        super.onCreate(aSavedInstanceState);
         ((ViewGroup) (theListView.getParent())).removeView(theListView);
         setContentView(theListView);
         theListAdapter = new StopAdapter(this);
@@ -86,7 +86,7 @@ public class SelectStopActivity extends GTFSActivity implements CopyDBListener, 
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem anItem) {
+    public boolean onOptionsItemSelected(final MenuItem anItem) {
         switch (anItem.getItemId()) {
             case R.id.menu_current_location:
                 startLocationSearch();
@@ -134,7 +134,7 @@ public class SelectStopActivity extends GTFSActivity implements CopyDBListener, 
     }
 
     @Override
-    public void onLocationFound(Location aLocation) {
+    public void onLocationFound(final Location aLocation) {
         Log.d(LOG_NAME, "Probably have a GPS Fix");
         if (theProgressDialog != null) {
             try {
@@ -170,13 +170,13 @@ public class SelectStopActivity extends GTFSActivity implements CopyDBListener, 
         populateListView(false);
     }
 
-    public void populateListView(boolean useLocation) {
-        final ArrayList<Stop> theStops = theAgency().getStops(null);
+    public void populateListView(final boolean useLocation) {
+        final ArrayList<Stop> ourStops = theAgency().getStops(null);
         if (!useLocation) {
             theListAdapter.clear();
 
-            for (Stop aStop : theStops) {
-                theListAdapter.add(aStop);
+            for (Stop ourStop : ourStops) {
+                theListAdapter.add(ourStop);
             }
             theListAdapter.sort(StopComparator.STOP_ORDER);
             theListAdapter.notifyDataSetChanged();

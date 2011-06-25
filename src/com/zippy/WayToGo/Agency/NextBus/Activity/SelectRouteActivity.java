@@ -45,7 +45,7 @@ public class SelectRouteActivity extends BaseNextBusActivity implements CopyDBLi
     private boolean needsRefresh = true;
 
     @Override
-    public void onCreate(Bundle aSavedInstanceState) {
+    public void onCreate(final Bundle aSavedInstanceState) {
         Log.d(LOG_NAME, "onCreate");
         super.onCreate(aSavedInstanceState);
 
@@ -81,7 +81,7 @@ public class SelectRouteActivity extends BaseNextBusActivity implements CopyDBLi
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu aMenu) {
+    public boolean onPrepareOptionsMenu(final Menu aMenu) {
         super.onPrepareOptionsMenu(aMenu);
         final MenuItem theMenuItem = aMenu.findItem(R.id.menu_current_location);
         theMenuItem.setEnabled(false);

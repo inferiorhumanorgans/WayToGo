@@ -40,7 +40,7 @@ public class SelectDirectionActivity extends BaseNextBusActivity {
     private final String LOG_NAME=SelectDirectionActivity.class.getCanonicalName();
 
     @Override
-    public void onCreate(Bundle aSavedInstanceState) {
+    public void onCreate(final Bundle aSavedInstanceState) {
         Log.d(LOG_NAME, "onCreate");
         super.onCreate(aSavedInstanceState);
         theOptionsMenuId = R.menu.nextbus_direction_menu;
@@ -91,7 +91,7 @@ public class SelectDirectionActivity extends BaseNextBusActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem anItem) {
+    public boolean onOptionsItemSelected(final MenuItem anItem) {
         switch (anItem.getItemId()) {
             case R.id.menu_settings:
                 this.startActivity(TheApp.thePrefIntent);

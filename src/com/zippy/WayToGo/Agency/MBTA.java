@@ -45,7 +45,7 @@ public class MBTA extends NextBusAgency {
     }
 
     @Override
-    public void init(Context aContext) {
+    public void init(final Context aContext) {
         super.init(aContext);
         if (theDBHelper == null) {
             theDBHelper = (NextBusDataHelper) setTheDBHelper(new MBTADataHelper(theContext, this));
@@ -303,7 +303,7 @@ public class MBTA extends NextBusAgency {
         }
 
         @Override
-        protected String getSanitizedStopName(String aStopTitle) {
+        protected String getSanitizedStopName(final String aStopTitle) {
             return aStopTitle.replaceAll("St opp", "Stop");
         }
 
@@ -326,8 +326,8 @@ public class MBTA extends NextBusAgency {
         @Override
         protected int getBadgeColorForRouteTag(final String aRouteTag) {
             if (routeTitleMap.containsKey(aRouteTag)) {
-                final String theRouteTag = routeTitleMap.get(aRouteTag);
-                if (theRouteTag.contains("EXPRESS")) {
+                final String ourRouteTag = routeTitleMap.get(aRouteTag);
+                if (ourRouteTag.contains("EXPRESS")) {
                     return 0xff990000;
                 }
             }

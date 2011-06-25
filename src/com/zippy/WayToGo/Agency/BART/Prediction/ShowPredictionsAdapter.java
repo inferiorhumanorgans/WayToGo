@@ -38,26 +38,26 @@ public class ShowPredictionsAdapter extends ExpandableArrayAdapter<Prediction> {
 
     protected final HashMap<String, Drawable> theBadges;
 
-    public ShowPredictionsAdapter(Context aContext) {
+    public ShowPredictionsAdapter(final Context aContext) {
         super(aContext);
         theBadges = new HashMap<String, Drawable>();
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int aGroupPosition, final int aChildPosition, final boolean isLastChild, final View aConvertView, final ViewGroup aParent) {
         final IconTextView v;
-        if (convertView == null) {
+        if (aConvertView == null) {
             final LayoutInflater inflater = (LayoutInflater) theContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = (IconTextView) inflater.inflate(R.layout.list_item_route, null);
             v.setFocusable(false);
             v.setFocusableInTouchMode(false);
             v.setClickable(false);
         } else {
-            v = (IconTextView) convertView;
+            v = (IconTextView) aConvertView;
         }
 
-        final String ourGroup = theGroups.get(groupPosition).intern();
-        final Prediction ourPrediction = theChildren.get(ourGroup).get(childPosition);
+        final String ourGroup = theGroups.get(aGroupPosition).intern();
+        final Prediction ourPrediction = theChildren.get(ourGroup).get(aChildPosition);
         final Resources ourResources = TheApp.getContext().getResources();
         final String ourText;
         if (ourGroup.startsWith("Platform ")) {

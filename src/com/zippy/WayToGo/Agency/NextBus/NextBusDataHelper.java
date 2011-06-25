@@ -47,7 +47,6 @@ public abstract class NextBusDataHelper extends CommonDBHelper {
      * the extra index for the shrunken DBs.
      */
     private static final int DATABASE_VERSION = 2;
-    private final Context theContext;
     private static final String DATABASE_NAME = "nextbus_data";
     private static final String ROUTES_TABLE =
             "CREATE TABLE routes ( "
@@ -88,33 +87,32 @@ public abstract class NextBusDataHelper extends CommonDBHelper {
     private static final String LAT_COLUMN = "lat";
     private static final String LNG_COLUMN = "lng";
 
-    public NextBusDataHelper(final Context context, final NextBusAgency anAgency) {
+    public NextBusDataHelper(final Context aContext, final NextBusAgency anAgency) {
         super(TheApp.getContext(),
                 TheApp.getDatabaseFileName(getDBName(anAgency)), null, DATABASE_VERSION);
 
-        theContext = context;
         theAgency = anAgency;
         theRow = new ContentValues();
     }
 
     @Override
-    public final void onCreate(SQLiteDatabase db) {
+    public final void onCreate(final SQLiteDatabase aDatabase) {
         // Routes
-        db.execSQL(ROUTES_TABLE);
-        db.execSQL(DIRECTIONS_TABLE);
-        db.execSQL(ROUTES_STOPS_TABLE);
+        aDatabase.execSQL(ROUTES_TABLE);
+        aDatabase.execSQL(DIRECTIONS_TABLE);
+        aDatabase.execSQL(ROUTES_STOPS_TABLE);
 
         // Create list of stops
-        db.execSQL(STOPS_TABLE);
-        db.execSQL(DIRECTIONS_STOPS_TABLE);
+        aDatabase.execSQL(STOPS_TABLE);
+        aDatabase.execSQL(DIRECTIONS_STOPS_TABLE);
 
-        db.execSQL(EXTRA_INDEX_1);
+        aDatabase.execSQL(EXTRA_INDEX_1);
     }
 
     @Override
-    public final void onUpgrade(SQLiteDatabase aDB, int anOldVersion, int aNewVersion) {
+    public final void onUpgrade(final SQLiteDatabase aDatabase, final int anOldVersion, final int aNewVersion) {
         if ((anOldVersion == 1) && (aNewVersion == 2)) {
-            aDB.execSQL(EXTRA_INDEX_1);
+            aDatabase.execSQL(EXTRA_INDEX_1);
         }
     }
 
@@ -236,19 +234,19 @@ public abstract class NextBusDataHelper extends CommonDBHelper {
         return count;
     }
 
-    protected final void addRoute(final ContentValues theRoute) {
-        addRowToTable("routes", theRoute);
+    protected final void addRoute(final ContentValues aRoute) {
+        addRowToTable("routes", aRoute);
     }
 
-    protected final void addStop(final ContentValues theStop) {
-        addConstrainedRowToTable("stops", theStop);
+    protected final void addStop(final ContentValues aStop) {
+        addConstrainedRowToTable("stops", aStop);
         // Ignore, the only constraint here is the unique stop
         // and because NB doesn't provide us a list of stops
         // we will get duplicates
     }
 
-    protected final void addDirection(final ContentValues theDirection) {
-        addRowToTable("directions", theDirection);
+    protected final void addDirection(final ContentValues aDirection) {
+        addRowToTable("directions", aDirection);
     }
 
     protected final void addStopToRoute(final String aRouteTag, final String aStopTag) {
@@ -258,7 +256,7 @@ public abstract class NextBusDataHelper extends CommonDBHelper {
         addRowToTable("routes_stops", theRow);
     }
 
-    protected final void addStopToDirection(String aDirectionTag, String aStopTag, int aPosition) {
+    protected final void addStopToDirection(final String aDirectionTag, final String aStopTag, final int aPosition) {
         theRow.clear();
         theRow.put("direction_tag", aDirectionTag);
         theRow.put("stop_tag", aStopTag);
@@ -397,7 +395,7 @@ public abstract class NextBusDataHelper extends CommonDBHelper {
     }
 
     // Badge
-    protected int getBadgeColorForRouteTag(String aRouteTag) {
+    protected int getBadgeColorForRouteTag(final String aRouteTag) {
         return Color.LTGRAY;
     }
 }

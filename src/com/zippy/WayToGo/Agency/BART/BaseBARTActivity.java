@@ -30,7 +30,7 @@ public class BaseBARTActivity extends BaseActivity {
     protected ProgressDialog theProgressDialog = null;
 
     @Override
-    public void onCreate(Bundle aSavedInstanceState) {
+    public void onCreate(final Bundle aSavedInstanceState) {
         super.onCreate(aSavedInstanceState);
         theAgencyClassName = BARTAgency.class.getCanonicalName();
     }

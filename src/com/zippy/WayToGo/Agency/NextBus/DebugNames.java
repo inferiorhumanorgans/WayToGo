@@ -39,8 +39,8 @@ public class DebugNames extends BaseNextBusActivity {
     protected ExpandableArrayAdapter<String> theExListAdapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(final Bundle aSavedInstanceState) {
+        super.onCreate(aSavedInstanceState);
     }
 
     @Override
@@ -58,29 +58,29 @@ public class DebugNames extends BaseNextBusActivity {
             theExListView.setGroupIndicator(null);
         }
 
-        final ArrayList<Route> theRoutes = theAgency().getRoutes();
-        Collections.sort(theRoutes, RouteComparator.ROUTE_ORDER);
+        final ArrayList<Route> ourRoutes = theAgency().getRoutes();
+        Collections.sort(ourRoutes, RouteComparator.ROUTE_ORDER);
 
-        final ArrayList<Direction> theDirections = theAgency().getDirections();
+        final ArrayList<Direction> ourDirections = theAgency().getDirections();
 
 
-        for (final Route aRoute : theRoutes) {
+        for (final Route aRoute : ourRoutes) {
             theExListAdapter.addItemToGroup("Routes", aRoute.getTheName());
         }
 
-        final ArrayList<Stop> theStops = theAgency().getStops(null);
-        Collections.sort(theStops, StopComparator.STOP_ORDER);
-        for (final Stop aStop : theStops) {
-            theExListAdapter.addItemToGroup("Stops", aStop.getTheName());
+        final ArrayList<Stop> ourStops = theAgency().getStops(null);
+        Collections.sort(ourStops, StopComparator.STOP_ORDER);
+        for (final Stop ourStop : ourStops) {
+            theExListAdapter.addItemToGroup("Stops", ourStop.getTheName());
         }
 
-        for (final Direction aDirection : theDirections) {
-            if (aDirection.getTheTitle().startsWith("Inbound")) {
-                theExListAdapter.addItemToGroup("Directions Inbound", aDirection.getTheTitle());
-            } else if (aDirection.getTheTitle().startsWith("Outbound")) {
-                theExListAdapter.addItemToGroup("Directions Outbound", aDirection.getTheTitle());
+        for (final Direction ourDirection : ourDirections) {
+            if (ourDirection.getTheTitle().startsWith("Inbound")) {
+                theExListAdapter.addItemToGroup("Directions Inbound", ourDirection.getTheTitle());
+            } else if (ourDirection.getTheTitle().startsWith("Outbound")) {
+                theExListAdapter.addItemToGroup("Directions Outbound", ourDirection.getTheTitle());
             } else {
-                theExListAdapter.addItemToGroup("Directions", aDirection.getTheTitle());
+                theExListAdapter.addItemToGroup("Directions", ourDirection.getTheTitle());
             }
         }
     }

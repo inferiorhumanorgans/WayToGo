@@ -18,6 +18,7 @@ package com.zippy.WayToGo.Agency.BART;
 
 import com.zippy.WayToGo.Agency.BARTAgency;
 import android.os.AsyncTask;
+import junit.framework.Assert;
 import org.apache.http.HttpVersion;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -38,7 +39,8 @@ public abstract class BaseXMLTask extends AsyncTask<BARTAgency, Object, Void> {
     protected final SchemeRegistry registry = new SchemeRegistry();
 
     @Override
-    protected Void doInBackground(BARTAgency... someAgencies) {
+    protected Void doInBackground(final BARTAgency... someAgencies) {
+        Assert.assertEquals(1, someAgencies.length);
         theAgency = someAgencies[0];
 
         HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);

@@ -78,7 +78,7 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
     }
 
     @Override
-    public void onCreate(Bundle aSavedInstanceState) {
+    public void onCreate(final Bundle aSavedInstanceState) {
         super.onCreate(aSavedInstanceState);
 
         Log.d(LOG_NAME, "onCreate()");
@@ -153,8 +153,8 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(final MenuItem anItem) {
+        switch (anItem.getItemId()) {
             case R.id.menu_bookmark_stop:
                 addBookmarkForStop(theStation);
                 return true;
@@ -164,7 +164,7 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
                 setup();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(anItem);
         }
     }
 
@@ -202,33 +202,33 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
     }
 
     protected static String formatPrediction(final Prediction aPrediction, final boolean groupByPlatform) {
-        final int theMinutes = aPrediction.getMinutes();
-        final String theNumberOfCars = aPrediction.getTheFlags();
-        final String thePlatform = aPrediction.getTheSubStopTag().toLowerCase();
-        final String theDestination = aPrediction.getDirectionTag();
+        final int ourMinutes = aPrediction.getMinutes();
+        final String ourNumberOfCars = aPrediction.getTheFlags();
+        final String ourPlatform = aPrediction.getTheSubStopTag().toLowerCase();
+        final String ourDestination = aPrediction.getDirectionTag();
         String theText;
         if (!groupByPlatform) {
-            switch (theMinutes) {
+            switch (ourMinutes) {
                 case 0:
-                    theText = "Currently at " + thePlatform + "\n" + theNumberOfCars + " cars";
+                    theText = "Currently at " + ourPlatform + "\n" + ourNumberOfCars + " cars";
                     break;
                 case 1:
-                    theText = "1 minute\n" + theNumberOfCars + " cars, " + thePlatform;
+                    theText = "1 minute\n" + ourNumberOfCars + " cars, " + ourPlatform;
                     break;
                 default:
-                    theText = "" + theMinutes + " minutes\n" + theNumberOfCars + " cars, " + thePlatform;
+                    theText = "" + ourMinutes + " minutes\n" + ourNumberOfCars + " cars, " + ourPlatform;
                     break;
             }
         } else {
-            switch (theMinutes) {
+            switch (ourMinutes) {
                 case 0:
-                    theText = theDestination + "\nAt platform - " + theNumberOfCars + " cars";
+                    theText = ourDestination + "\nAt platform - " + ourNumberOfCars + " cars";
                     break;
                 case 1:
-                    theText = theDestination + "\n1 minute - " + theNumberOfCars + " cars";
+                    theText = ourDestination + "\n1 minute - " + ourNumberOfCars + " cars";
                     break;
                 default:
-                    theText = theDestination + "\n" + theMinutes + " minutes - " + theNumberOfCars + " cars";
+                    theText = ourDestination + "\n" + ourMinutes + " minutes - " + ourNumberOfCars + " cars";
                     break;
             }
         }
@@ -252,30 +252,30 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
 
     protected void populateByPlatform() {
         final int maxPredictions = TheApp.getMaxPredictionsPerStop();
-        HashMap<String, ArrayList<Prediction>> thePredictions = new HashMap<String, ArrayList<Prediction>>();
-        for (String aDestination : thePredictionGroups.keySet()) {
-            ArrayList<Prediction> somePredictions = thePredictionGroups.get(aDestination);
-            for (Prediction aPrediction : somePredictions) {
-                if (!thePredictions.containsKey(aPrediction.getTheSubStopTag())) {
-                    thePredictions.put(aPrediction.getTheSubStopTag(), new ArrayList<Prediction>());
+        HashMap<String, ArrayList<Prediction>> ourPredictions = new HashMap<String, ArrayList<Prediction>>();
+        for (String ourDestination : thePredictionGroups.keySet()) {
+            ArrayList<Prediction> somePredictions = thePredictionGroups.get(ourDestination);
+            for (final Prediction ourPrediction : somePredictions) {
+                if (!ourPredictions.containsKey(ourPrediction.getTheSubStopTag())) {
+                    ourPredictions.put(ourPrediction.getTheSubStopTag(), new ArrayList<Prediction>());
                 }
-                thePredictions.get(aPrediction.getTheSubStopTag()).add(aPrediction);
+                ourPredictions.get(ourPrediction.getTheSubStopTag()).add(ourPrediction);
             }
         }
 
-        final String[] thePlatforms = thePredictions.keySet().toArray(new String[thePredictions.size()]);
-        Arrays.sort(thePlatforms);
+        final String[] ourPlatforms = ourPredictions.keySet().toArray(new String[ourPredictions.size()]);
+        Arrays.sort(ourPlatforms);
 
-        for (String aPlatform : thePlatforms) {
-            ArrayList<Prediction> thePlatformPredictions = thePredictions.get(aPlatform);
-            Collections.sort(thePlatformPredictions, PredictionComparator.PREDICTION_ORDER);
+        for (String ourPlatform : ourPlatforms) {
+            final ArrayList<Prediction> ourPlatformPredictions = ourPredictions.get(ourPlatform);
+            Collections.sort(ourPlatformPredictions, PredictionComparator.PREDICTION_ORDER);
 
             int i = 0;
-            for (Prediction ourPrediction : thePlatformPredictions) {
+            for (final Prediction ourPrediction : ourPlatformPredictions) {
                 if ((i >= maxPredictions) && (maxPredictions != -1)) {
                     break;
                 }
-                addItem(aPlatform, ourPrediction);
+                addItem(ourPlatform, ourPrediction);
                 i++;
             }
         }
@@ -284,7 +284,7 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
     public void startPredictionFetch() {
     }
 
-    public void finishedPullingPredictions(boolean wasCancelled) {
+    public void finishedPullingPredictions(final boolean wasCancelled) {
         if (wasCancelled || thePredictionFetcher.isCancelled()) {
             return;
         }

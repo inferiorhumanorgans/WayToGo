@@ -30,7 +30,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XMLHandler extends DefaultHandler {
 
     private static String LOG_NAME = XMLHandler.class.getSimpleName();
-    private XMLInterface theTV;
+    private XMLInterface theListener;
     private static final String STATION_TAG = "station";
     private static final String NAME_TAG = "name";
     private static final String TAG_TAG = "abbr";
@@ -45,15 +45,15 @@ public class XMLHandler extends DefaultHandler {
     private StringBuilder theInnerText = null;
     private String theAddress = null, theCity = null;
 
-    public XMLHandler(XMLInterface aTV) {
+    public XMLHandler(final XMLInterface aListener) {
         super();
-        theTV = aTV;
+        theListener = aListener;
     }
 
     @Override
     public void endDocument() throws SAXException {
         super.endDocument();
-        if (theTV.isCancelled()) {
+        if (theListener.isCancelled()) {
             throw new AbortXMLParsingException();
         }
     }
@@ -61,79 +61,79 @@ public class XMLHandler extends DefaultHandler {
     @Override
     public void startDocument() throws SAXException {
         super.startDocument();
-        if (theTV.isCancelled()) {
+        if (theListener.isCancelled()) {
             throw new AbortXMLParsingException();
         }
     }
 
     @Override
-    public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-        super.startElement(uri, localName, qName, atts);
+    public void startElement(final String aUri, final String aLocalName, final String aQName, final Attributes someAtts) throws SAXException {
+        super.startElement(aUri, aLocalName, aQName, someAtts);
 
-        if (theTV.isCancelled()) {
+        if (theListener.isCancelled()) {
             throw new AbortXMLParsingException();
         }
 
-        if (localName.equals(STATION_TAG)) {
+        if (aLocalName.equals(STATION_TAG)) {
             theValues.clear();
             inStation = true;
-        } else if (localName.equals(NAME_TAG)) {
+        } else if (aLocalName.equals(NAME_TAG)) {
             inName = true;
             theInnerText = new StringBuilder();
-        } else if (localName.equals(TAG_TAG)) {
+        } else if (aLocalName.equals(TAG_TAG)) {
             inAbbr = true;
             theInnerText = new StringBuilder();
-        } else if (localName.equals(ADDRESS_TAG)) {
+        } else if (aLocalName.equals(ADDRESS_TAG)) {
             inAddress = true;
             theInnerText = new StringBuilder();
-        } else if (localName.equals(CITY_TAG)) {
+        } else if (aLocalName.equals(CITY_TAG)) {
             inCity = true;
             theInnerText = new StringBuilder();
         }
     }
 
     @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
-        super.characters(ch, start, length);
+    public void characters(final char[] aCharacter, final int aStartPosition, final int aLength) throws SAXException {
+        super.characters(aCharacter, aStartPosition, aLength);
 
-        if (theTV.isCancelled()) {
+        if (theListener.isCancelled()) {
             throw new AbortXMLParsingException();
         }
 
         if (inName || inAbbr || inCity || inAddress) {
             //Log.d(LOG_NAME, "theInnerText: " + theInnerText + " inName: " + inName + " inAbbr: " + inAbbr + " inCity: " + inCity + " inAddress: " + inAddress);
-            theInnerText.append(ch, start, length);
+            theInnerText.append(aCharacter, aStartPosition, aLength);
         }
     }
 
     @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
-        super.endElement(uri, localName, qName);
+    public void endElement(final String aUri, final String aLocalName, final String aQName) throws SAXException {
+        super.endElement(aUri, aLocalName, aQName);
 
-        if (theTV.isCancelled()) {
+        if (theListener.isCancelled()) {
             throw new AbortXMLParsingException();
         }
 
-        if (localName.equals(STATION_TAG)) {
+        if (aLocalName.equals(STATION_TAG)) {
             theValues.put("address", theAddress + ", " + theCity);
-            theTV.addStation(theValues);
+            theListener.addStation(theValues);
             theValues.clear();
             theCity = null;
             theAddress = null;
             inStation = false;
-        } else if (localName.equals(NAME_TAG)) {
+        } else if (aLocalName.equals(NAME_TAG)) {
             theValues.put(NAME_COLUMN, theInnerText.toString());
             theInnerText = null;
             inName = false;
-        } else if (localName.equals(TAG_TAG)) {
+        } else if (aLocalName.equals(TAG_TAG)) {
             theValues.put(TAG_COLUMN, theInnerText.toString());
             theInnerText = null;
             inAbbr = false;
-        } else if (localName.equals(ADDRESS_TAG)) {
+        } else if (aLocalName.equals(ADDRESS_TAG)) {
             theAddress = theInnerText.toString();
             theInnerText = null;
             inAddress = false;
-        } else if (localName.equals(CITY_TAG)) {
+        } else if (aLocalName.equals(CITY_TAG)) {
             theCity = theInnerText.toString();
             theInnerText = null;
             inCity = false;

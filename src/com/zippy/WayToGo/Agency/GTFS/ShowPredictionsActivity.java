@@ -43,7 +43,7 @@ public class ShowPredictionsActivity extends GTFSActivity implements PredictionL
     
 
     @Override
-    public void onCreate(Bundle aSavedInstanceState) {
+    public void onCreate(final Bundle aSavedInstanceState) {
         super.onCreate(aSavedInstanceState);
         theListAdapter = new PredictionAdapter(this);
         theListView.setAdapter(theListAdapter);
@@ -80,9 +80,9 @@ public class ShowPredictionsActivity extends GTFSActivity implements PredictionL
         theListAdapter.clear();
         final boolean includeLegit = true;
         final boolean wantAllRoutes = true;
-        ArrayList<PredictionGroup> thePredictionGroups = PredictionGroup.getPredictionGroups(thePredictions, includeLegit);
+        ArrayList<PredictionGroup> ourPredictionGroups = PredictionGroup.getPredictionGroups(thePredictions, includeLegit);
 
-        if (wantAllRoutes && (thePredictionGroups.size() > 1)) {
+        if (wantAllRoutes && (ourPredictionGroups.size() > 1)) {
             final int theLogo = theAgency().getLogo();
             if (theLogo == -1) {
                 theIconView.setBadgeText(theAgency().getShortName());
@@ -91,19 +91,19 @@ public class ShowPredictionsActivity extends GTFSActivity implements PredictionL
             }
         }
 
-        for (final PredictionGroup aGroup : thePredictionGroups) {
-            final PredictionSummary theSummary = new PredictionSummary(getDialogContext(), aGroup);
-            if ((thePredictionGroups.size() == 1) && wantAllRoutes) {
-                theSummary.setTheFlags("legit");
-                final Stop ourStop = theAgency().getStop(aGroup.getTheStopTag());
-                final Direction ourDirection = theAgency().getDirectionFromTag(aGroup.getTheDirectionTag());
+        for (final PredictionGroup ourGroup : ourPredictionGroups) {
+            final PredictionSummary ourSummary = new PredictionSummary(getDialogContext(), ourGroup);
+            if ((ourPredictionGroups.size() == 1) && wantAllRoutes) {
+                ourSummary.setTheFlags("legit");
+                final Stop ourStop = theAgency().getStop(ourGroup.getTheStopTag());
+                final Direction ourDirection = theAgency().getDirectionFromTag(ourGroup.getTheDirectionTag());
                 theIconView.setText(ourStop.getTheShortName() + "\n" + ourDirection.getTheShortTitle());
                 //theIconView.setText(theStop.first) + "\n" + theAgency.getTerseDirectionName(theDirection.first));
-                theIconView.setBadgeText(aGroup.getTheRouteTag());
+                theIconView.setBadgeText(ourGroup.getTheRouteTag());
                 theIconView.invalidate();
             }
 
-            theListAdapter.add(theSummary);
+            theListAdapter.add(ourSummary);
         }
         if (theListAdapter.isEmpty()) {
             theListAdapter.add(new PredictionSummary(getDialogContext()));
@@ -115,11 +115,11 @@ public class ShowPredictionsActivity extends GTFSActivity implements PredictionL
         thePredictions.clear();
     }
 
-    public synchronized void addPrediction(Prediction aPrediction) {
+    public synchronized void addPrediction(final Prediction aPrediction) {
         thePredictions.add(aPrediction);
     }
 
-    public void finishedPullingPredictions(boolean wasCancelled) {
+    public void finishedPullingPredictions(final boolean wasCancelled) {
         populateListView();
     }
 }

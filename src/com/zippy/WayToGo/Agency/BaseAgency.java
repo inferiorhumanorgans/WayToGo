@@ -124,7 +124,7 @@ public abstract class BaseAgency {
      * @param aStopTag
      * @return
      */
-    public final Stop getStop(String aStopId) {
+    public final Stop getStop(final String aStopId) {
         return theCommonDBHelper.getStop(aStopId);
     }
 
@@ -186,7 +186,7 @@ public abstract class BaseAgency {
      * Extracts the database from the APK to a flat file on the SD card
      * @param aListener A listener object so that we can display a progress dialog
      */
-    public void copyDatabase(CopyDBListener aListener) {
+    public void copyDatabase(final CopyDBListener aListener) {
         theCommonDBHelper.copyDatabase(aListener);
     }
 }

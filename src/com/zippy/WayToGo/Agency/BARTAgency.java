@@ -109,9 +109,9 @@ public final class BARTAgency extends BaseAgency {
     public final synchronized void addStations(final Collection<ContentValues> someStations) {
         Log.d(LOG_NAME, "Batch adding stations.");
         theDBHelper.beginTransaction();
-        for (ContentValues aStation : someStations) {
-            Log.d(LOG_NAME, "Adding: " + aStation);
-            addStation(aStation);
+        for (ContentValues ourStation : someStations) {
+            Log.d(LOG_NAME, "Adding: " + ourStation);
+            addStation(ourStation);
         }
         theDBHelper.endTransaction();
     }
@@ -142,11 +142,11 @@ public final class BARTAgency extends BaseAgency {
 
     @Override
     public final Intent getPredictionIntentForStop(final Stop aStop, final Direction aDirection) {
-        final Intent theIntent = new Intent("w2g.action.BART.PREDICTIONS_FOR_STATION");
-        theIntent.putExtra("stationTitle", aStop.getTheName());
-        theIntent.putExtra("stationTag", aStop.getTheId());
-        theIntent.putExtra("AgencyClassName", this.getClass().getCanonicalName());
-        return theIntent;
+        final Intent ourIntent = new Intent("w2g.action.BART.PREDICTIONS_FOR_STATION");
+        ourIntent.putExtra("stationTitle", aStop.getTheName());
+        ourIntent.putExtra("stationTag", aStop.getTheId());
+        ourIntent.putExtra("AgencyClassName", this.getClass().getCanonicalName());
+        return ourIntent;
     }
 
     public static class ActivityGroup extends com.zippy.WayToGo.ActivityGroup {

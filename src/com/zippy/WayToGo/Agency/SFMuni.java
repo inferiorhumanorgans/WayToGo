@@ -48,7 +48,7 @@ public class SFMuni extends NextBusAgency {
     }
 
     @Override
-    public void init(Context aContext) {
+    public void init(final Context aContext) {
         super.init(aContext);
         if (theDBHelper == null) {
             theDBHelper = (NextBusDataHelper) setTheDBHelper(new SFMuniDataHelper(theContext, this));
@@ -83,7 +83,7 @@ public class SFMuni extends NextBusAgency {
     }
 
     static final class SFMuniDataHelper extends NextBusDataHelper {
-        private LRUCache<String, String> theStopCache = new LRUCache<String, String>(75);
+        private final LRUCache<String, String> theStopCache = new LRUCache<String, String>(75);
 
         public SFMuniDataHelper(final Context aContext, final NextBusAgency anAgency) {
             super(aContext, anAgency);
@@ -237,30 +237,71 @@ public class SFMuni extends NextBusAgency {
 
         @Override
         protected String getSanitizedRouteName(final String aRouteTitle) {
-            return aRouteTitle.replaceFirst("(\\d|\\w*)-(\\d|\\w*)\\s?-\\s?(.*)", "$1-$2/$3").replaceFirst("(\\d|\\w*)-(\\d|\\w*)", "$1 - $2").replaceAll("(.)/(.)", "$1 / $2").replaceAll("B.A.R.T.", "BART").replaceAll("Exp$", "Express");
+            return aRouteTitle
+                    .replaceFirst("(\\d|\\w*)-(\\d|\\w*)\\s?-\\s?(.*)", "$1-$2/$3")
+                    .replaceFirst("(\\d|\\w*)-(\\d|\\w*)", "$1 - $2")
+                    .replaceAll("(.)/(.)", "$1 / $2")
+                    .replaceAll("B.A.R.T.", "BART")
+                    .replaceAll("Exp$", "Express");
         }
 
         @Override
         protected String getSanitizedDirection(final String aDirectionTitle) {
-            return aDirectionTitle.replaceAll("V A", "VA").replaceAll("(?i)St\\.", "St").replaceAll("(Ave|St|Blvd)\\.", "$1").replaceAll("Street", "St").replaceAll("Avenue", "Ave").replaceAll("Boulevard", "Blvd").replaceAll("\\sAv\\.", " Ave").replaceAll("\\sAv\\s", " Ave ").replaceAll("([01456789])\\s(St|Ave)", "$1th $2").replaceAll("(1)\\s(St|Ave)", "$1st $2").replaceAll("(2)\\s(St|Ave)", "$1nd $2").replaceAll("(3)\\s(St|Ave)", "$1rd $2").replaceAll("(?i)([0-9])(\\s)(nd|Th|Rd|St)", "$1$3").replaceAll("(?i)Geray", "Geary").replaceAll("PLaya", "Playa").replaceAll("Phean", "Phelan").replaceAll("S F", "SF").replaceAll("Pa Lobos", "Pt Lobos").replaceFirst("Visitacion Valley via Downtown", "Sunnydale").replaceFirst("SF STATE", "SF State University").replaceAll("St\\.", "St").replaceAll("Bart", "BART").replaceAll("Balboa (BART|Park) Station", "Balboa Park BART").replaceFirst("to Chavez", "to Cesar Chavez St").replaceAll("Steuart Terminal", "Steuart St & Mission St").replaceFirst("Mission &", "Mission St &").replaceFirst("Van Ness Av\\s&", "Van Ness Ave").replaceAll("Vanness", "Van Ness Ave").replaceAll("Lagrande", "La Grande").replaceAll("Acevdo", "Acevedo").replaceAll("\\s(Arballo)(?!\\s?+Dr)(\\s&|$)", " $1 Dr$2").replaceAll("\\s(Presidio|San Jose|Potrero|Van\\sNess|Pt\\sLobos|Masonic|La\\sGrande|Palou|Geneva|Acevedo)(?!\\s?+Ave)(\\s&|$)", " $1 Ave$2").replaceAll("\\s(Geary|Sloat|Park\\sPresidio|Bayshore)(?!\\s?+Blvd)(\\s&|$)", " $1 Blvd$2").replaceAll("\\s(Mission|Main|Market|Judah|Steuart|Powell|Turk|Lyon|Quintara|Kearny|Fillmore|Jackson|Church|Union|Duboce|Fulton|Vicente|Wawona|Bay|Ortega|Munich|La\\sPlaya|Divisidero|California|Cabrillo|Bryant|Polk)(?!\\s?+St)(\\s\\&|$)", " $1 St$2").replaceFirst("\\s&(Van Ness)$", " & $1 Ave").replaceAll("Park Presidio Ave", "Park Presidio Blvd");
+            return aDirectionTitle
+                    .replaceAll("V A", "VA")
+                    .replaceAll("(?i)St\\.", "St")
+                    .replaceAll("(Ave|St|Blvd)\\.", "$1")
+                    .replaceAll("Street", "St")
+                    .replaceAll("Avenue", "Ave")
+                    .replaceAll("Boulevard", "Blvd")
+                    .replaceAll("\\sAv\\.", " Ave")
+                    .replaceAll("\\sAv\\s", " Ave ")
+                    .replaceAll("([01456789])\\s(St|Ave)", "$1th $2")
+                    .replaceAll("(1)\\s(St|Ave)", "$1st $2")
+                    .replaceAll("(2)\\s(St|Ave)", "$1nd $2")
+                    .replaceAll("(3)\\s(St|Ave)", "$1rd $2")
+                    .replaceAll("(?i)([0-9])(\\s)(nd|Th|Rd|St)", "$1$3")
+                    .replaceAll("(?i)Geray", "Geary")
+                    .replaceAll("PLaya", "Playa")
+                    .replaceAll("Phean", "Phelan")
+                    .replaceAll("S F", "SF")
+                    .replaceAll("Pa Lobos", "Pt Lobos")
+                    .replaceFirst("Visitacion Valley via Downtown", "Sunnydale")
+                    .replaceFirst("SF STATE", "SF State University")
+                    .replaceAll("St\\.", "St")
+                    .replaceAll("Bart", "BART")
+                    .replaceAll("Balboa (BART|Park) Station", "Balboa Park BART")
+                    .replaceFirst("to Chavez", "to Cesar Chavez St")
+                    .replaceAll("Steuart Terminal", "Steuart St & Mission St")
+                    .replaceFirst("Mission &", "Mission St &")
+                    .replaceFirst("Van Ness Av\\s&", "Van Ness Ave")
+                    .replaceAll("Vanness", "Van Ness Ave")
+                    .replaceAll("Lagrande", "La Grande")
+                    .replaceAll("Acevdo", "Acevedo")
+                    .replaceAll("\\s(Arballo)(?!\\s?+Dr)(\\s&|$)", " $1 Dr$2")
+                    .replaceAll("\\s(Presidio|San Jose|Potrero|Van\\sNess|Pt\\sLobos|Masonic|La\\sGrande|Palou|Geneva|Acevedo)(?!\\s?+Ave)(\\s&|$)", " $1 Ave$2")
+                    .replaceAll("\\s(Geary|Sloat|Park\\sPresidio|Bayshore)(?!\\s?+Blvd)(\\s&|$)", " $1 Blvd$2")
+                    .replaceAll("\\s(Mission|Main|Market|Judah|Steuart|Powell|Turk|Lyon|Quintara|Kearny|Fillmore|Jackson|Church|Union|Duboce|Fulton|Vicente|Wawona|Bay|Ortega|Munich|La\\sPlaya|Divisidero|California|Cabrillo|Bryant|Polk)(?!\\s?+St)(\\s\\&|$)", " $1 St$2")
+                    .replaceFirst("\\s&(Van Ness)$", " & $1 Ave")
+                    .replaceAll("Park Presidio Ave", "Park Presidio Blvd");
         }
 
         @Override
         protected String getSanitizedStopName(final String aStopTitle) {
-            final String theCachedValue = theStopCache.get(aStopTitle);
-            if (theCachedValue != null) {
-                return theCachedValue;
+            final String ourCachedValue = theStopCache.get(aStopTitle);
+            if (ourCachedValue != null) {
+                return ourCachedValue;
             }
             String ret = aStopTitle;
             /*if ((theStopPatterns.length != theStopReplaceAll.length) && (theStopReplaceAll.length != theStopReplacements.length)) {
             Log.d(LOG_NAME, "Something's wrong with the arrays");
             }*/
             for (int i = 0; i < theStopPatterns.length; i++) {
-                final Matcher matcher = theStopPatterns[i].matcher(ret);
+                final Matcher ourMatcher = theStopPatterns[i].matcher(ret);
                 if (theStopReplaceAll[i]) {
-                    ret = matcher.replaceAll(theStopReplacements[i]);
+                    ret = ourMatcher.replaceAll(theStopReplacements[i]);
                 } else {
-                    ret = matcher.replaceFirst(theStopReplacements[i]);
+                    ret = ourMatcher.replaceFirst(theStopReplacements[i]);
                 }
             }
             theStopCache.put(aStopTitle, ret);
@@ -291,7 +332,7 @@ public class SFMuni extends NextBusAgency {
         }
 
         @Override
-        protected int getBadgeColorForRouteTag(String aRouteTag) {
+        protected int getBadgeColorForRouteTag(final String aRouteTag) {
             if (aRouteTag.contains("X")) {
                 // Our express color
                 return 0xff990000;

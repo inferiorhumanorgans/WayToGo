@@ -46,7 +46,7 @@ public abstract class CommonDBHelper extends SQLiteOpenHelper {
     
     protected CopyDBTask theCopyTask;
 
-    protected CommonDBHelper(Context aContext, String aName, SQLiteDatabase.CursorFactory aFactory, int aVersion) {
+    protected CommonDBHelper(final Context aContext, final String aName, final SQLiteDatabase.CursorFactory aFactory, final int aVersion) {
         super(aContext, aName, aFactory, aVersion);
     }
 
@@ -86,18 +86,20 @@ public abstract class CommonDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    protected void addConstrainedRowToTable(final String theTable, final ContentValues theValues) {
+    protected boolean addConstrainedRowToTable(final String aTable, final ContentValues someValues) {
         checkWriteDb();
         try {
-            theWriteDB.insertOrThrow(theTable, null, theValues);
+            theWriteDB.insertOrThrow(aTable, null, someValues);
+            return true;
         } catch (SQLiteConstraintException theConstraint) {
             // Ignore
+            return false;
         }
     }
 
-    protected synchronized void addRowToTable(final String theTable, final ContentValues theValues) {
+    protected synchronized void addRowToTable(final String aTable, final ContentValues someValues) {
         checkWriteDb();
-        theWriteDB.insert(theTable, null, theValues);
+        theWriteDB.insert(aTable, null, someValues);
     }
 
     protected static String slightlySanitize(final String anInputString) {
@@ -127,7 +129,7 @@ public abstract class CommonDBHelper extends SQLiteOpenHelper {
 
         int fileSize = 0;
         try {
-            InputStream myInput = TheApp.getContext().getAssets().open("databases/" + getDBName());
+            final InputStream myInput = TheApp.getContext().getAssets().open("databases/" + getDBName());
             fileSize = myInput.available();
             myInput.close();
         } catch (IOException theEx) {
@@ -150,9 +152,9 @@ public abstract class CommonDBHelper extends SQLiteOpenHelper {
      * @return true if it exists, false if it doesn't
      */
     public boolean checkDataBase() {
-        final String thePath = TheApp.getContext().getDatabasePath(getDBName()).getPath();
-        Log.d(LOG_NAME, "checkDatabase(), looking for: " + thePath);
-        return new File(thePath).exists();
+        final String ourPath = TheApp.getContext().getDatabasePath(getDBName()).getPath();
+        Log.d(LOG_NAME, "checkDatabase(), looking for: " + ourPath);
+        return new File(ourPath).exists();
     }
 
 

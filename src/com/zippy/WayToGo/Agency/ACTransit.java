@@ -39,7 +39,7 @@ public class ACTransit extends NextBusAgency {
     }
 
     @Override
-    public void init(Context aContext) {
+    public void init(final Context aContext) {
         super.init(aContext);
         if (theDBHelper == null) {
             theDBHelper = (NextBusDataHelper) setTheDBHelper(new ACTransitDataHelper(theContext, this));
@@ -72,18 +72,43 @@ public class ACTransit extends NextBusAgency {
         }
 
         @Override
-        protected String getSanitizedStopName(String aStopTitle) {
-            return aStopTitle.replaceAll("Bart(\\sStation|\\sStat$)?", "BART").replaceAll("Av(\\s|$)", "Ave$1").replaceFirst("Wesleyway$", "Wesley Way").replaceFirst("\\(([^\\)]*)(?!\\))$", "($1)").replaceFirst("(Sc|Sch|Scho|Schoo)\\)", "School)").replaceAll("\\'S", "'s").replaceAll("P\\s\\&\\sR", "Park and Ride").replaceAll("Jrway", "Jr Way").replaceAll("Nr\\s", "Near ").replaceAll("U\\.s\\.", "US").replaceAll("Cr(\\)|\\s|$)", "Crossing$1").replaceAll("Hgh SChool", "High School").replaceAll("Oakland Technical Hi\\)", "Oakland Technical High School)").replaceAll("In Middle Of Traffic Is\\)", "Middle of Traffic Island)").replaceAll("Simmons Middl\\)", "Simmons Middle School)").replaceAll("(?i)Mlk\\s", "Martin Luther King ").replaceAll("(Embarcadero\\sW)(\\s|$)", "$1est$2").replaceAll("(\\(.*BART\\))$", "");
+        protected String getSanitizedStopName(final String aStopTitle) {
+            return aStopTitle
+                    .replaceAll("Bart(\\sStation|\\sStat$)?", "BART")
+                    .replaceAll("Av(\\s|$)", "Ave$1")
+                    .replaceFirst("Wesleyway$", "Wesley Way")
+                    .replaceFirst("\\(([^\\)]*)(?!\\))$", "($1)")
+                    .replaceFirst("(Sc|Sch|Scho|Schoo)\\)", "School)")
+                    .replaceAll("\\'S", "'s")
+                    .replaceAll("P\\s\\&\\sR", "Park and Ride")
+                    .replaceAll("Jrway", "Jr Way")
+                    .replaceAll("Nr\\s", "Near ")
+                    .replaceAll("U\\.s\\.", "US")
+                    .replaceAll("Cr(\\)|\\s|$)", "Crossing$1")
+                    .replaceAll("Hgh SChool", "High School")
+                    .replaceAll("Oakland Technical Hi\\)", "Oakland Technical High School)")
+                    .replaceAll("In Middle Of Traffic Is\\)", "Middle of Traffic Island)")
+                    .replaceAll("Simmons Middl\\)", "Simmons Middle School)")
+                    .replaceAll("(?i)Mlk\\s", "Martin Luther King ")
+                    .replaceAll("(Embarcadero\\sW)(\\s|$)", "$1est$2")
+                    .replaceAll("(\\(.*BART\\))$", "");
         }
 
         @Override
         protected String getSanitizedDirection(String aDirectionTitle) {
-            return aDirectionTitle.replaceAll("(Blvd|Ct|St|Ave|Dr|Rd|Fwy|Pkwy|Terr)\\.", "$1").replaceAll("U.C. Campus", "UC Berkeley").replaceAll("Tenth", "10th");
+            return aDirectionTitle
+                    .replaceAll("(Blvd|Ct|St|Ave|Dr|Rd|Fwy|Pkwy|Terr)\\.", "$1")
+                    .replaceAll("U.C. Campus", "UC Berkeley")
+                    .replaceAll("Tenth", "10th");
         }
 
         @Override
         protected String getTerseDirectionName(final String aDirectionTitle) {
-            return aDirectionTitle.replaceAll("^[Tt]o\\s", "").replaceAll("(?i)Counterclockwise", "CCW").replaceAll("(?i)Clockwise", "CW").replaceAll("Jc Penney", "JC Penney");
+            return aDirectionTitle
+                    .replaceAll("^[Tt]o\\s", "")
+                    .replaceAll("(?i)Counterclockwise", "CCW")
+                    .replaceAll("(?i)Clockwise", "CW")
+                    .replaceAll("Jc Penney", "JC Penney");
         }
     }
 }

@@ -38,7 +38,6 @@ public final class DataHelper extends CommonDBHelper {
 
     private final static String LOG_NAME = DataHelper.class.getCanonicalName();
     protected BARTAgency theAgency = null;
-    private ContentValues theRow;
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "bart_data.sqlite3";
     private static final String ROUTES_TABLE =
@@ -58,28 +57,27 @@ public final class DataHelper extends CommonDBHelper {
             + "lat INTEGER NOT NULL,"
             + "lng INTEGER NOT NULL);";
 
-    public DataHelper(Context aContext, BARTAgency anAgency) {
+    public DataHelper(final Context aContext, final BARTAgency anAgency) {
         super(aContext, DATABASE_NAME, null, DATABASE_VERSION);
         theAgency = anAgency;
-        theRow = new ContentValues();
     }
 
     @Override
-    public void onCreate(SQLiteDatabase aDatabase) {
+    public void onCreate(final SQLiteDatabase aDatabase) {
         aDatabase.execSQL(ROUTES_TABLE);
         aDatabase.execSQL(STATIONS_TABLE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
+    public void onUpgrade(final SQLiteDatabase aDatabase, final int anOldVersion, final int aNewVersion) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public final void addStation(ContentValues aStation) {
+    public final void addStation(final ContentValues aStation) {
         addRowToTable("stations", aStation);
     }
 
-    public final void addRoute(ContentValues aRoute) {
+    public final void addRoute(final ContentValues aRoute) {
         addRowToTable("routes", aRoute);
     }
 
@@ -126,29 +124,29 @@ public final class DataHelper extends CommonDBHelper {
     }
 
     @Override
-    public final Stop getStop(String aStationTag) {
+    public final Stop getStop(final String aStationTag) {
         checkReadDb();
         final Stop ret;
         String[] bindVars = {aStationTag};
-        Cursor theCursor = theReadDB.rawQuery(
+        Cursor ourCursor = theReadDB.rawQuery(
                 "SELECT name,tag,address,lat,lng FROM stations WHERE tag = ? LIMIT 1",
                 bindVars);
-        if (theCursor.getCount() != 1) {
+        if (ourCursor.getCount() != 1) {
             ret = null;
         } else {
-            theCursor.moveToFirst();
-            ret = getStationFromCursor(theCursor);
+            ourCursor.moveToFirst();
+            ret = getStationFromCursor(ourCursor);
         }
-        theCursor.close();
+        ourCursor.close();
         return ret;
     }
 
     private Stop getStationFromCursor(final Cursor aCursor) {
         final int lat = aCursor.getInt(3);
         final int lng = aCursor.getInt(4);
-        final GeoPoint thePoint = new GeoPoint(lat, lng);
-        final String name = aCursor.getString(0).replaceAll("/", " / ");
-        return new Stop(thePoint, name, aCursor.getString(1), aCursor.getString(2), theAgency.getClass());
+        final GeoPoint ourPoint = new GeoPoint(lat, lng);
+        final String ourStationName = aCursor.getString(0).replaceAll("/", " / ");
+        return new Stop(ourPoint, ourStationName, aCursor.getString(1), aCursor.getString(2), theAgency.getClass());
 
     }
 
@@ -157,13 +155,20 @@ public final class DataHelper extends CommonDBHelper {
         return DATABASE_NAME;
     }
 
+    /**
+     * We return an empty route because BART trains aren't really identified
+     * by route (which are either colors, private numbers, or the start/end station),
+     * but are almost exclusively referred to by terminus.
+     * @param aRouteTag
+     * @return An empty route.
+     */
     @Override
-    protected Route getRouteFromTag(String aRouteTag) {
+    protected Route getRouteFromTag(final String aRouteTag) {
         return new Route();
     }
 
     @Override
-    protected final Direction getDirectionForTag(String aDirectionTag) {
+    protected final Direction getDirectionForTag(final String aDirectionTag) {
         //final String anAgencyClassName, final String aRouteTag, final String aTag, final String aTitle) {
         return new Direction(theAgency.getClass().getCanonicalName(), null, aDirectionTag, aDirectionTag);
     }

@@ -39,15 +39,17 @@ public class PredictionTask extends AsyncTask<Stop,Prediction,Void> {
     }
 
     @Override
-    protected Void doInBackground(Stop... args) {
-        theListener.startPredictionFetch();
+    protected Void doInBackground(final Stop... someStops) {
+        if (theListener != null) {
+            theListener.startPredictionFetch();
+        }
         theDBHelper = new GTFSDataHelper(null, theAgency);
-        for (int i=0; i < args.length; i++) {
-            for (final Prediction aPrediction : theDBHelper.getPredictionsForStop(args[i])) {
+        for (int i=0; i < someStops.length; i++) {
+            for (final Prediction ourPrediction : theDBHelper.getPredictionsForStop(someStops[i])) {
                 if (isCancelled()) {
                     return null;
                 }
-                this.publishProgress(aPrediction);
+                publishProgress(ourPrediction);
             }
         }
         theDBHelper.cleanUp();
@@ -57,17 +59,22 @@ public class PredictionTask extends AsyncTask<Stop,Prediction,Void> {
 
 
     @Override
-    protected void onPostExecute(Void result) {
-        theListener.finishedPullingPredictions(isCancelled());
+    protected void onPostExecute(final Void aResult) {
+        if (theListener != null) {
+            theListener.finishedPullingPredictions(isCancelled());
+        }
     }
 
     @Override
-    protected void onProgressUpdate(Prediction... values) {
-        for (int i=0; i < values.length; i++) {
+    protected void onProgressUpdate(final Prediction... someProgress) {
+        if (theListener == null) {
+            return;
+        }
+        for (int i=0; i < someProgress.length; i++) {
             if (isCancelled()) {
                 return;
             }
-            theListener.addPrediction(values[i]);
+            theListener.addPrediction(someProgress[i]);
         }
     }
 

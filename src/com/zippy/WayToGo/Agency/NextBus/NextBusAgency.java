@@ -110,7 +110,7 @@ public abstract class NextBusAgency extends BaseAgency {
         return ourTask.execute(this);
     }
 
-    public synchronized final void setRouteFetchListener(NextBusRouteFetchListener aListener) {
+    public synchronized final void setRouteFetchListener(final NextBusRouteFetchListener aListener) {
         theRouteFetchListener = aListener;
     }
 

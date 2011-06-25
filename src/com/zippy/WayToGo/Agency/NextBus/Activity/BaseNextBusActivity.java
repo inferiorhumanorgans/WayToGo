@@ -46,7 +46,7 @@ public abstract class BaseNextBusActivity extends BaseActivity {
     protected ProgressDialog theProgressDialog;
 
     @Override
-    public void onCreate(Bundle aSavedInstanceState) {
+    public void onCreate(final Bundle aSavedInstanceState) {
         super.onCreate(aSavedInstanceState);
         Log.d(LOG_NAME, "onCreate");
         setContentView(R.layout.nextbus_new_layout);
@@ -121,7 +121,7 @@ public abstract class BaseNextBusActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem anItem) {
+    public boolean onOptionsItemSelected(final MenuItem anItem) {
         switch (anItem.getItemId()) {
             case R.id.menu_help:
                 final Intent ourIntent = new Intent("w2g.action.NextBus.DEBUG");

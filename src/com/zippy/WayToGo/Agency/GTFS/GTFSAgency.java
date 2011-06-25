@@ -48,20 +48,20 @@ abstract public class GTFSAgency extends BaseAgency {
         Log.d(LOG_NAME, "finish()");
 
         if (TRACE_FINISH) {
-            StackTraceElement[] theTrace = Thread.currentThread().getStackTrace();
+            StackTraceElement[] ourTrace = Thread.currentThread().getStackTrace();
             Log.d(LOG_NAME, "finish(): ");
             int i = 2;
-            if (theTrace.length < 2) {
+            if (ourTrace.length < 2) {
                 i = 0;
             }
-            for (; i < theTrace.length; i++) {
-                Log.d(LOG_NAME, theTrace[i].toString());
+            for (; i < ourTrace.length; i++) {
+                Log.d(LOG_NAME, ourTrace[i].toString());
             }
         }
 
         // Ideally this object will last the lifetime of the app so we should
         // never need to close the DB or destroy its helper.  Ideally.
-        if (true && (theDBHelper != null)) {
+        if (theDBHelper != null) {
             theDBHelper.cleanUp();
         }
     }
@@ -72,21 +72,21 @@ abstract public class GTFSAgency extends BaseAgency {
 
     @Override
     public final Intent getPredictionIntentForStop(final Stop aStop, final Direction aDirection) {
-        final Intent theIntent = new Intent("w2g.action.GTFS.PREDICTIONS_STOP_SPECIFIC");
-        theIntent.putExtra("stopName", aStop.getTheName());
-        theIntent.putExtra("stopId", aStop.getTheId());
+        final Intent ourIntent = new Intent("w2g.action.GTFS.PREDICTIONS_STOP_SPECIFIC");
+        ourIntent.putExtra("stopName", aStop.getTheName());
+        ourIntent.putExtra("stopId", aStop.getTheId());
         if (aDirection != null) {
-            theIntent.putExtra("directionTitle", aDirection.getTheTitle());
-            theIntent.putExtra("directionTag", aDirection.getTheTag());
+            ourIntent.putExtra("directionTitle", aDirection.getTheTitle());
+            ourIntent.putExtra("directionTag", aDirection.getTheTag());
         }
-        theIntent.putExtra("allRoutes", true);
-        theIntent.putExtra("AgencyClassName", this.getClass().getCanonicalName());
-        return theIntent;
+        ourIntent.putExtra("allRoutes", true);
+        ourIntent.putExtra("AgencyClassName", this.getClass().getCanonicalName());
+        return ourIntent;
 
     }
 
     @Override
-    public AsyncTask fetchPredictionsForStop(Stop aStop, PredictionListener aListener) {
+    public AsyncTask fetchPredictionsForStop(final Stop aStop, final PredictionListener aListener) {
         return new PredictionTask(this, aListener).execute(aStop);
     }
 }

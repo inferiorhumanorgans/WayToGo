@@ -37,7 +37,7 @@ public class LAMetro extends NextBusAgency {
     }
 
     @Override
-    public void init(Context aContext) {
+    public void init(final Context aContext) {
         super.init(aContext);
         if (theDBHelper == null) {
             theDBHelper = (NextBusDataHelper) setTheDBHelper(new LAMetroDataHelper(theContext, this));

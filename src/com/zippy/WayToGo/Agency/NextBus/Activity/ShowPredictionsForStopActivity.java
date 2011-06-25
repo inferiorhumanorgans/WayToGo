@@ -54,7 +54,7 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
     private final ArrayList<Prediction> thePredictions = new ArrayList<Prediction>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         Log.d(LOG_NAME, "onCreate");
         super.onCreate(savedInstanceState);
 
@@ -151,8 +151,8 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(final MenuItem anItem) {
+        switch (anItem.getItemId()) {
             case R.id.menu_bookmark_stop:
                 addBookmarkForStop(theStop);
                 return true;
@@ -162,7 +162,7 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
                 setup();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(anItem);
         }
     }
 
@@ -229,7 +229,7 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
         thePredictions.clear();
     }
 
-    private void displayAllPredictions(boolean includeLegit) {
+    private void displayAllPredictions(final boolean includeLegit) {
         ArrayList<PredictionGroup> thePredictionGroups = PredictionGroup.getPredictionGroups(thePredictions, includeLegit);
 
         if (wantAllRoutes && (thePredictionGroups.size() != 1)) {

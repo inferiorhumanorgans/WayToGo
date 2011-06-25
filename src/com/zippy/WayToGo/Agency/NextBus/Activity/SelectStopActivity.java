@@ -106,7 +106,7 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem anItem) {
+    public boolean onOptionsItemSelected(final MenuItem anItem) {
         switch (anItem.getItemId()) {
             case R.id.menu_current_location:
                 startLocationSearch();
@@ -117,7 +117,7 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem anItem) {
+    public boolean onContextItemSelected(final MenuItem anItem) {
         AdapterView.AdapterContextMenuInfo theInfo = (AdapterContextMenuInfo) anItem.getMenuInfo();
         final int ourListPosition = theInfo.position;
         final Stop ourStop = (Stop) theListAdapter.getItem(ourListPosition);
@@ -153,7 +153,7 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
      * If a list with distances from here is desired call it again with true.
      * @param useLocation Do we perform a location search nor not
      */
-    private void populateListView(boolean useLocation) {
+    private void populateListView(final boolean useLocation) {
         if (!useLocation) {
             for (final Stop aStop : theStops) {
                 theListAdapter.add(aStop);

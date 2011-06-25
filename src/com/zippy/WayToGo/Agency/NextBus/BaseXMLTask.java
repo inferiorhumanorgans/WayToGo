@@ -37,7 +37,7 @@ public abstract class BaseXMLTask extends AsyncTask<NextBusAgency, Object, Void>
     protected final SchemeRegistry registry = new SchemeRegistry();
 
     @Override
-    protected Void doInBackground(NextBusAgency... someAgencies) {
+    protected Void doInBackground(final NextBusAgency... someAgencies) {
         theAgency = someAgencies[0];
 
         HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
