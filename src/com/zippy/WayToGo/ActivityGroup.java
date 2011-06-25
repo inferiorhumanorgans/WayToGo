@@ -32,6 +32,7 @@ import android.view.Window;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
+import junit.framework.Assert;
 
 /**
  * The purpose of this Activity is to manage the activities in a tab.
@@ -56,10 +57,10 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * calls finish to finish the entire group.
      */
     @Override
-    public void finishFromChild(Activity child) {
+    public synchronized void finishFromChild(Activity child) {
         //Log.d(LOG_NAME, "finishFromChild(" + child + ") w/ list size: " + mIdList.size());
         //Log.d(LOG_NAME, "list is: " + mIdList.toString());
-        LocalActivityManager manager = getLocalActivityManager();
+        final LocalActivityManager manager = getLocalActivityManager();
         int index = mIdList.size() - 1;
 
         if (index < 1) {
@@ -67,13 +68,17 @@ public class ActivityGroup extends android.app.ActivityGroup {
             return;
         }
 
-        //manager.destroyActivity(mIdList.get(index), true);
         destroy(mIdList.get(index));
         mIdList.remove(index);
         index--;
         String lastId = mIdList.get(index);
-        Intent lastIntent = manager.getActivity(lastId).getIntent();
-        Window newWindow = manager.startActivity(lastId, lastIntent);
+
+        /* Something randomly disappeared on me, dunno what. */
+        Assert.assertEquals(false, manager == null);
+        Assert.assertEquals(false, manager.getActivity(lastId) == null);
+
+        final Intent lastIntent = manager.getActivity(lastId).getIntent();
+        final Window newWindow = manager.startActivity(lastId, lastIntent);
         setContentView(newWindow.getDecorView());
         newWindow.getDecorView().requestFocus();
     }
@@ -84,7 +89,7 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * @param intent The Intent describing the activity to be started.
      * @throws android.content.ActivityNotFoundException.
      */
-    public void startChildActivity(String Id, Intent intent) {
+    public synchronized void startChildActivity(String Id, Intent intent) {
         Log.d(LOG_NAME, "startChildActivity");
         LocalActivityManager manager = getLocalActivityManager();
 
@@ -108,7 +113,7 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * from calling their default KeyEvent.KEYCODE_BACK during onKeyDown.
      */
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public synchronized boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
             return true;
@@ -121,7 +126,7 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * so that all systems call onBackPressed().
      */
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public synchronized boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             onBackPressed();
             return true;
@@ -134,7 +139,7 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * Simply override and add this method.
      */
     @Override
-    public void onBackPressed() {
+    public synchronized void onBackPressed() {
         int length = mIdList.size();
         if (length > 1) {
             Activity current = getLocalActivityManager().getActivity(mIdList.get(length - 1));
@@ -145,7 +150,7 @@ public class ActivityGroup extends android.app.ActivityGroup {
     //http://stackoverflow.com/questions/1912947/android-start-user-defined-activity-on-search-button-pressed-handset
     //http://stackoverflow.com/questions/5461240/searchdialog-cannot-be-shown-within-activitygroup
     @Override
-    public boolean onSearchRequested() {
+    public synchronized boolean onSearchRequested() {
         return true;
     }
 
@@ -184,7 +189,7 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * @param id
      * @return
      */
-    private boolean destroy(String id) {
+    private synchronized boolean destroy(String id) {
         final LocalActivityManager activityManager = getLocalActivityManager();
         if (activityManager != null) {
             activityManager.destroyActivity(id, false);
