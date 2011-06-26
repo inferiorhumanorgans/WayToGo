@@ -238,7 +238,7 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
             // in that case.
             theIconView.setIconVisible(false);
             final int theLogo = theAgency().getLogo();
-            if (theLogo == -1) {
+            if (theLogo == 0) {
                 theIconView.setBadgeText(theAgency().getShortName());
             } else {
                 theIconView.setBadgeDrawable(theLogo);

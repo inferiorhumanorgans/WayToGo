@@ -19,6 +19,7 @@ package com.zippy.WayToGo.Agency;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.zippy.WayToGo.Agency.BART.DataHelper;
@@ -27,7 +28,7 @@ import com.zippy.WayToGo.Agency.BART.Station.StationActivity;
 import com.zippy.WayToGo.Agency.BART.Route.RouteTask;
 import com.zippy.WayToGo.Agency.BART.Station.StationTask;
 import com.zippy.WayToGo.BaseActivityGroup;
-import com.zippy.WayToGo.R;
+import com.zippy.WayToGo.TheApp;
 import com.zippy.WayToGo.Util.Direction;
 import com.zippy.WayToGo.Util.Stop;
 import java.util.Collection;
@@ -56,7 +57,14 @@ public final class BARTAgency extends BaseAgency {
         theURL = "http://www.bart.gov/";
         theShortName = "BART";
         theLongName = "BART";
-        theLogoId = R.drawable.bart;
+
+        /*
+         * We look it up manually in case we're running a build without icons.
+         * If that's the case we should use the agency's short name instead.
+         */
+        final Resources ourResources = TheApp.getContext().getResources();
+        theLogoId = ourResources.getIdentifier("drawable/bart", null, "com.zippy.WayToGo");
+
         if (theDBHelper == null) {
             theDBHelper = (DataHelper) setTheDBHelper(new DataHelper(theContext, this));
         }

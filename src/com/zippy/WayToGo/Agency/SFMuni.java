@@ -19,6 +19,7 @@ package com.zippy.WayToGo.Agency;
 import com.zippy.WayToGo.Agency.NextBus.NextBusAgency;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
 import com.zippy.WayToGo.Comparator.MuniRouteComparator;
@@ -26,7 +27,7 @@ import com.zippy.WayToGo.Agency.NextBus.Activity.SelectRouteActivity;
 import com.zippy.WayToGo.Agency.NextBus.NextBusDataHelper;
 import com.zippy.WayToGo.BaseActivityGroup;
 import com.zippy.WayToGo.ListAdapter.RouteBadgeAdapter;
-import com.zippy.WayToGo.R;
+import com.zippy.WayToGo.TheApp;
 import com.zippy.WayToGo.Util.LRUCache;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,7 +46,13 @@ public class SFMuni extends NextBusAgency {
         theURL = "http://www.sfmta.com";
         theShortName = "Muni";
         theLongName = "San Francisco Muni";
-        theLogoId = R.drawable.sfmuni;
+
+        /*
+         * We look it up manually in case we're running a build without icons.
+         * If that's the case we should use the agency's short name instead.
+         */
+        final Resources ourResources = TheApp.getContext().getResources();
+        theLogoId = ourResources.getIdentifier("drawable/sfmuni", null, "com.zippy.WayToGo");
     }
 
     @Override

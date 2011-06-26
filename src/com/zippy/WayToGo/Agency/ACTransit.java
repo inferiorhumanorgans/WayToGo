@@ -19,10 +19,11 @@ package com.zippy.WayToGo.Agency;
 import com.zippy.WayToGo.Agency.NextBus.NextBusAgency;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import com.zippy.WayToGo.Agency.NextBus.Activity.SelectRouteActivity;
 import com.zippy.WayToGo.Agency.NextBus.NextBusDataHelper;
 import com.zippy.WayToGo.BaseActivityGroup;
-import com.zippy.WayToGo.R;
+import com.zippy.WayToGo.TheApp;
 
 /**
  *
@@ -36,7 +37,13 @@ public class ACTransit extends NextBusAgency {
         theURL = "http://www.actransit.org/";
         theShortName = "AC Transit";
         theLongName = "AC Transit";
-        theLogoId = R.drawable.actransit;
+
+        /*
+         * We look it up manually in case we're running a build without icons.
+         * If that's the case we should use the agency's short name instead.
+         */
+        final Resources ourResources = TheApp.getContext().getResources();
+        theLogoId = ourResources.getIdentifier("drawable/actransit", null, "com.zippy.WayToGo");
     }
 
     @Override

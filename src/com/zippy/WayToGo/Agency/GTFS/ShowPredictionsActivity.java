@@ -84,7 +84,7 @@ public class ShowPredictionsActivity extends GTFSActivity implements PredictionL
 
         if (wantAllRoutes && (ourPredictionGroups.size() > 1)) {
             final int theLogo = theAgency().getLogo();
-            if (theLogo == -1) {
+            if (theLogo == 0) {
                 theIconView.setBadgeText(theAgency().getShortName());
             } else {
                 theIconView.setBadgeDrawable(theLogo);

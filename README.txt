@@ -18,7 +18,8 @@ SLF4J:
 	<http://www.slf4j.org/>
 	MIT License
 
-Agency logos are needed.  Currently these are:
+Agency logos are optional, but potentially desirable.  If a logo is missing,
+the agency's short name will be substituted in its stead.  Currently these are:
 
 actransit.png
 caltrain.png

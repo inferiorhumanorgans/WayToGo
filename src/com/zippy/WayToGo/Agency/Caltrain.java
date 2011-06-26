@@ -20,10 +20,11 @@ package com.zippy.WayToGo.Agency;
 
 import com.zippy.WayToGo.Agency.GTFS.GTFSAgency;
 import android.content.Intent;
+import android.content.res.Resources;
 import com.zippy.WayToGo.Agency.GTFS.SelectRouteActivity;
 import com.zippy.WayToGo.Agency.GTFS.SelectStopActivity;
 import com.zippy.WayToGo.BaseActivityGroup;
-import com.zippy.WayToGo.R;
+import com.zippy.WayToGo.TheApp;
 
 /**
  *
@@ -37,7 +38,13 @@ public class Caltrain extends GTFSAgency {
         theURL = "http://www.caltrain.com";
         theShortName = "Caltrain";
         theLongName = "Caltrain";
-        theLogoId = R.drawable.caltrain;
+
+        /*
+         * We look it up manually in case we're running a build without icons.
+         * If that's the case we should use the agency's short name instead.
+         */
+        final Resources ourResources = TheApp.getContext().getResources();
+        theLogoId = ourResources.getIdentifier("drawable/caltrain", null, "com.zippy.WayToGo");
     }
 
     public static class ActivityGroup extends BaseActivityGroup {

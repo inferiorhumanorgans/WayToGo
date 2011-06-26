@@ -93,13 +93,15 @@ public class BookmarkAdapter extends ArrayAdapter<Bookmark> implements Predictio
 
         BaseAgency ourAgency = theBookmark.getTheStop().agency();
 
-        int ourDrawable = -1;
+        final int ourDrawableId;
         if (ourAgency != null) {
-            ourDrawable = ourAgency.getLogo();
+            ourDrawableId = ourAgency.getLogo();
+        } else {
+            ourDrawableId = 0;
         }
 
-        if (ourDrawable != -1) {
-            v.setBadgeDrawable(ourDrawable);
+        if (ourDrawableId != 0) {
+            v.setBadgeDrawable(ourDrawableId);
         } else {
             v.setBadgeText(ourAgency.getShortName());
         }

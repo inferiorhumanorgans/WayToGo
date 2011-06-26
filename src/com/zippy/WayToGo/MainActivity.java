@@ -145,7 +145,12 @@ public class MainActivity extends TabActivity implements CopyDBListener, OnShare
             intent = new Intent(this, intentClass);
             spec = mTabHost.newTabSpec(aTabType);
             spec.setContent(intent);
-            spec.setIndicator(ourAgency.getShortName(), TheApp.getResDrawable(ourAgency.getLogo()));
+            final int ourLogoId = ourAgency.getLogo();
+            if (ourLogoId == 0) {
+                spec.setIndicator(ourAgency.getShortName());
+            } else {
+                spec.setIndicator(ourAgency.getShortName(), TheApp.getResDrawable(ourLogoId));
+            }
             mTabHost.addTab(spec);
         } else if (aTabType.equals("Map")) {
             addMapTab();
