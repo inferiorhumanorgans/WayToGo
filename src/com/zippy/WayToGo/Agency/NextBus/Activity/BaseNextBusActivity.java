@@ -87,8 +87,8 @@ public abstract class BaseNextBusActivity extends BaseActivity {
 
 
             if (theRoute != null) {
-                theIconView.setBadgeText(theRoute.getTheRawTag());
-                theIconView.setText(theRoute.getTheName());
+                theIconView.setBadgeText(theRoute.rawTag());
+                theIconView.setText(theRoute.name());
             }
         } else {
             theAgency().init(getDialogContext());

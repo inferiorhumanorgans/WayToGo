@@ -34,52 +34,50 @@ import java.util.logging.Logger;
  */
 public class CopyDBTask extends AsyncTask<String, Integer, Boolean> {
 
-    final private Context theContext;
-    final private CopyDBListener theListener;
+    private final CopyDBListener theListener;
     private static final String LOG_NAME = CopyDBTask.class.getCanonicalName();
 
-    public CopyDBTask(Context aContext, CopyDBListener aListener) {
+    public CopyDBTask(final CopyDBListener aListener) {
         super();
         theListener = aListener;
-        theContext = aContext;
     }
 
     @Override
-    protected Boolean doInBackground(String... theArgs) {
+    protected Boolean doInBackground(final String... someArgs) {
         Boolean ret;
-        Log.d(LOG_NAME, "doInBackground called with: " + theArgs[0]);
+        Log.d(LOG_NAME, "doInBackground called with: " + someArgs[0]);
         try {
             //Open your local db as the input stream
-            InputStream myInput = TheApp.getContext().getAssets().open("databases" + File.separator + theArgs[0]);
+            InputStream ourInputStream = TheApp.getContext().getAssets().open("databases" + File.separator + someArgs[0]);
 
             // Path to the just created empty db
-            String outFileName = TheApp.getQualifiedDatabasePathName(theArgs[0]);
+            String ourOutputFilename = TheApp.getQualifiedDatabasePathName(someArgs[0]);
 
             // Make sure that we actually have a database directory in the first
             // place, as Android won't do this when we request the sanctioned
             // DB path
-            final File theOutputFile = new File(outFileName).getParentFile();
-            theOutputFile.mkdirs();
+            final File ourOutputFile = new File(ourOutputFilename).getParentFile();
+            ourOutputFile.mkdirs();
 
-            Log.d(LOG_NAME, "Trying to copy to: " + outFileName);
+            Log.d(LOG_NAME, "Trying to copy to: " + ourOutputFilename);
 
             //Open the empty db as the output stream
-            OutputStream myOutput = new FileOutputStream(outFileName);
+            final OutputStream ourOutputStream = new FileOutputStream(ourOutputFilename);
 
             //transfer bytes from the inputfile to the outputfile
-            byte[] buffer = new byte[1024];
+            final byte[] buffer = new byte[1024];
             int length;
-            while ((length = myInput.read(buffer)) > 0) {
-                myOutput.write(buffer, 0, length);
+            while ((length = ourInputStream.read(buffer)) > 0) {
+                ourOutputStream.write(buffer, 0, length);
 //                this.publishProgress(new Integer(length));
             }
             Log.d(LOG_NAME, "DONE!");
 
             //Close the streams
-            myOutput.flush();
+            ourOutputStream.flush();
             Log.d(LOG_NAME, "DONE FLUSHING");
-            myOutput.close();
-            myInput.close();
+            ourOutputStream.close();
+            ourInputStream.close();
             ret = Boolean.valueOf(true);
         } catch (IOException theEx) {
             Log.e(LOG_NAME, "Task Failed");
@@ -90,7 +88,7 @@ public class CopyDBTask extends AsyncTask<String, Integer, Boolean> {
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(final Boolean result) {
         if (theListener != null) {
             theListener.copyingFinished();
         }

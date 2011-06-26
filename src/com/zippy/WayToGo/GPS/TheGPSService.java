@@ -30,9 +30,9 @@ import com.zippy.WayToGo.TheApp;
  * Our runs in the background and polls the GPS provider service.
  * @author alex
  */
-public final class Service extends android.app.Service {
+public final class TheGPSService extends android.app.Service {
 
-    private final static String LOG_NAME = Service.class.getCanonicalName();
+    private final static String LOG_NAME = TheGPSService.class.getCanonicalName();
     private volatile static Intent theIntent = null;
     private HandlerThread theGPSThread;
     private static LocationManager lm;
@@ -49,8 +49,8 @@ public final class Service extends android.app.Service {
 
     public final class LocalBinder extends Binder {
 
-        public Service getService() {
-            return Service.this;
+        public TheGPSService getService() {
+            return TheGPSService.this;
         }
     }
 
@@ -60,7 +60,7 @@ public final class Service extends android.app.Service {
      */
     public static Intent getIntent() {
         if (theIntent == null) {
-            theIntent = new Intent(TheApp.getContext(), Service.class);
+            theIntent = new Intent(TheApp.getContext(), TheGPSService.class);
         }
         return theIntent;
     }
@@ -106,7 +106,7 @@ public final class Service extends android.app.Service {
 
     @Override
     public void onCreate() {
-        //Log.d(LOG_NAME, "Service created");
+        //Log.d(LOG_NAME, "TheGPSService created");
     }
 
     @Override

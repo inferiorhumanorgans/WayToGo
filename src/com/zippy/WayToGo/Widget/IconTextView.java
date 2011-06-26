@@ -38,25 +38,25 @@ import com.zippy.WayToGo.R;
 public class IconTextView extends LinearLayout {
 
     private static final String LOG_NAME = IconTextView.class.getCanonicalName();
-    final private TextView theTextView;
-    final private BadgeView theSurface;
-    final protected Context theContext;
+    private final TextView theTextView;
+    private final BadgeView theSurface;
+    protected final Context theContext;
     TextAppearanceSpan theSmallStyle;
 
-    public IconTextView(Context aContext) {
+    public IconTextView(final Context aContext) {
         this(aContext, null);
     }
 
-    public IconTextView(Context aContext, AttributeSet anAttributeSet) {
+    public IconTextView(final Context aContext, final AttributeSet anAttributeSet) {
         this(aContext, anAttributeSet, R.layout.widget_icon_text_view);
     }
 
-    public IconTextView(Context aContext, AttributeSet anAttributeSet, int aLayoutId) {
+    public IconTextView(final Context aContext, final AttributeSet anAttributeSet, final int aLayoutId) {
         super(aContext, anAttributeSet);
         theContext = aContext;
         setOrientation(HORIZONTAL);
-        LayoutInflater inflater = (LayoutInflater) aContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(aLayoutId, this, true);
+        final LayoutInflater ourInflater = (LayoutInflater) aContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ourInflater.inflate(aLayoutId, this, true);
         theTextView = (TextView) findViewById(R.id.ictv_textview);
         theSurface = (BadgeView) findViewById(R.id.ictv_surface_view);
         //theBigStyle = new TextAppearanceSpan(theContext, android.R.style.TextAppearance_Medium);
@@ -64,35 +64,34 @@ public class IconTextView extends LinearLayout {
 
     }
 
-    public final void setTheAgency(BaseAgency theAgency) {
-        theSurface.setTheAgency(theAgency);
+    public final void setTheAgency(final BaseAgency anAgency) {
+        theSurface.setTheAgency(anAgency);
     }
 
-    public final void setBadgeText(String aBadge) {
+    public final void setBadgeText(final String aBadge) {
         theSurface.setText(aBadge);
     }
 
-    public final void setBadgeDrawable(Drawable aDrawable) {
+    public final void setBadgeDrawable(final Drawable aDrawable) {
         theSurface.setDrawable(aDrawable);
     }
 
-    public final void setBadgeDrawable(int anId) {
+    public final void setBadgeDrawable(final int anId) {
         theSurface.setDrawable(anId);
     }
 
-    public final void setText(String someText) {
+    public final void setText(final String someText) {
         SpannableString str = new SpannableString(someText);
 
-        int start = someText.indexOf("\n");
+        final int start = someText.indexOf("\n");
 
         if (start != -1) {
             str.setSpan(theSmallStyle, start, someText.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         theTextView.setText(str, BufferType.SPANNABLE);
-
     }
 
-    public final void setIconVisible(boolean isVisible) {
+    public final void setIconVisible(final boolean isVisible) {
         theSurface.setVisibility(isVisible ? VISIBLE : GONE);
         theTextView.setGravity(
                 isVisible ? Gravity.CENTER_VERTICAL : (Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL));

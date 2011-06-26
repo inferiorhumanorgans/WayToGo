@@ -177,7 +177,7 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
         theExpandableListAdapter.clear();
 
         theIconView.setIconVisible(false);
-        theIconView.setText(theStation.getTheName() + "\n" + theStation.getTheAddress());
+        theIconView.setText(theStation.name() + "\n" + theStation.address());
 
         theProgressDialog = new ProgressDialog(getDialogContext());
         theProgressDialog.setCancelable(true);
@@ -202,10 +202,10 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
     }
 
     protected static String formatPrediction(final Prediction aPrediction, final boolean groupByPlatform) {
-        final int ourMinutes = aPrediction.getMinutes();
-        final String ourNumberOfCars = aPrediction.getTheFlags();
-        final String ourPlatform = aPrediction.getTheSubStopTag().toLowerCase();
-        final String ourDestination = aPrediction.getDirectionTag();
+        final int ourMinutes = aPrediction.minutes();
+        final String ourNumberOfCars = aPrediction.flags();
+        final String ourPlatform = aPrediction.subStopTag().toLowerCase();
+        final String ourDestination = aPrediction.directionTag();
         String theText;
         if (!groupByPlatform) {
             switch (ourMinutes) {
@@ -256,10 +256,10 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
         for (String ourDestination : thePredictionGroups.keySet()) {
             ArrayList<Prediction> somePredictions = thePredictionGroups.get(ourDestination);
             for (final Prediction ourPrediction : somePredictions) {
-                if (!ourPredictions.containsKey(ourPrediction.getTheSubStopTag())) {
-                    ourPredictions.put(ourPrediction.getTheSubStopTag(), new ArrayList<Prediction>());
+                if (!ourPredictions.containsKey(ourPrediction.subStopTag())) {
+                    ourPredictions.put(ourPrediction.subStopTag(), new ArrayList<Prediction>());
                 }
-                ourPredictions.get(ourPrediction.getTheSubStopTag()).add(ourPrediction);
+                ourPredictions.get(ourPrediction.subStopTag()).add(ourPrediction);
             }
         }
 
@@ -323,7 +323,7 @@ public class ShowPredictionsForStationActivity extends BaseBARTActivity implemen
         }
 
         //        Log.i(LOG_NAME, "ADDING PREDICTION for: " + aPrediction.getAsString("destination"));
-        String theDestination = aPrediction.getDirectionTag();
+        String theDestination = aPrediction.directionTag();
         if (!thePredictionGroups.containsKey(theDestination)) {
             //Log.i(LOG_NAME, "Creating group of: " + theDestination);
             thePredictionGroups.put(theDestination, new ArrayList<Prediction>());

@@ -27,7 +27,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author alex
  */
 public class XMLHandler extends DefaultHandler {
-    private static String LOG_NAME = XMLHandler.class.getSimpleName();
+    private static String LOG_NAME = XMLHandler.class.getCanonicalName();
     private XMLInterface theTV;
 
     private static final String ROUTE_TAG = "route";

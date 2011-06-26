@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import junit.framework.Assert;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.ClientConnectionManager;
@@ -41,11 +42,12 @@ import org.xml.sax.*;
  */
 public class RouteListXMLTask extends BaseXMLTask implements RouteListNotification {
 
-    private static final String LOG_NAME = "RouteListXMLTask";
-    private RouteListXMLHandler dataHandler = new RouteListXMLHandler(this);
+    private static final String LOG_NAME = RouteListXMLTask.class.getCanonicalName();
+    private RouteListXMLHandler theDataHandler = new RouteListXMLHandler(this);
 
     @Override
-    protected Void doInBackground(NextBusAgency... someAgencies) {
+    protected Void doInBackground(final NextBusAgency... someAgencies) {
+        Assert.assertEquals(1, someAgencies.length);
         super.doInBackground(someAgencies);
         String theNBName = theAgency.getNextBusName();
 
@@ -76,7 +78,7 @@ public class RouteListXMLTask extends BaseXMLTask implements RouteListNotificati
 
             XMLReader xr = sp.getXMLReader();
 
-            xr.setContentHandler(dataHandler);
+            xr.setContentHandler(theDataHandler);
 
             xr.parse(new InputSource(content));
 
@@ -96,7 +98,7 @@ public class RouteListXMLTask extends BaseXMLTask implements RouteListNotificati
     @Override
     protected void onPostExecute(Void result) {
         if (!isCancelled()) {
-            theAgency.setNumberOfExpectedRoutes(dataHandler.numberOfRoutes);
+            theAgency.setNumberOfExpectedRoutes(theDataHandler.numberOfRoutes);
         }
         theAgency.finishedParsingRouteList();
         theAgency.fetchRouteConfig();

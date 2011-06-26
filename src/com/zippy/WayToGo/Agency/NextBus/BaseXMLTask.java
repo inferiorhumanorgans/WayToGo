@@ -17,6 +17,7 @@
 package com.zippy.WayToGo.Agency.NextBus;
 
 import android.os.AsyncTask;
+import junit.framework.Assert;
 import org.apache.http.HttpVersion;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -38,6 +39,7 @@ public abstract class BaseXMLTask extends AsyncTask<NextBusAgency, Object, Void>
 
     @Override
     protected Void doInBackground(final NextBusAgency... someAgencies) {
+        Assert.assertEquals(1, someAgencies.length);
         theAgency = someAgencies[0];
 
         HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);

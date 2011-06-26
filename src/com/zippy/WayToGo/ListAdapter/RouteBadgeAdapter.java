@@ -70,8 +70,8 @@ public class RouteBadgeAdapter extends ArrayAdapter<Route> {
         }
         Route ourRoute = theItems.get(position);
 
-        v.setBadgeText(ourRoute.getTheRawTag());
-        v.setText(ourRoute.getTheName());
+        v.setBadgeText(ourRoute.rawTag());
+        v.setText(ourRoute.name());
         return v;
     }
 }

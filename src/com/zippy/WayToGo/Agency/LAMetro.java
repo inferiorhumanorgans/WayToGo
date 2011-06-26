@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import com.zippy.WayToGo.Agency.NextBus.Activity.SelectRouteActivity;
 import com.zippy.WayToGo.Agency.NextBus.NextBusDataHelper;
+import com.zippy.WayToGo.BaseActivityGroup;
 
 /**
  *
@@ -44,7 +45,7 @@ public class LAMetro extends NextBusAgency {
         }
     }
 
-    public static class ActivityGroup extends com.zippy.WayToGo.ActivityGroup {
+    public static class ActivityGroup extends BaseActivityGroup {
 
         @Override
         public void onResume() {
@@ -72,8 +73,33 @@ public class LAMetro extends NextBusAgency {
 
         @Override
         protected String getSanitizedRouteName(final String aRouteTitle) {
-            final String correctedStr = aRouteTitle.replaceFirst("[0-9a-zA-Z]*\\s", "").replaceAll("\\s?-\\s?", "-").replaceAll("(Csu|Cal\\. State Univ\\.)", "CSU").replaceAll("(Dtwn|Dwntwn)", "Downtown").replaceAll("Hllywd", "Hollywood").replaceAll("Tran Ctr", "Transit Center").replaceAll("Ctr", "Center").replaceAll("Cty", "City").replaceAll("Hwy", "Highway").replaceAll("Pk", "Park").replaceAll("Rck", "Rock").replaceAll("Rd", "Road").replaceAll("Hawthrn", "Hawthorne").replaceAll("Av(\\s|$|-)", "Ave$1").replaceAll("Sta(\\s|$|-)", "Station$1").replaceAll("Jpl", "Jet Propulsion Laboratory").replaceAll("S Madre", "Sierra Madre").replaceAll("Sm Vlla", "Sierra Madre Villa").replaceAll("Lax", "LAX").replaceAll("Sbay Gallria", "S. Bay Galleria Transit Center").replaceAll("Latijera", "La Tijera").replaceAll("W Hollywood", "West Hollywood");
-            final String mainRoutes = correctedStr.replaceFirst("(?im)(\\s)via.*", "").replaceAll("(?m)-", "\n").replaceAll("(?m)I\n([0-9]{1,3}) Fwy", "I-$1 Freeway");
+            final String correctedStr = aRouteTitle
+                    .replaceFirst("[0-9a-zA-Z]*\\s", "")
+                    .replaceAll("\\s?-\\s?", "-")
+                    .replaceAll("(Csu|Cal\\. State Univ\\.)", "CSU")
+                    .replaceAll("(Dtwn|Dwntwn)", "Downtown")
+                    .replaceAll("Hllywd", "Hollywood")
+                    .replaceAll("Tran Ctr", "Transit Center")
+                    .replaceAll("Ctr", "Center")
+                    .replaceAll("Cty", "City")
+                    .replaceAll("Hwy", "Highway")
+                    .replaceAll("Pk", "Park")
+                    .replaceAll("Rck", "Rock")
+                    .replaceAll("Rd", "Road")
+                    .replaceAll("Hawthrn", "Hawthorne")
+                    .replaceAll("Av(\\s|$|-)", "Ave$1")
+                    .replaceAll("Sta(\\s|$|-)", "Station$1")
+                    .replaceAll("Jpl", "Jet Propulsion Laboratory")
+                    .replaceAll("S Madre", "Sierra Madre")
+                    .replaceAll("Sm Vlla", "Sierra Madre Villa")
+                    .replaceAll("Lax", "LAX")
+                    .replaceAll("Sbay Gallria", "S. Bay Galleria Transit Center")
+                    .replaceAll("Latijera", "La Tijera")
+                    .replaceAll("W Hollywood", "West Hollywood");
+            final String mainRoutes = correctedStr
+                    .replaceFirst("(?im)(\\s)via.*", "")
+                    .replaceAll("(?m)-", "\n")
+                    .replaceAll("(?m)I\n([0-9]{1,3}) Fwy", "I-$1 Freeway");
             final String viaRoutes;
             if (correctedStr.contains("Via")) {
                 viaRoutes = "\n" + correctedStr.replaceAll("\\s?-\\s?", " / ").replaceFirst("(?i)^.*\\svia", "Via");

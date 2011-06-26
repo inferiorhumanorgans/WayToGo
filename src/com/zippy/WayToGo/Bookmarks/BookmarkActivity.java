@@ -16,7 +16,7 @@
  */
 package com.zippy.WayToGo.Bookmarks;
 
-import com.zippy.WayToGo.ActivityGroup;
+import com.zippy.WayToGo.BaseActivityGroup;
 import com.zippy.WayToGo.GPS.LocationFinder;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -55,7 +55,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
 
     private static final String LOG_NAME = BookmarkActivity.class.getCanonicalName();
     private BookmarksDataHelper theDB;
-    final private HashMap<Bookmark, Intent> theIntents = new HashMap<Bookmark, Intent>();
+    private final HashMap<Bookmark, Intent> theIntents = new HashMap<Bookmark, Intent>();
     private BookmarkAdapter theAdapter = null;
     private LocationFinder theFinder;
     private ProgressDialog theProgressDialog = null;
@@ -65,7 +65,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
     /**
      * How long to display each prediction summary on a stop.
      */
-    static private final int CYCLE_PREDICTIONS_DURATION = 1000 * 4;
+    private static final int CYCLE_PREDICTIONS_DURATION = 1000 * 4;
     private final ArrayList<AsyncTask> pendingTasks = new ArrayList<AsyncTask>(TheApp.theAgencies.size());
     private long lastLocationUpdate = 0;
     private Location theLocation = null;
@@ -157,8 +157,8 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
         killRefreshPredictionTimer();
         getParent().setProgressBarIndeterminateVisibility(false);
 
-        for (final BaseAgency anAgency : TheApp.theAgencies.values()) {
-            anAgency.finish();
+        for (final BaseAgency ourAgency : TheApp.theAgencies.values()) {
+            ourAgency.finish();
         }
     }
 
@@ -172,15 +172,15 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu aMenu, View aView, ContextMenuInfo someMenuInfo) {
+    public void onCreateContextMenu(final ContextMenu aMenu, final View aView, final ContextMenuInfo someMenuInfo) {
         super.onCreateContextMenu(aMenu, aView, someMenuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bookmark_context, aMenu);
+        final MenuInflater ourInflater = getMenuInflater();
+        ourInflater.inflate(R.menu.bookmark_context, aMenu);
         aMenu.setHeaderTitle(TheApp.getResString(R.string.context_title_generic));
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem anItem) {
+    public boolean onContextItemSelected(final MenuItem anItem) {
         AdapterView.AdapterContextMenuInfo theInfo = (AdapterContextMenuInfo) anItem.getMenuInfo();
         final int position = theInfo.position;
         final Bookmark theBookmark = theAdapter.getItem(position);
@@ -191,7 +191,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
                 this.startActivity(myIntent);
                 return true;
             case R.id.context_directions_to:
-                Stop.getWalkingDirectionsTo(this, theBookmark.getTheStop());
+                Stop.launchWalkingDirectionsTo(this, theBookmark.getTheStop());
                 return true;
             case R.id.context_view_bookmark_prediction:
                 showPredictionsForItem(position);
@@ -206,7 +206,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
     }
 
     @Override
-    protected void onListItemClick(ListView aListView, View aView, int position, long anId) {
+    protected void onListItemClick(final ListView aListView, final View aView, final int position, final long anId) {
         showPredictionsForItem(position);
     }
 
@@ -218,9 +218,9 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
          * just use that to find the right activity group, and launch on that
          * otherwise just launch on the top level.
          */
-        MainActivity theMain = (MainActivity) getParent();
+        final MainActivity ourMainActivity = (MainActivity) getParent();
         Log.d(LOG_NAME, "Bookmark class is: " + theBookmark.getTheAgencyClass());
-        com.zippy.WayToGo.ActivityGroup ag = (ActivityGroup) theMain.getActivityForTabTag(theBookmark.getTheAgencyClass());
+        BaseActivityGroup ag = (BaseActivityGroup) ourMainActivity.getActivityForTabTag(theBookmark.getTheAgencyClass());
         if (ag != null) {
             Log.d(LOG_NAME, "Creating on activity group: " + ag);
             ag.startChildActivity(theIntents.get(theBookmark).toUri(0), theIntents.get(theBookmark));
@@ -232,7 +232,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
     }
 
     @Override
-    public void onLocationFound(Location aLocation) {
+    public void onLocationFound(final Location aLocation) {
         if (theProgressDialog != null) {
             theProgressDialog.dismiss();
             theProgressDialog = null;
@@ -254,7 +254,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
     }
 
     private void setupRotateTimer() {
-        boolean wantRefresh = TheApp.getPrefs().getBoolean(TheApp.getResString(R.string.pref_auto_refresh_key), TheApp.getResBool(R.bool.pref_auto_refresh_default));
+        final boolean wantRefresh = TheApp.getPrefs().getBoolean(TheApp.getResString(R.string.pref_auto_refresh_key), TheApp.getResBool(R.bool.pref_auto_refresh_default));
         if (wantRefresh) {
             Log.i(LOG_NAME, "We're gonna set up a timer");
             theRotateTimer = new Timer();
@@ -347,10 +347,10 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
                 if (getParent() != null) {
                     getParent().setProgressBarIndeterminateVisibility(true);
                 }
-                for (Bookmark aBookmark : theAdapter.getArray()) {
-                    final Stop ourStop = aBookmark.getTheStop();
+                for (final Bookmark ourBookmark : theAdapter.getArray()) {
+                    final Stop ourStop = ourBookmark.getTheStop();
                     Log.d(LOG_NAME, "Adding task");
-                    pendingTasks.add(ourStop.getTheAgency().fetchPredictionsForStop(ourStop, theAdapter));
+                    pendingTasks.add(ourStop.agency().fetchPredictionsForStop(ourStop, theAdapter));
                 }
 
                 // If we've no tasks, turn off the progress indicator

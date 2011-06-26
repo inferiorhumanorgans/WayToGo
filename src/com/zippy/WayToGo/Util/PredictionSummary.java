@@ -33,15 +33,15 @@ public final class PredictionSummary {
     protected final Context theContext;
     protected final int[] theMinutes;
     protected String theFlags;
-    final protected boolean isEmpty;
+    protected final boolean isEmpty;
     private SpannableString theSpannable;
     protected final String theDirectionTitle;
 
-    public PredictionSummary(Context aContext) {
+    public PredictionSummary(final Context aContext) {
         this(aContext, null);
     }
 
-    public PredictionSummary(Context aContext, final PredictionGroup aPredictionGroup) {
+    public PredictionSummary(final Context aContext, final PredictionGroup aPredictionGroup) {
         theContext = aContext;
         if (aPredictionGroup == null) {
             theMinutes = null;
@@ -49,18 +49,18 @@ public final class PredictionSummary {
             isEmpty = true;
             theFlags = "";
         } else {
-            final BaseAgency ourAgency = aPredictionGroup.getTheStop().getTheAgency();
-            final Route theRoute = ourAgency.getRouteFromTag(aPredictionGroup.getTheRouteTag());
-            //final String theStopTag = aPredictionGroup.getTheStopTag();
-            final Direction theDirection = ourAgency.getDirectionFromTag(aPredictionGroup.getTheDirectionTag());
-            final String theDirectionName = theDirection.getTheShortTitle();
+            final BaseAgency ourAgency = aPredictionGroup.stop().agency();
+            final Route theRoute = ourAgency.getRouteFromTag(aPredictionGroup.routeTag());
+            //final String theStopTag = aPredictionGroup.stopTag();
+            final Direction theDirection = ourAgency.getDirectionFromTag(aPredictionGroup.directionTag());
+            final String theDirectionName = theDirection.shortTitle();
 
-            theMinutes = aPredictionGroup.getTheMinutes();
+            theMinutes = aPredictionGroup.minutes();
             
             if (theRoute.isEmpty()) {
                 theDirectionTitle = "To " + theDirectionName;
             } else {
-                theDirectionTitle = theRoute.getTheTag() + " to " + theDirectionName;
+                theDirectionTitle = theRoute.tag() + " to " + theDirectionName;
             }
 
             isEmpty = false;
@@ -68,11 +68,11 @@ public final class PredictionSummary {
         }
     }
 
-    public String getTheFlags() {
+    public String flags() {
         return theFlags;
     }
 
-    public void setTheFlags(String someFlags) {
+    public void setFlags(final String someFlags) {
         theSpannable = null;
         if (someFlags == null) {
             theFlags = "";
@@ -85,7 +85,7 @@ public final class PredictionSummary {
         return isEmpty;
     }
 
-    private String getMinutesString() {
+    private String minutesString() {
         StringBuilder sb = new StringBuilder();
         for (final int minutes : theMinutes) {
             switch (minutes) {
@@ -116,7 +116,7 @@ public final class PredictionSummary {
         return sb.toString();
     }
 
-    public final SpannableString toText() {
+    public final SpannableString toStyledText() {
         if (theSpannable != null) {
             return theSpannable;
         }
@@ -130,12 +130,12 @@ public final class PredictionSummary {
             return theSpannable;
         }
         if (theFlags.equals("legit")) {
-            theSpannable = new SpannableString(getMinutesString());
+            theSpannable = new SpannableString(minutesString());
             theSpannable.setSpan(theBigStyle, 0, theSpannable.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             return theSpannable;
         } else {
             final StringBuilder sb = new StringBuilder();
-            sb.append(getMinutesString());
+            sb.append(minutesString());
             int startOfSmall = sb.length();
             sb.append("\n");
             sb.append(theDirectionTitle);

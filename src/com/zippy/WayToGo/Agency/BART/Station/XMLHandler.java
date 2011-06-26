@@ -29,7 +29,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XMLHandler extends DefaultHandler {
 
-    private static String LOG_NAME = XMLHandler.class.getSimpleName();
+    private static String LOG_NAME = XMLHandler.class.getCanonicalName();
     private XMLInterface theListener;
     private static final String STATION_TAG = "station";
     private static final String NAME_TAG = "name";
@@ -39,7 +39,7 @@ public class XMLHandler extends DefaultHandler {
     private static final String NAME_COLUMN = "name";
     private static final String TAG_COLUMN = "tag";
     private static final String ADDRESS_COLUMN = "address";
-    private ContentValues theValues = new ContentValues();
+    private final ContentValues theValues = new ContentValues();
     private boolean inStation = false, inName = false, inAbbr = false;
     private boolean inCity = false, inAddress = false;
     private StringBuilder theInnerText = null;

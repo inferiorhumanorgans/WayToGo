@@ -46,7 +46,7 @@ resDialogText = R.string.acra_dialog_text,
 resDialogCommentPrompt = R.string.acra_dialog_comment_prompt)
 public final class TheApp extends Application {
 
-    private static final String LOG_NAME = TheApp.class.getSimpleName();
+    private static final String LOG_NAME = TheApp.class.getCanonicalName();
     private static TheApp instance;
     private static String theAppName = null;
     private static final double KM_FACTOR = 1 / 1000.00;

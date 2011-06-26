@@ -41,41 +41,41 @@ import org.xml.sax.*;
 public class RouteConfigXMLTask extends BaseXMLTask implements RouteConfigNotification {
 
     private int numberOfCompletedRoutes = 0;
-    private static String LOG_NAME = "RouteConfigXMLTask";
+    private static final String LOG_NAME = RouteConfigXMLTask.class.getCanonicalName();
     private static final String NB_URL_BASE = "http://webservices.nextbus.com/service/publicXMLFeed?command=routeConfig&verbose=true&a=";
 
     @Override
-    protected Void doInBackground(NextBusAgency... someAgencies) {
+    protected Void doInBackground(final NextBusAgency... someAgencies) {
         super.doInBackground(someAgencies);
 
-        String theNBName = theAgency.getNextBusName();
+        final String ourNBName = theAgency.getNextBusName();
 
-        Log.i(LOG_NAME, "Trying to get the route config for " + theNBName + ".");
-        Log.i(LOG_NAME, "Fetching from: " + NB_URL_BASE + theNBName);
-        InputStream content = null;
-        ClientConnectionManager connman = new ThreadSafeClientConnManager(params, registry);
-        DefaultHttpClient hc = new DefaultHttpClient(connman, params);
+        Log.i(LOG_NAME, "Trying to get the route config for " + ourNBName + ".");
+        Log.i(LOG_NAME, "Fetching from: " + NB_URL_BASE + ourNBName);
+        InputStream ourInputStream = null;
+        ClientConnectionManager ourConnectionManager = new ThreadSafeClientConnManager(params, registry);
+        DefaultHttpClient ourHttpClient = new DefaultHttpClient(ourConnectionManager, params);
 
-        HttpGet getRequest = new HttpGet(NB_URL_BASE + Uri.encode(theNBName));
+        final HttpGet getRequest = new HttpGet(NB_URL_BASE + Uri.encode(ourNBName));
         try {
-            content = hc.execute(getRequest).getEntity().getContent();
+            ourInputStream = ourHttpClient.execute(getRequest).getEntity().getContent();
         } catch (ClientProtocolException ex) {
             Logger.getLogger(LOG_NAME).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(LOG_NAME).log(Level.SEVERE, null, ex);
         }
-        Log.i(LOG_NAME, "Done with the route config for " + theNBName + ".");
+        Log.i(LOG_NAME, "Done with the route config for " + ourNBName + ".");
 
         try {
-            SAXParserFactory spf = SAXParserFactory.newInstance();
-            SAXParser sp = spf.newSAXParser();
+            SAXParserFactory ourParserFactory = SAXParserFactory.newInstance();
+            SAXParser ourParser = ourParserFactory.newSAXParser();
 
-            XMLReader xr = sp.getXMLReader();
+            XMLReader xr = ourParser.getXMLReader();
 
-            RouteConfigXMLHandler dataHandler = new RouteConfigXMLHandler(this);
-            xr.setContentHandler(dataHandler);
+            RouteConfigXMLHandler ourDataHandler = new RouteConfigXMLHandler(this);
+            xr.setContentHandler(ourDataHandler);
 
-            xr.parse(new InputSource(content));
+            xr.parse(new InputSource(ourInputStream));
 
         } catch (ParserConfigurationException pce) {
             Log.e(LOG_NAME + "SAX XML", "sax parse error", pce);
@@ -86,7 +86,7 @@ public class RouteConfigXMLTask extends BaseXMLTask implements RouteConfigNotifi
         } catch (IOException ioe) {
             Log.e(LOG_NAME + "SAX XML", "sax parse io error", ioe);
         }
-        Log.i(LOG_NAME + "SAX XML", "Done parsing XML for " + theNBName);
+        Log.i(LOG_NAME + "SAX XML", "Done parsing XML for " + ourNBName);
         return null;
     }
 
@@ -96,37 +96,37 @@ public class RouteConfigXMLTask extends BaseXMLTask implements RouteConfigNotifi
     }
 
     @Override
-    protected void onProgressUpdate(Object... values) {
+    protected void onProgressUpdate(final Object... someValues) {
         theAgency.bumpProgress();
         return;
     }
 
     @Override
-    protected void onPostExecute(Void result) {
+    protected void onPostExecute(final Void aResult) {
         theAgency.finishedParsingRouteConfig();
     }
 
-    public void addRoute(ContentValues aRoute) {
+    public void addRoute(final ContentValues aRoute) {
         theAgency.addRoute(aRoute);
     }
 
-    public void addStopToRoute(String aRouteTag, String aStopTag) {
+    public void addStopToRoute(final String aRouteTag, final String aStopTag) {
         theAgency.addStopToRoute(aRouteTag, aStopTag);
     }
 
-    public void addDirection(ContentValues aDirection) {
+    public void addDirection(final ContentValues aDirection) {
         theAgency.addDirection(aDirection);
     }
 
-    public void addStopToDirection(String aDirectionTag, String aStopTag, int aPosition) {
+    public void addStopToDirection(final String aDirectionTag, final String aStopTag, final int aPosition) {
         theAgency.addStopToDirection(aDirectionTag, aStopTag, aPosition);
     }
 
-    public void addStop(ContentValues aStop) {
+    public void addStop(final ContentValues aStop) {
         theAgency.addStop(aStop);
     }
 
-    public void addPath(ContentValues aPath) {
+    public void addPath(final ContentValues aPath) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

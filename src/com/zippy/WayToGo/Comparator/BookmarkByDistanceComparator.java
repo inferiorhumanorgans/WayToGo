@@ -49,8 +49,8 @@ public final class BookmarkByDistanceComparator implements Comparator<Bookmark> 
         final float i1, i2;
         final GeoPoint point1, point2;
 
-        point1 = o1.getTheStop().getThePoint();
-        point2 = o2.getTheStop().getThePoint();
+        point1 = o1.getTheStop().point();
+        point2 = o2.getTheStop().point();
 
         Location.distanceBetween(
                 point1.getLatitudeE6()/1E6, point1.getLongitudeE6()/1E6,

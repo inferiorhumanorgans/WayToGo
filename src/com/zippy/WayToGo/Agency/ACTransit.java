@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import com.zippy.WayToGo.Agency.NextBus.Activity.SelectRouteActivity;
 import com.zippy.WayToGo.Agency.NextBus.NextBusDataHelper;
+import com.zippy.WayToGo.BaseActivityGroup;
 import com.zippy.WayToGo.R;
 
 /**
@@ -46,7 +47,7 @@ public class ACTransit extends NextBusAgency {
         }
     }
 
-    public static class ActivityGroup extends com.zippy.WayToGo.ActivityGroup {
+    public static class ActivityGroup extends BaseActivityGroup {
 
         @Override
         public void onResume() {

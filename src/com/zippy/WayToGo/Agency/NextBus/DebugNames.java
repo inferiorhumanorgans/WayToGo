@@ -65,22 +65,22 @@ public class DebugNames extends BaseNextBusActivity {
 
 
         for (final Route aRoute : ourRoutes) {
-            theExListAdapter.addItemToGroup("Routes", aRoute.getTheName());
+            theExListAdapter.addItemToGroup("Routes", aRoute.name());
         }
 
         final ArrayList<Stop> ourStops = theAgency().getStops(null);
         Collections.sort(ourStops, StopComparator.STOP_ORDER);
         for (final Stop ourStop : ourStops) {
-            theExListAdapter.addItemToGroup("Stops", ourStop.getTheName());
+            theExListAdapter.addItemToGroup("Stops", ourStop.name());
         }
 
         for (final Direction ourDirection : ourDirections) {
-            if (ourDirection.getTheTitle().startsWith("Inbound")) {
-                theExListAdapter.addItemToGroup("Directions Inbound", ourDirection.getTheTitle());
-            } else if (ourDirection.getTheTitle().startsWith("Outbound")) {
-                theExListAdapter.addItemToGroup("Directions Outbound", ourDirection.getTheTitle());
+            if (ourDirection.title().startsWith("Inbound")) {
+                theExListAdapter.addItemToGroup("Directions Inbound", ourDirection.title());
+            } else if (ourDirection.title().startsWith("Outbound")) {
+                theExListAdapter.addItemToGroup("Directions Outbound", ourDirection.title());
             } else {
-                theExListAdapter.addItemToGroup("Directions", ourDirection.getTheTitle());
+                theExListAdapter.addItemToGroup("Directions", ourDirection.title());
             }
         }
     }

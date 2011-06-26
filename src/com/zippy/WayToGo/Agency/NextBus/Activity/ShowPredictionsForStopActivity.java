@@ -136,9 +136,9 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
         theListAdapter.clear();
 
         if (wantAllRoutes) {
-            theIconView.setText(theStop.getTheShortName());
+            theIconView.setText(theStop.shortName());
         } else {
-            theIconView.setText(theStop.getTheShortName() + "\nTo " + theDirection.getTheShortTitle());
+            theIconView.setText(theStop.shortName() + "\nTo " + theDirection.shortTitle());
         }
 
         theProgressDialog = new ProgressDialog(getDialogContext());
@@ -167,19 +167,19 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
     }
 
     public synchronized void addPrediction(final Prediction aPrediction) {
-        Prediction thePrediction = new Prediction(theAgency(), aPrediction.getRouteTag(), theStop.getTheId(), aPrediction.getDirectionTag(), aPrediction.getMinutes());
+        Prediction thePrediction = new Prediction(theAgency(), aPrediction.routeTag(), theStop.stopId(), aPrediction.directionTag(), aPrediction.minutes());
 
-        final Direction otherDirection = theAgency().getDirectionFromTag(thePrediction.getDirectionTag());
+        final Direction otherDirection = theAgency().getDirectionFromTag(thePrediction.directionTag());
 
         if (!wantAllRoutes) {
-            Assert.assertEquals(false, theRoute == null);
-            Assert.assertEquals(false, thePrediction == null);
-            if (!theRoute.getTheRawTag().equals(thePrediction.getRouteTag())) {
-                thePrediction.setTheFlags("differentRoute");
+            Assert.assertNotNull(theRoute);
+            Assert.assertNotNull(thePrediction);
+            if (!theRoute.rawTag().equals(thePrediction.routeTag())) {
+                thePrediction.setFlags("differentRoute");
             } else if ((theDirection != null) && !theDirection.equals(otherDirection)) {
-                thePrediction.setTheFlags("differentDir");
+                thePrediction.setFlags("differentDir");
             } else {
-                thePrediction.setTheFlags("legit");
+                thePrediction.setFlags("legit");
             }
         }
         //Log.i(LOG_NAME, "Got a prediction for: " + thePrediction.toString());
@@ -207,7 +207,7 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
             final ArrayList<Prediction> theLegit = new ArrayList<Prediction>(thePredictions.size());
 
             for (Prediction aPrediction : thePredictions) {
-                if (aPrediction.getTheFlags().equals("legit")) {
+                if (aPrediction.flags().equals("legit")) {
                     theLegit.add(aPrediction);
                 }
             }
@@ -215,7 +215,7 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
                 //BaseAgency anAgency, String aRouteTag, String aStopTag, String aDirectionTag, final ArrayList<Integer> aMinutes
                 ArrayList<PredictionGroup> foo = PredictionGroup.getPredictionGroups(theLegit, true);
                 final PredictionSummary theSummary = new PredictionSummary(getDialogContext(), foo.get(0));
-                theSummary.setTheFlags("legit");
+                theSummary.setFlags("legit");
                 theListAdapter.add(theSummary);
             }
         }
@@ -248,12 +248,12 @@ public class ShowPredictionsForStopActivity extends BaseNextBusActivity implemen
         for (final PredictionGroup aGroup : thePredictionGroups) {
             final PredictionSummary theSummary = new PredictionSummary(getDialogContext(), aGroup);
             if ((thePredictionGroups.size() == 1) && wantAllRoutes) {
-                theSummary.setTheFlags("legit");
-                final Stop ourStop = theAgency().getStop(aGroup.getTheStopTag());
-                final Direction ourDirection = theAgency().getDirectionFromTag(aGroup.getTheDirectionTag());
-                theIconView.setText(ourStop.getTheShortName() + "\nTo " + ourDirection.getTheShortTitle());
+                theSummary.setFlags("legit");
+                final Stop ourStop = theAgency().getStop(aGroup.stopTag());
+                final Direction ourDirection = theAgency().getDirectionFromTag(aGroup.directionTag());
+                theIconView.setText(ourStop.shortName() + "\nTo " + ourDirection.shortTitle());
                 //theIconView.setText(theStop.first) + "\n" + theAgency.getTerseDirectionName(theDirection.first));
-                theIconView.setBadgeText(aGroup.getTheRouteTag());
+                theIconView.setBadgeText(aGroup.routeTag());
                 theIconView.invalidate();
             }
 

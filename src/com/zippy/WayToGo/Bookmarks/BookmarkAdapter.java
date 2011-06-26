@@ -91,7 +91,7 @@ public class BookmarkAdapter extends ArrayAdapter<Bookmark> implements Predictio
         }
         Bookmark theBookmark = theItems.get(position);
 
-        BaseAgency ourAgency = theBookmark.getTheStop().getTheAgency();
+        BaseAgency ourAgency = theBookmark.getTheStop().agency();
 
         int ourDrawable = -1;
         if (ourAgency != null) {
@@ -106,7 +106,7 @@ public class BookmarkAdapter extends ArrayAdapter<Bookmark> implements Predictio
 
         String theDistanceString = "";
         if (theLocation != null) {
-            GeoPoint thePoint = theBookmark.getTheStop().getThePoint();
+            GeoPoint thePoint = theBookmark.getTheStop().point();
             double lat = thePoint.getLatitudeE6() / 1E6;
             double lng = thePoint.getLongitudeE6() / 1E6;
             float[] results = new float[1];
@@ -115,7 +115,7 @@ public class BookmarkAdapter extends ArrayAdapter<Bookmark> implements Predictio
         }
 
         final StringBuilder thePredictionString = new StringBuilder();
-        //Log.d(LOG_NAME, "Refreshing: " + theBookmark.getTheStop().getGUID());
+        //Log.d(LOG_NAME, "Refreshing: " + theBookmark.stop().getGUID());
         if (thePredictionGroups.containsKey(theBookmark.getTheStop().getGUID())) {
             //Log.d(LOG_NAME, "FOUND SOMETHING");
             synchronized (lock1) {
@@ -125,14 +125,14 @@ public class BookmarkAdapter extends ArrayAdapter<Bookmark> implements Predictio
                 }
                 final PredictionGroup aPredictionGroup = ourGroups.get(0);
                 final PredictionSummary summary = new PredictionSummary(theContext, aPredictionGroup);
-                thePredictionString.append(summary.toText().toString());
+                thePredictionString.append(summary.toStyledText().toString());
             }
         } else {
             //Log.d(LOG_NAME, "Found nothing");
         }
 
         final StringBuilder theText = new StringBuilder();
-        theText.append(theBookmark.getTheStop().getTheName());
+        theText.append(theBookmark.getTheStop().name());
         if (thePredictionString.toString().length() != 0) {
             theText.append("\n");
             theText.append(thePredictionString.toString());
@@ -149,9 +149,11 @@ public class BookmarkAdapter extends ArrayAdapter<Bookmark> implements Predictio
 
     public synchronized void startPredictionFetch() {
         if (pendingPredictions == 0) {
-            thePredictions.clear();
-            for (final ArrayList<PredictionGroup> someGroups : thePredictionGroups.values()) {
-                someGroups.clear();
+            synchronized (lock1) {
+                thePredictions.clear();
+                for (final ArrayList<PredictionGroup> someGroups : thePredictionGroups.values()) {
+                    someGroups.clear();
+                }
             }
         }
         pendingPredictions++;
@@ -177,10 +179,10 @@ public class BookmarkAdapter extends ArrayAdapter<Bookmark> implements Predictio
         synchronized (lock1) {
             final ArrayList<PredictionGroup> rawGroups = PredictionGroup.getPredictionGroups(thePredictions);
             for (final PredictionGroup aGroup : rawGroups) {
-                if (!thePredictionGroups.containsKey(aGroup.getTheUID())) {
-                    thePredictionGroups.put(aGroup.getTheUID(), new ArrayList<PredictionGroup>());
+                if (!thePredictionGroups.containsKey(aGroup.getUID())) {
+                    thePredictionGroups.put(aGroup.getUID(), new ArrayList<PredictionGroup>());
                 }
-                thePredictionGroups.get(aGroup.getTheUID()).add(aGroup);
+                thePredictionGroups.get(aGroup.getUID()).add(aGroup);
             }
             for (final ArrayList<PredictionGroup> somePredictionGroups : thePredictionGroups.values()) {
                 Collections.sort(somePredictionGroups, PredictionGroupComparator.PREDICTION_GROUP_ORDER);

@@ -31,14 +31,14 @@ import com.zippy.WayToGo.TheApp;
  */
 public class PredictionActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
-    private final static String LOG_NAME = PreferenceActivity.class.getSimpleName();
-    private SharedPreferences prefs;
+    private final static String LOG_NAME = PreferenceActivity.class.getCanonicalName();
+    private SharedPreferences thePrefs;
     private PreferenceScreen theScreen;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        prefs = (SharedPreferences) PreferenceManager.getDefaultSharedPreferences(this);
+    protected void onCreate(final Bundle aSavedInstanceState) {
+        super.onCreate(aSavedInstanceState);
+        thePrefs = (SharedPreferences) PreferenceManager.getDefaultSharedPreferences(this);
         addPreferencesFromResource(R.layout.activity_prefs_predictions);
     }
 
@@ -46,7 +46,7 @@ public class PredictionActivity extends PreferenceActivity implements OnSharedPr
     protected void onPause() {
         super.onPause();
 
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
+        thePrefs.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class PredictionActivity extends PreferenceActivity implements OnSharedPr
         updatePredictionsPerStop();
         updateReloadIntervalSummary();
         // Set up a listener whenever a key changes
-        prefs.registerOnSharedPreferenceChangeListener(this);
+        thePrefs.registerOnSharedPreferenceChangeListener(this);
     }
 
     public void onSharedPreferenceChanged(SharedPreferences someSharedPreferences, String aKey) {
@@ -71,18 +71,18 @@ public class PredictionActivity extends PreferenceActivity implements OnSharedPr
     }
 
     private void updatePredictionsPerStop() {
-        final String theKey = TheApp.getResString(R.string.pref_predictions_per_stop_key);
-        final String theDefault = TheApp.getResString(R.string.pref_predictions_per_stop_default);
-        final String theCount = prefs.getString(theKey, theDefault);
-        final String theSummary = TheApp.getResString(R.string.pref_predictions_per_stop_summary) + "  Currently: " + theCount;
-        theScreen.findPreference(theKey).setSummary(theSummary);
+        final String ourKey = TheApp.getResString(R.string.pref_predictions_per_stop_key);
+        final String ourDefault = TheApp.getResString(R.string.pref_predictions_per_stop_default);
+        final String ourCount = thePrefs.getString(ourKey, ourDefault);
+        final String ourSummary = TheApp.getResString(R.string.pref_predictions_per_stop_summary) + "  Currently: " + ourCount;
+        theScreen.findPreference(ourKey).setSummary(ourSummary);
     }
 
     private void updateReloadIntervalSummary() {
-        final String theKey = TheApp.getResString(R.string.pref_auto_refresh_delay_key);
-        final String theDefault = TheApp.getResString(R.string.pref_auto_refresh_delay_default);
-        final String theCount = prefs.getString(theKey, theDefault);
-        final String theSummary = TheApp.getResString(R.string.pref_auto_refresh_delay_summary) + "  Currently: " + theCount + " seconds";
-        theScreen.findPreference(theKey).setSummary(theSummary);
+        final String ourKey = TheApp.getResString(R.string.pref_auto_refresh_delay_key);
+        final String ourDefault = TheApp.getResString(R.string.pref_auto_refresh_delay_default);
+        final String ourCount = thePrefs.getString(ourKey, ourDefault);
+        final String ourSummary = TheApp.getResString(R.string.pref_auto_refresh_delay_summary) + "  Currently: " + ourCount + " seconds";
+        theScreen.findPreference(ourKey).setSummary(ourSummary);
     }
 }

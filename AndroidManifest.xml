@@ -211,6 +211,6 @@
         </activity>
 
         <!-- GPS Service -->
-        <service android:enabled="true" android:name=".GPS.Service" />
+        <service android:enabled="true" android:name=".GPS.TheGPSService" />
     </application>
 </manifest> 

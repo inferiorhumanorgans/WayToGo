@@ -135,7 +135,7 @@ public abstract class BaseActivity extends Activity implements AdapterView.OnIte
         switch (anItem.getItemId()) {
             case R.id.context_add_bookmark:
                 final BookmarksDataHelper theDB = new BookmarksDataHelper(this);
-                final StringPair theBookmark = new StringPair(theAgency().getClass().getCanonicalName(), ourStop.getTheId());
+                final StringPair theBookmark = new StringPair(theAgency().getClass().getCanonicalName(), ourStop.stopId());
                 theDB.addBookmark(theBookmark);
                 theDB.cleanUp();
                 return true;
@@ -148,10 +148,10 @@ public abstract class BaseActivity extends Activity implements AdapterView.OnIte
                 showPredictionsForStop(ourStop);
                 return true;
             case R.id.context_directions_to:
-                Assert.assertEquals(false, getDialogContext() == null);
-                Assert.assertEquals(false, theAgency() == null);
-                Assert.assertEquals(false, ourStop == null);
-                Stop.getWalkingDirectionsTo(getDialogContext(), ourStop);
+                Assert.assertNotNull(getDialogContext());
+                Assert.assertNotNull(theAgency());
+                Assert.assertNotNull(ourStop);
+                Stop.launchWalkingDirectionsTo(getDialogContext(), ourStop);
                 return true;
             default:
                 return super.onContextItemSelected(anItem);
@@ -160,12 +160,6 @@ public abstract class BaseActivity extends Activity implements AdapterView.OnIte
 
     protected void showPredictionsForStop(final Stop aStop) {
         launchIntent(theAgency().getPredictionIntentForStop(aStop));
-    }
-
-    @Deprecated
-    protected void showPredictionsForStopAndDirection(final Stop aStop, final StringPair aDirectionPair) {
-        final Direction ourDirection = theAgency().getDirectionFromTag(aDirectionPair.second);
-        showPredictionsForStopAndDirection(aStop, ourDirection);
     }
 
     protected void showPredictionsForStopAndDirection(final Stop aStop, final Direction aDirection) {
@@ -181,7 +175,7 @@ public abstract class BaseActivity extends Activity implements AdapterView.OnIte
         theAgency().finish();
         anIntent.putExtra("AgencyClassName", theAgencyClassName);
 
-        ActivityGroup ag = (ActivityGroup) getParent();
+        BaseActivityGroup ag = (BaseActivityGroup) getParent();
         if (ag != null) {
             Log.d(LOG_NAME, "Launching in an activity group");
             ag.startChildActivity(anIntent.toURI(), anIntent);
@@ -204,17 +198,9 @@ public abstract class BaseActivity extends Activity implements AdapterView.OnIte
         return ourContext;
     }
 
-    @Deprecated
-    protected final void addBookmarkForPair(final StringPair aStopPair) {
-        final BookmarksDataHelper theDB = new BookmarksDataHelper(this);
-        final StringPair theBookmark = new StringPair(theAgencyClassName, aStopPair.second);
-        theDB.addBookmark(theBookmark);
-        theDB.cleanUp();
-    }
-
     protected final void addBookmarkForStop(final Stop aStop) {
         final BookmarksDataHelper theDB = new BookmarksDataHelper(this);
-        final StringPair theBookmark = new StringPair(aStop.getTheAgency().getClass().getCanonicalName(), aStop.getTheId());
+        final StringPair theBookmark = new StringPair(aStop.agency().getClass().getCanonicalName(), aStop.stopId());
         theDB.addBookmark(theBookmark);
         theDB.cleanUp();
     }

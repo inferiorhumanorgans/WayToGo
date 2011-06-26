@@ -56,24 +56,24 @@ public class SelectDirectionActivity extends BaseNextBusActivity {
             return;
         }
 
-        final ArrayList<Direction> ourDirections = theAgency().getDirectionsForRouteTag(theRoute.getTheRawTag());
+        final ArrayList<Direction> ourDirections = theAgency().getDirectionsForRouteTag(theRoute.rawTag());
 
         final HashMap<String, Integer> ourDirectionTitles = new HashMap<String, Integer>(ourDirections.size());
         for (final Direction aDirection : ourDirections) {
-            if (!ourDirectionTitles.containsKey(aDirection.getTheTitle())) {
-                ourDirectionTitles.put(aDirection.getTheTitle(), Integer.valueOf(1));
+            if (!ourDirectionTitles.containsKey(aDirection.title())) {
+                ourDirectionTitles.put(aDirection.title(), Integer.valueOf(1));
             } else {
-                Integer theIncrement = ourDirectionTitles.get(aDirection.getTheTitle()).intValue() + 1;
-                ourDirectionTitles.put(aDirection.getTheTitle(), theIncrement);
+                Integer theIncrement = ourDirectionTitles.get(aDirection.title()).intValue() + 1;
+                ourDirectionTitles.put(aDirection.title(), theIncrement);
             }
         }
         for (final Direction aDirection : ourDirections) {
-            if (ourDirectionTitles.get(aDirection.getTheTitle()) > 1) {
-                Stop theFirstStop = theAgency().getStopAtIndexOnDirection(aDirection.getTheTag(), 0);
-                String theTitle = aDirection.getTheTitle() + "\nvia " + theFirstStop.getTheName();
-                theListAdapter.add(new StringPair(theTitle, aDirection.getTheTag()));
+            if (ourDirectionTitles.get(aDirection.title()) > 1) {
+                Stop theFirstStop = theAgency().getStopAtIndexOnDirection(aDirection.tag(), 0);
+                String theTitle = aDirection.title() + "\nvia " + theFirstStop.name();
+                theListAdapter.add(new StringPair(theTitle, aDirection.tag()));
             } else {
-                theListAdapter.add(new StringPair(aDirection.getTheTitle(), aDirection.getTheTag()));
+                theListAdapter.add(new StringPair(aDirection.title(), aDirection.tag()));
             }
         }
     }
@@ -84,7 +84,7 @@ public class SelectDirectionActivity extends BaseNextBusActivity {
         final PairListAdapter ourAdapter = (PairListAdapter) aListView.getAdapter();
         final StringPair ourDirection = ourAdapter.getItem(aPosition);
         final Intent ourIntent = new Intent(this, SelectStopActivity.class);
-        ourIntent.putExtra("currentRouteTag", theRoute.getTheRawTag());
+        ourIntent.putExtra("currentRouteTag", theRoute.rawTag());
         ourIntent.putExtra("directionTag", ourDirection.second);
         Log.d(LOG_NAME, ourIntent.toURI());
         launchIntent(ourIntent);

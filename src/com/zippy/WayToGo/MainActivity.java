@@ -193,14 +193,14 @@ public class MainActivity extends TabActivity implements CopyDBListener, OnShare
         // listener in onPause and unregister on onResume, because we only care
         // about changes made behind our back?
         //TheApp.getPrefs().unregisterOnSharedPreferenceChangeListener(this);
-        stopService(new Intent(this, com.zippy.WayToGo.GPS.Service.class));
+        stopService(new Intent(this, com.zippy.WayToGo.GPS.TheGPSService.class));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         TheApp.getPrefs().unregisterOnSharedPreferenceChangeListener(this);
-        stopService(new Intent(this, com.zippy.WayToGo.GPS.Service.class));
+        stopService(new Intent(this, com.zippy.WayToGo.GPS.TheGPSService.class));
     }
 
     @Override
@@ -211,7 +211,7 @@ public class MainActivity extends TabActivity implements CopyDBListener, OnShare
             resetTabs();
         }
         mTabHost.getTabContentView().requestFocus();
-        startService(new Intent(this, com.zippy.WayToGo.GPS.Service.class));
+        startService(new Intent(this, com.zippy.WayToGo.GPS.TheGPSService.class));
 
         pendingAgencies.clear();
         for (final Entry<String, BaseAgency> anEntry : TheApp.theAgencies.entrySet()) {

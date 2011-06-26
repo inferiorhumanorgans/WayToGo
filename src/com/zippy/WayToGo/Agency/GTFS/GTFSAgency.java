@@ -73,11 +73,11 @@ abstract public class GTFSAgency extends BaseAgency {
     @Override
     public final Intent getPredictionIntentForStop(final Stop aStop, final Direction aDirection) {
         final Intent ourIntent = new Intent("w2g.action.GTFS.PREDICTIONS_STOP_SPECIFIC");
-        ourIntent.putExtra("stopName", aStop.getTheName());
-        ourIntent.putExtra("stopId", aStop.getTheId());
+        ourIntent.putExtra("stopName", aStop.name());
+        ourIntent.putExtra("stopId", aStop.stopId());
         if (aDirection != null) {
-            ourIntent.putExtra("directionTitle", aDirection.getTheTitle());
-            ourIntent.putExtra("directionTag", aDirection.getTheTag());
+            ourIntent.putExtra("directionTitle", aDirection.title());
+            ourIntent.putExtra("directionTag", aDirection.tag());
         }
         ourIntent.putExtra("allRoutes", true);
         ourIntent.putExtra("AgencyClassName", this.getClass().getCanonicalName());

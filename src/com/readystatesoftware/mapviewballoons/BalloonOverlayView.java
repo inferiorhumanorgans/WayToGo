@@ -107,7 +107,7 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
         if (item.getTitle() != null) {
             title.setVisibility(VISIBLE);
             if (theStopItem != null) {
-                title.setText(theStopItem.getTheStop().getTheAgency().getShortName());
+                title.setText(theStopItem.getTheStop().agency().getShortName());
             } else {
                 title.setText(item.getTitle());
             }
@@ -117,7 +117,7 @@ public class BalloonOverlayView<Item extends OverlayItem> extends FrameLayout {
         if (item.getSnippet() != null) {
             snippet.setVisibility(VISIBLE);
             if (theStopItem != null) {
-                snippet.setText(theStopItem.getTheStop().getTheName());
+                snippet.setText(theStopItem.getTheStop().name());
             } else {
                 snippet.setText(item.getSnippet());
             }

@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import com.zippy.WayToGo.Agency.NextBus.Activity.SelectRouteActivity;
 import com.zippy.WayToGo.Agency.NextBus.NextBusDataHelper;
+import com.zippy.WayToGo.BaseActivityGroup;
 import com.zippy.WayToGo.ListAdapter.RouteBadgeAdapter;
 import com.zippy.WayToGo.Comparator.MBTARouteComparator;
 import java.util.Collections;
@@ -52,7 +53,7 @@ public class MBTA extends NextBusAgency {
         }
     }
 
-    public static class ActivityGroup extends com.zippy.WayToGo.ActivityGroup {
+    public static class ActivityGroup extends BaseActivityGroup {
 
         @Override
         public void onResume() {

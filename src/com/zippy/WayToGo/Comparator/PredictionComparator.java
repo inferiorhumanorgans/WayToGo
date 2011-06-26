@@ -33,8 +33,8 @@ public final class PredictionComparator implements Comparator<Prediction> {
         // EQUAL = 0;
         // AFTER = 1;
 
-        final int i1 = o1.getMinutes();
-        final int i2 = o2.getMinutes();
+        final int i1 = o1.minutes();
+        final int i2 = o2.minutes();
         if (i1 < i2) {
             return -1;
         }

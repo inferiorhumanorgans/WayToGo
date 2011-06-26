@@ -39,14 +39,14 @@ import junit.framework.Assert;
  * Note: Child Activities can handle Key Presses before they are seen here.
  * @author Eric Harlow
  */
-public class ActivityGroup extends android.app.ActivityGroup {
+public class BaseActivityGroup extends android.app.ActivityGroup {
 
-    private static String LOG_NAME = ActivityGroup.class.getCanonicalName();
-    final protected ArrayList<String> mIdList = new ArrayList<String>();
+    private static String LOG_NAME = BaseActivityGroup.class.getCanonicalName();
+    protected final ArrayList<String> mIdList = new ArrayList<String>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(final Bundle aSavedInstanceState) {
+        super.onCreate(aSavedInstanceState);
     }
 
     /**
@@ -57,7 +57,7 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * calls finish to finish the entire group.
      */
     @Override
-    public synchronized void finishFromChild(Activity child) {
+    public synchronized void finishFromChild(final Activity aChild) {
         //Log.d(LOG_NAME, "finishFromChild(" + child + ") w/ list size: " + mIdList.size());
         //Log.d(LOG_NAME, "list is: " + mIdList.toString());
         final LocalActivityManager manager = getLocalActivityManager();
@@ -74,8 +74,8 @@ public class ActivityGroup extends android.app.ActivityGroup {
         String lastId = mIdList.get(index);
 
         /* Something randomly disappeared on me, dunno what. */
-        Assert.assertEquals(false, manager == null);
-        Assert.assertEquals(false, manager.getActivity(lastId) == null);
+        Assert.assertNotNull(manager);
+        Assert.assertNotNull(manager.getActivity(lastId));
 
         final Intent lastIntent = manager.getActivity(lastId).getIntent();
         final Window newWindow = manager.startActivity(lastId, lastIntent);
@@ -85,17 +85,17 @@ public class ActivityGroup extends android.app.ActivityGroup {
 
     /**
      * Starts an Activity as a child Activity to this.
-     * @param Id Unique identifier of the activity to be started.
-     * @param intent The Intent describing the activity to be started.
+     * @param anId Unique identifier of the activity to be started.
+     * @param anIntent The Intent describing the activity to be started.
      * @throws android.content.ActivityNotFoundException.
      */
-    public synchronized void startChildActivity(String Id, Intent intent) {
+    public synchronized void startChildActivity(final String anId, final Intent anIntent) {
         Log.d(LOG_NAME, "startChildActivity");
         LocalActivityManager manager = getLocalActivityManager();
 
-        Window window = manager.startActivity(Id, intent);
+        Window window = manager.startActivity(anId, anIntent);
         if (window != null) {
-            mIdList.add(Id);
+            mIdList.add(anId);
             setContentView(window.getDecorView());
         }
     }
@@ -113,12 +113,12 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * from calling their default KeyEvent.KEYCODE_BACK during onKeyDown.
      */
     @Override
-    public synchronized boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+    public synchronized boolean onKeyDown(final int aKeyCode, final KeyEvent anEvent) {
+        if (aKeyCode == KeyEvent.KEYCODE_BACK) {
             //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
             return true;
         }
-        return super.onKeyDown(keyCode, event);
+        return super.onKeyDown(aKeyCode, anEvent);
     }
 
     /**
@@ -126,12 +126,12 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * so that all systems call onBackPressed().
      */
     @Override
-    public synchronized boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+    public synchronized boolean onKeyUp(final int aKeyCode, final KeyEvent anEvent) {
+        if (aKeyCode == KeyEvent.KEYCODE_BACK) {
             onBackPressed();
             return true;
         }
-        return super.onKeyUp(keyCode, event);
+        return super.onKeyUp(aKeyCode, anEvent);
     }
 
     /**
@@ -158,25 +158,25 @@ public class ActivityGroup extends android.app.ActivityGroup {
     // http://stackoverflow.com/questions/80692/java-logger-that-automatically-determines-callers-class-name
     // http://www.exampledepot.com/egs/java.lang.reflect/Methods.html
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
-        return getLocalActivityManager().getCurrentActivity().onCreateOptionsMenu(menu);
+    public boolean onPrepareOptionsMenu(final Menu aMenu) {
+        aMenu.clear();
+        return getLocalActivityManager().getCurrentActivity().onCreateOptionsMenu(aMenu);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu aMenu) {
         Method[] methods = getLocalActivityManager().getCurrentActivity().getClass().getDeclaredMethods();
         for (int i = 0; i < methods.length; i++) {
             if (methods[i].toString().endsWith("onCreateOptionsMenu(android.view.menu)")) {
-                return getLocalActivityManager().getCurrentActivity().onCreateOptionsMenu(menu);
+                return getLocalActivityManager().getCurrentActivity().onCreateOptionsMenu(aMenu);
             }
         }
-        return getParent().onCreateOptionsMenu(menu);
+        return getParent().onCreateOptionsMenu(aMenu);
     }
 
     @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        return getLocalActivityManager().getCurrentActivity().onMenuItemSelected(featureId, item);
+    public boolean onMenuItemSelected(final int aFeatureId, final MenuItem anItem) {
+        return getLocalActivityManager().getCurrentActivity().onMenuItemSelected(aFeatureId, anItem);
     }
 
     /**
@@ -186,13 +186,13 @@ public class ActivityGroup extends android.app.ActivityGroup {
      * 
      * http://code.google.com/p/android/issues/detail?id=12359
      * http://code.google.com/p/android/issues/detail?id=879
-     * @param id
+     * @param anId
      * @return
      */
-    private synchronized boolean destroy(String id) {
+    private synchronized boolean destroy(final String anId) {
         final LocalActivityManager activityManager = getLocalActivityManager();
         if (activityManager != null) {
-            activityManager.destroyActivity(id, false);
+            activityManager.destroyActivity(anId, false);
             // http://code.google.com/p/android/issues/detail?id=12359
             // http://www.netmite.com/android/mydroid/frameworks/base/core/java/android/app/LocalActivityManager.java
             try {
@@ -202,7 +202,7 @@ public class ActivityGroup extends android.app.ActivityGroup {
                     @SuppressWarnings("unchecked")
                     final Map<String, Object> mActivities = (Map<String, Object>) mActivitiesField.get(activityManager);
                     if (mActivities != null) {
-                        mActivities.remove(id);
+                        mActivities.remove(anId);
                     }
                     final Field mActivityArrayField = LocalActivityManager.class.getDeclaredField("mActivityArray");
                     if (mActivityArrayField != null) {
@@ -215,7 +215,7 @@ public class ActivityGroup extends android.app.ActivityGroup {
                                 if (idField != null) {
                                     idField.setAccessible(true);
                                     final String _id = (String) idField.get(record);
-                                    if (id.equals(_id)) {
+                                    if (anId.equals(_id)) {
                                         mActivityArray.remove(record);
                                         break;
                                     }

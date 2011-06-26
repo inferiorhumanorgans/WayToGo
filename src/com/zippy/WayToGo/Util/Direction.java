@@ -16,11 +16,14 @@
  */
 package com.zippy.WayToGo.Util;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  *
  * @author alex
  */
-public class Direction {
+public class Direction implements Parcelable {
 
     private final String theAgencyClassName;
     private final String theRouteTag;
@@ -46,34 +49,78 @@ public class Direction {
         theShortTitle = aShortTitle;
     }
 
-    public String getTheAgencyClassName() {
+    public String agencyClassName() {
         return theAgencyClassName;
     }
 
-    public String getTheRouteTag() {
+    public String routeTag() {
         return theRouteTag;
     }
 
-    public String getTheTag() {
+    public String tag() {
         return theTag;
     }
 
-    public String getTheTitle() {
+    public String title() {
         return theTitle;
     }
 
-    public String getTheShortTitle() {
+    public String shortTitle() {
         return theShortTitle;
     }
 
-    public final synchronized boolean equals(final Direction anOtherDirection) {
-        return ((this.theAgencyClassName.equals(anOtherDirection.getTheAgencyClassName()))
-                && (this.theRouteTag.equals(anOtherDirection.getTheRouteTag()))
-                && (this.theTitle.equals(anOtherDirection.getTheTitle())));
+    @Override
+    public final synchronized boolean equals(final Object anOtherDirection) {
+        if (!(anOtherDirection instanceof Direction)) {
+            return false;
+        }
+        final Direction ourOtherDirection = (Direction) anOtherDirection;
+        return ((this.theAgencyClassName.equals(ourOtherDirection.agencyClassName()))
+                && (this.theRouteTag.equals(ourOtherDirection.routeTag()))
+                && (this.theTitle.equals(ourOtherDirection.title())));
     }
 
+    @Override
+    /**
+     * Whoops, this won't work on Android since Dalvik ignores assertions
+     * by default.
+     */
     public int hashCode() {
         assert false : "hashCode not designed";
         return 42; // any arbitrary constant will do
+    }
+
+
+    // Parcelable stuff begins here
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(final Parcel out, final int flags) {
+        out.writeString(theAgencyClassName);
+        out.writeString(theRouteTag);
+        out.writeString(theTag);
+        out.writeString(theTitle);
+        out.writeString(theShortTitle);
+    }
+    public static final Parcelable.Creator<Direction> CREATOR = new Parcelable.Creator<Direction>() {
+
+        public Direction createFromParcel(final Parcel in) {
+            return new Direction(in);
+        }
+
+        public Direction[] newArray(final int size) {
+            return new Direction[size];
+        }
+    };
+
+    private Direction(final Parcel in) {
+        theAgencyClassName = in.readString();
+        theRouteTag = in.readString();
+        theTag = in.readString();
+        theTitle = in.readString();
+        theShortTitle = in.readString();
+
     }
 }

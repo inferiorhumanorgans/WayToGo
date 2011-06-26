@@ -52,7 +52,7 @@ public class OneStopActivity extends Activity implements OSMReadyListener, Itemi
         final Intent theIntent = getIntent();
         theStop = theIntent.getParcelableExtra("theStop");
 
-        this.setTitle(this.getTitle() + " - " + theStop.getTheName());
+        this.setTitle(this.getTitle() + " - " + theStop.name());
 
         theMapView = (OSMView) findViewById(R.id.osm_map_view);
         theMapView.setTileSource(TileSourceFactory.MAPNIK);
@@ -60,11 +60,11 @@ public class OneStopActivity extends Activity implements OSMReadyListener, Itemi
         theMapView.setOnReadyListener(this);
         theMapController = theMapView.getController();
         theMapController.setZoom(TheApp.getResInt(R.integer.default_map_zoom) - 1);
-        theMapController.setCenter(theStop.getThePoint());
+        theMapController.setCenter(theStop.point());
 
         theManager = theMapView.getOverlayManager();
         theMarker = new MapMarker(this);
-        theMarker.setLocation(theStop.getThePoint());
+        theMarker.setLocation(theStop.point());
         theManager.add(theMarker);
     }
 
@@ -80,7 +80,7 @@ public class OneStopActivity extends Activity implements OSMReadyListener, Itemi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.context_return_to_stop:
-                theMapController.setCenter(theStop.getThePoint());
+                theMapController.setCenter(theStop.point());
                 return true;
             case R.id.context_return_to_location:
                 return true;

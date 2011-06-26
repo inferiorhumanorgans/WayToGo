@@ -28,15 +28,15 @@ import org.osmdroid.views.MapView;
  */
 public class OSMView extends MapView {
 
-    private static final String LOG_NAME = OSMView.class.getSimpleName();
+    private static final String LOG_NAME = OSMView.class.getCanonicalName();
     private OSMReadyListener theReadyListener;
 
-    public OSMView(final Context context, final AttributeSet attrs) {
-        super(context, attrs);
+    public OSMView(final Context aContext, final AttributeSet someAttrs) {
+        super(aContext, someAttrs);
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         if (!changed) {
             return;

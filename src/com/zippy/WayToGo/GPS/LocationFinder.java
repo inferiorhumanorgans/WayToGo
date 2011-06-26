@@ -36,7 +36,7 @@ public class LocationFinder {
 
     private ServiceConnection theGPSServiceConnection = null;
     private boolean mGPSIsBound = false;
-    private com.zippy.WayToGo.GPS.Service theGPSService = null;
+    private com.zippy.WayToGo.GPS.TheGPSService theGPSService = null;
     private Timer theLocationTimer = null;
     private int theLocationTimerCount = 0;
     private final Context theContext;
@@ -81,7 +81,7 @@ public class LocationFinder {
 
     public boolean startLocationSearch() {
         Log.d(LOG_NAME, "startLocationSearch");
-        if (!com.zippy.WayToGo.GPS.Service.isProviderOn()) {
+        if (!com.zippy.WayToGo.GPS.TheGPSService.isProviderOn()) {
             Log.d(LOG_NAME, "GPS IS OFF, ABORTING");
             return false;
         }
@@ -161,8 +161,8 @@ public class LocationFinder {
                 // service that we know is running in our own process, we can
                 // cast its IBinder to a concrete class and directly access it.
                 Log.d(LOG_NAME, "onServiceConnected");
-                theGPSService = ((com.zippy.WayToGo.GPS.Service.LocalBinder) service).getService();
-                // Service connected.
+                theGPSService = ((com.zippy.WayToGo.GPS.TheGPSService.LocalBinder) service).getService();
+                // TheGPSService connected.
                 mGPSIsBound = true;
             }
 
@@ -182,7 +182,7 @@ public class LocationFinder {
             return;
         }
         // Trying to bind to service?
-        TheApp.getContext().bindService(new Intent(theContext, com.zippy.WayToGo.GPS.Service.class), theGPSServiceConnection, Context.BIND_AUTO_CREATE);
+        TheApp.getContext().bindService(new Intent(theContext, com.zippy.WayToGo.GPS.TheGPSService.class), theGPSServiceConnection, Context.BIND_AUTO_CREATE);
         // Finished with boot up?
     }
 }

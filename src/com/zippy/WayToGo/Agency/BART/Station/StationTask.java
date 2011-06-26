@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import junit.framework.Assert;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.ClientConnectionManager;
@@ -47,11 +48,15 @@ public class StationTask extends BaseXMLTask implements XMLInterface {
     private static final String LOG_NAME = StationTask.class.getCanonicalName();
     private static final String BART_URL = "http://api.bart.gov/api/stn.aspx?cmd=stns&key=";
     private static final String BART_DETAIL_URL = "http://api.bart.gov/api/stn.aspx?cmd=stninfo&key=";
-    private XMLHandler dataHandler = new XMLHandler(this);
-    private HashMap<String, ContentValues> theStations = new HashMap<String, ContentValues>(44);
+    private final XMLHandler dataHandler = new XMLHandler(this);
+    /**
+     * At the time this was written there were 44 stations in the BART system.
+     */
+    private final HashMap<String, ContentValues> theStations = new HashMap<String, ContentValues>(44);
 
     @Override
     protected Void doInBackground(BARTAgency... someAgencies) {
+        Assert.assertEquals(1, someAgencies.length);
         super.doInBackground(someAgencies);
 
         Log.i(LOG_NAME, "Trying to get BART station list.");
@@ -132,12 +137,12 @@ public class StationTask extends BaseXMLTask implements XMLInterface {
     }
 
     @Override
-    protected void onPostExecute(Void result) {
+    protected void onPostExecute(final Void result) {
         theAgency.addStations(theStations.values());
         theAgency.finishedParsingStations();
     }
 
-    public void addStation(ContentValues aStation) {
+    public void addStation(final ContentValues aStation) {
         Log.d(LOG_NAME, "Trying to initially add station of: (" + aStation.getAsString("tag") + ") " + aStation);
         theStations.put(aStation.getAsString("tag"), new ContentValues(aStation));
     }

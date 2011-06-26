@@ -35,8 +35,8 @@ public final class PredictionGroupComparator implements Comparator<PredictionGro
         // EQUAL = 0;
         // AFTER = 1;
 
-        final int i1 = o1.getTheMinutes()[0];
-        final int i2 = o2.getTheMinutes()[0];
+        final int i1 = o1.minutes()[0];
+        final int i2 = o2.minutes()[0];
         if (i1 < i2) {
             return -1;
         }

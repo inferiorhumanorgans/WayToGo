@@ -61,7 +61,7 @@ public class StopAdapter extends ArrayAdapter<Stop> {
                 final double ourLatitude = theLocation.getLatitude();
                 final double ourLongitude = theLocation.getLongitude();
                 final float[] ourDistance = new float[1];
-                final GeoPoint ourPoint = theItems.get(i).getThePoint();
+                final GeoPoint ourPoint = theItems.get(i).point();
                 Location.distanceBetween(ourLatitude, ourLongitude, ourPoint.getLatitudeE6() / 1E6, ourPoint.getLongitudeE6() / 1E6, ourDistance);
                 theDistances[i] = ourDistance[0];
             }
@@ -109,7 +109,7 @@ public class StopAdapter extends ArrayAdapter<Stop> {
         final TextView theRight = (TextView) v.findViewById(R.id.list_item_distance);
         final Stop ourStop = theItems.get(position);
 
-        theLeft.setText(ourStop.getTheShortName());
+        theLeft.setText(ourStop.shortName());
         if (theHighlightPosition == position) {
             theLeft.setBackgroundColor(Color.WHITE);
             theRight.setBackgroundColor(Color.WHITE);

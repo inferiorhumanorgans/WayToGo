@@ -29,7 +29,7 @@ public class RouteComparator extends NaturalComparator<Route> {
 
     @Override
     protected String getSortString(final Route aRoute) {
-        return aRoute.getTheName();
+        return aRoute.name();
     }
 
 }

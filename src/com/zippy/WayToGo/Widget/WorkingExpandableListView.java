@@ -30,8 +30,8 @@ public class WorkingExpandableListView extends ExpandableListView {
         this(aContext, null);
     }
 
-    public WorkingExpandableListView(Context aContext, AttributeSet anAttributeSet) {
+    public WorkingExpandableListView(final Context aContext, final AttributeSet anAttributeSet) {
         super(aContext, anAttributeSet);
-        this.setGroupIndicator(null);
+        setGroupIndicator(null);
     }
 }

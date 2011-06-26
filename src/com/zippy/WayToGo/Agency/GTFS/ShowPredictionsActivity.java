@@ -58,10 +58,10 @@ public class ShowPredictionsActivity extends GTFSActivity implements PredictionL
         theStop = theAgency().getStop(intent.getStringExtra("stopId"));
         theFetcher = theAgency().fetchPredictionsForStop(theStop, this);
         final String theText;
-        if ((theStop.getTheAddress() != null) && !theStop.getTheAddress().equals("")) {
-            theIconView.setText(theStop.getTheName() + "\n" + theStop.getTheAddress());
+        if ((theStop.address() != null) && !theStop.address().equals("")) {
+            theIconView.setText(theStop.name() + "\n" + theStop.address());
         } else {
-            theIconView.setText(theStop.getTheName());
+            theIconView.setText(theStop.name());
         }
 
         thePredictions.clear();
@@ -94,12 +94,12 @@ public class ShowPredictionsActivity extends GTFSActivity implements PredictionL
         for (final PredictionGroup ourGroup : ourPredictionGroups) {
             final PredictionSummary ourSummary = new PredictionSummary(getDialogContext(), ourGroup);
             if ((ourPredictionGroups.size() == 1) && wantAllRoutes) {
-                ourSummary.setTheFlags("legit");
-                final Stop ourStop = theAgency().getStop(ourGroup.getTheStopTag());
-                final Direction ourDirection = theAgency().getDirectionFromTag(ourGroup.getTheDirectionTag());
-                theIconView.setText(ourStop.getTheShortName() + "\n" + ourDirection.getTheShortTitle());
+                ourSummary.setFlags("legit");
+                final Stop ourStop = theAgency().getStop(ourGroup.stopTag());
+                final Direction ourDirection = theAgency().getDirectionFromTag(ourGroup.directionTag());
+                theIconView.setText(ourStop.shortName() + "\n" + ourDirection.shortTitle());
                 //theIconView.setText(theStop.first) + "\n" + theAgency.getTerseDirectionName(theDirection.first));
-                theIconView.setBadgeText(ourGroup.getTheRouteTag());
+                theIconView.setBadgeText(ourGroup.routeTag());
                 theIconView.invalidate();
             }
 

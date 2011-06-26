@@ -25,14 +25,14 @@ import com.zippy.WayToGo.Util.Stop;
  */
 public class Bookmark {
 
-    final private int theId;
-    final private String theAgencyClass;
-    final private Stop theStop;
+    private final int theId;
+    private final String theAgencyClassName;
+    private final Stop theStop;
     private Intent theIntent;
 
     public Bookmark(final int anId, final String anAgencyClass, final Stop aStop) {
         theId = anId;
-        theAgencyClass = anAgencyClass;
+        theAgencyClassName = anAgencyClass;
         theStop = aStop;
     }
 
@@ -53,6 +53,6 @@ public class Bookmark {
     }
 
     public final String getTheAgencyClass() {
-        return theAgencyClass;
+        return theAgencyClassName;
     }
 }

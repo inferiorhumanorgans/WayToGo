@@ -22,6 +22,7 @@ import com.zippy.WayToGo.Agency.GTFS.GTFSAgency;
 import android.content.Intent;
 import com.zippy.WayToGo.Agency.GTFS.SelectRouteActivity;
 import com.zippy.WayToGo.Agency.GTFS.SelectStopActivity;
+import com.zippy.WayToGo.BaseActivityGroup;
 import com.zippy.WayToGo.R;
 
 /**
@@ -39,7 +40,7 @@ public class Caltrain extends GTFSAgency {
         theLogoId = R.drawable.caltrain;
     }
 
-    public static class ActivityGroup extends com.zippy.WayToGo.ActivityGroup {
+    public static class ActivityGroup extends BaseActivityGroup {
 
         @Override
         public void onResume() {

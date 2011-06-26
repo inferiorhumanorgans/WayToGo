@@ -23,29 +23,28 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.zippy.WayToGo.Agency.BaseAgency;
 import com.zippy.WayToGo.TheApp;
-import com.zippy.WayToGo.Util.StringPairList.StringPair;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.osmdroid.util.GeoPoint;
 
 /**
- *
+ * These are intended to be immutable
  * @author alex
  */
 public final class Stop implements Parcelable {
 
-    final private GeoPoint thePoint;
-    final private String theName;
-    final private String theShortName;
-    final private String theId;
-    final private Class theAgencyClass;
-    final private String theAddress;
+    private final GeoPoint thePoint;
+    private final String theName;
+    private final String theShortName;
+    private final String theId;
+    private final Class theAgencyClass;
+    private final String theAddress;
 
-    public Stop(final GeoPoint aPoint, final String aName, final String anId, Class anAgencyClass) {
+    public Stop(final GeoPoint aPoint, final String aName, final String anId, final Class anAgencyClass) {
         this(aPoint, aName, anId, null, anAgencyClass);
     }
 
-    public Stop(final GeoPoint aPoint, final String aName, final String anId, String anAddress, Class anAgencyClass) {
+    public Stop(final GeoPoint aPoint, final String aName, final String anId, final String anAddress, final Class anAgencyClass) {
         thePoint = aPoint;
         theName = aName;
         theShortName = theName;
@@ -54,7 +53,7 @@ public final class Stop implements Parcelable {
         theAddress = anAddress;
     }
 
-    public final BaseAgency getTheAgency() {
+    public final BaseAgency agency() {
         return TheApp.theAgencies.get(theAgencyClass.getCanonicalName());
     }
 
@@ -62,48 +61,40 @@ public final class Stop implements Parcelable {
         return theAgencyClass.getCanonicalName() + "/" + theId;
     }
 
-    public final String getTheName() {
+    public final String name() {
         return theName;
     }
 
-    public String getTheShortName() {
+    public String shortName() {
         return theShortName;
     }
 
-    public final String getTheAddress() {
+    public final String address() {
         return theAddress;
     }
 
-    public final GeoPoint getThePoint() {
+    public final GeoPoint point() {
         return thePoint;
     }
 
-    public final String getTheId() {
+    public final String stopId() {
         return theId;
-    }
-
-    /**
-     * @deprecated Gross hack
-     * @return
-     */
-    @Deprecated
-    public final StringPair toStringPair() {
-        return new StringPair(theName, theId);
     }
 
     /**
      * Launches Google Nav so we can get walking directions to a stop
      * @param aStop
      */
-    public static void getWalkingDirectionsTo(final Context aContext, final Stop aStop) {
-        final double theLat = aStop.getThePoint().getLatitudeE6() / 1E6;
-        final double theLng = aStop.getThePoint().getLongitudeE6() / 1E6;
+    public static void launchWalkingDirectionsTo(final Context aContext, final Stop aStop) {
+        final double theLat = aStop.point().getLatitudeE6() / 1E6;
+        final double theLng = aStop.point().getLongitudeE6() / 1E6;
         String url = "google.navigation:mode=w&q=" + theLat + "," + theLng;
         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         aContext.startActivity(i);
     }
 
-    // Parcelable stuff
+    // Parcelable stuff begins here
+    
     public int describeContents() {
         return 0;
     }
@@ -119,16 +110,16 @@ public final class Stop implements Parcelable {
     }
     public static final Parcelable.Creator<Stop> CREATOR = new Parcelable.Creator<Stop>() {
 
-        public Stop createFromParcel(Parcel in) {
+        public Stop createFromParcel(final Parcel in) {
             return new Stop(in);
         }
 
-        public Stop[] newArray(int size) {
+        public Stop[] newArray(final int size) {
             return new Stop[size];
         }
     };
 
-    private Stop(Parcel in) {
+    private Stop(final Parcel in) {
         final int lat = in.readInt();
         final int lng = in.readInt();
         thePoint = new GeoPoint(lat, lng);

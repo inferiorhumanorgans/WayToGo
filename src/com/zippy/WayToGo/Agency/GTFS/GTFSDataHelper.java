@@ -103,7 +103,7 @@ public class GTFSDataHelper extends CommonDBHelper {
         //Log.d(LOG_NAME, "BASE QUERY IS: " + theQuery);
         ourQuery = ourQuery.replace(":trip_ids:", ListUtils.sqlEscapedJoin(ourTrips, ", "));
         //Log.d(LOG_NAME, "First replace: " + theQuery);
-        ourQuery = ourQuery.replace(":stop_id:", DatabaseUtils.sqlEscapeString(aStop.getTheId()));
+        ourQuery = ourQuery.replace(":stop_id:", DatabaseUtils.sqlEscapeString(aStop.stopId()));
         //Log.d(LOG_NAME, "getPredictionsForStop: query = " + theQuery);
 
         final Cursor ourCursor = theReadDB.rawQuery(ourQuery, null);
@@ -136,7 +136,7 @@ public class GTFSDataHelper extends CommonDBHelper {
                 continue;
             }
 
-            final Prediction pred = new Prediction(theAgency, ourCursor.getString(3), aStop.getTheId(), ourCursor.getString(4), minutes);
+            final Prediction pred = new Prediction(theAgency, ourCursor.getString(3), aStop.stopId(), ourCursor.getString(4), minutes);
             ourPredictions.add(pred);
             ourCursor.moveToNext();
         }

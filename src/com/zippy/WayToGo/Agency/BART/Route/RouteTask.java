@@ -43,7 +43,7 @@ import org.xml.sax.XMLReader;
  */
 public class RouteTask extends BaseXMLTask implements XMLInterface {
 
-    private static final String LOG_NAME = RouteTask.class.getSimpleName();
+    private static final String LOG_NAME = RouteTask.class.getCanonicalName();
     private static final String BART_URL = "http://api.bart.gov/api/route.aspx?cmd=routes&key=";
     private XMLHandler dataHandler = new XMLHandler(this);
 

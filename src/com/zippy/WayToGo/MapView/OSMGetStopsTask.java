@@ -108,7 +108,7 @@ public class OSMGetStopsTask extends AsyncTask<Void, Void, Void> {
                 if (isCancelled()) {
                     return null;
                 }
-                if (aStop.getThePoint() == null) {
+                if (aStop.point() == null) {
                     continue;
                 }
                 final StopOverlayItem theOverlayItem = new StopOverlayItem(aStop);

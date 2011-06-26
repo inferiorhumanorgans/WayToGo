@@ -27,8 +27,8 @@ public final class StringPairList extends ArrayList<StringPairList.StringPair> {
 
     public static final class StringPair extends Pair<String, String> {
 
-        public StringPair(String one, String two) {
-            super(one, two);
+        public StringPair(final String aString, final String anOtherString) {
+            super(aString, anOtherString);
         }
     };
 }

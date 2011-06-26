@@ -31,7 +31,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XMLHandler extends DefaultHandler {
 
-    private static String LOG_NAME = XMLHandler.class.getSimpleName();
+    private static String LOG_NAME = XMLHandler.class.getCanonicalName();
     private XMLInterface theTV;
     private String theDestination = null;
     private ContentValues theEstimateValues = new ContentValues();
@@ -176,7 +176,7 @@ public class XMLHandler extends DefaultHandler {
                     "Platform " + theEstimateValues.getAsInteger(TAG_PLATFORM),
                     theEstimateValues.getAsString(TAG_DESTINATION),
                     theEstimateValues.getAsInteger(TAG_MINUTES));
-            ourPred.setTheFlags(String.valueOf(theEstimateValues.getAsInteger(TAG_LENGTH)));
+            ourPred.setFlags(String.valueOf(theEstimateValues.getAsInteger(TAG_LENGTH)));
             //Log.d(LOG_NAME, "Creating BART prediction from: " + theEstimateValues);
             theTV.addPrediction(ourPred);
             theEstimateValues.clear();

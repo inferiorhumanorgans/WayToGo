@@ -161,13 +161,13 @@ public class BalloonItemizedOverlay<Item extends OverlayItem> extends ItemizedOv
 
         final StopOverlayItem stopItem = (StopOverlayItem) item;
         final Stop ourStop = stopItem.getTheStop();
-        final BaseAgency ourAgency = ourStop.getTheAgency();
+        final BaseAgency ourAgency = ourStop.agency();
         final Intent ourIntent = ourAgency.getPredictionIntentForStop(ourStop);
 
         if (theContext instanceof Activity) {
             final Activity ourActivity = (Activity) theContext;
             final MainActivity ourMain = (MainActivity) ourActivity.getParent();
-            com.zippy.WayToGo.ActivityGroup ag = (com.zippy.WayToGo.ActivityGroup) ourMain.getActivityForTabTag(ourAgency.getClass().getCanonicalName());
+            com.zippy.WayToGo.BaseActivityGroup ag = (com.zippy.WayToGo.BaseActivityGroup) ourMain.getActivityForTabTag(ourAgency.getClass().getCanonicalName());
             if (ag != null) {
                 Log.d(LOG_NAME, "Creating on activity group: " + ag);
                 ag.startChildActivity(ourIntent.toUri(0), ourIntent);

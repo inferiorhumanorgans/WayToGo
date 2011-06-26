@@ -54,7 +54,7 @@ public class XMLTask extends BaseXMLTask implements XMLInterface {
     public XMLTask(final Stop aStop, PredictionListener aListener) {
         super();
         theListener = aListener;
-        theStationTag = aStop.getTheId();
+        theStationTag = aStop.stopId();
     }
 
     @Override

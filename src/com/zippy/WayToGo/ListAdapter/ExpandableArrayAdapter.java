@@ -42,9 +42,9 @@ public class ExpandableArrayAdapter<T> extends BaseExpandableListAdapter {
     protected ArrayList<String> theGroups = new ArrayList<String>();
     protected Context theContext = null;
     protected HashMap<String, ArrayList<T>> theChildren = new HashMap<String, ArrayList<T>>();
-    final protected Drawable EXPANDED_DRAWABLE = 
+    protected final Drawable EXPANDED_DRAWABLE =
             TheApp.getResDrawable((android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.FROYO) ? R.drawable.expander_ic_expanded_gingerbread : R.drawable.expander_ic_expanded_old);
-    final protected Drawable COLLAPSED_DRAWABLE =
+    protected final Drawable COLLAPSED_DRAWABLE =
             TheApp.getResDrawable((android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.FROYO) ? R.drawable.expander_ic_collapsed_gingerbread : R.drawable.expander_ic_collapsed_old);;
 
     public ExpandableArrayAdapter(Context aContext) {

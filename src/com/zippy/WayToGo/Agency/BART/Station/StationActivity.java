@@ -53,9 +53,9 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle aSavedInstanceState) {
         Log.d(LOG_NAME, "onCreate");
-        super.onCreate(savedInstanceState);
+        super.onCreate(aSavedInstanceState);
 
         theAgency().init(this);
         theFinder = new LocationFinder(getParent(), this);
@@ -96,17 +96,17 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(final MenuItem anItem) {
+        switch (anItem.getItemId()) {
             case R.id.menu_agency_site:
-                final Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse(theAgency().getURL()));
-                startActivity(browserIntent);
+                final Intent ourBrowserIntent = new Intent("android.intent.action.VIEW", Uri.parse(theAgency().getURL()));
+                startActivity(ourBrowserIntent);
                 return true;
             case R.id.menu_current_location:
                 startLocationSearch();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(anItem);
         }
     }
 
@@ -181,7 +181,7 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
         populateStationListView(false);
     }
 
-    private void populateStationListView(boolean useLocation) {
+    private void populateStationListView(final boolean useLocation) {
         StopAdapter theAdapter = (StopAdapter) theListView.getAdapter();
         if (!useLocation) {
             theAdapter.clear();
@@ -219,7 +219,7 @@ public class StationActivity extends BaseBARTActivity implements CopyDBListener,
     }
 
     @Override
-    public void onLocationFound(Location aLocation) {
+    public void onLocationFound(final Location aLocation) {
         if (theProgressDialog != null) {
             try {
                 theProgressDialog.dismiss();

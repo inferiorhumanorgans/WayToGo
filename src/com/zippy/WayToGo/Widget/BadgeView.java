@@ -38,7 +38,7 @@ import com.zippy.WayToGo.Util.Route;
  */
 public class BadgeView extends View {
 
-    private static final String LOG_NAME = BadgeView.class.getSimpleName();
+    private static final String LOG_NAME = BadgeView.class.getCanonicalName();
     private String theText, theSanitizedText;
     private boolean isValid = false;
     private float theRadius;
@@ -78,7 +78,7 @@ public class BadgeView extends View {
             theSanitizedText = theText;
         } else {
             theRoute = theAgency.getRouteFromTag(aText);
-            theSanitizedText = theRoute.getTheTag();
+            theSanitizedText = theRoute.tag();
         }
         invalidate();
     }
@@ -132,50 +132,50 @@ public class BadgeView extends View {
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
-        Rect theBounds = new Rect();
-        getDrawingRect(theBounds);
+    public void onDraw(final Canvas aCanvas) {
+        Rect ourBounds = new Rect();
+        getDrawingRect(ourBounds);
 
-        super.onDraw(canvas);
+        super.onDraw(aCanvas);
 
-        final int theBgColor;
+        final int ourBgColor;
         if (theRoute != null) {
-            theBgColor = theRoute.getTheColor();
+            ourBgColor = theRoute.color();
         } else {
-            theBgColor = Color.LTGRAY;
+            ourBgColor = Color.LTGRAY;
         }
 
-        drawTheCircle(canvas, theBounds);
+        drawTheCircle(aCanvas, ourBounds);
 
-        final Paint thePaint = new Paint();
-        thePaint.setAntiAlias(true);
-        thePaint.setStyle(Paint.Style.FILL);
+        final Paint ourPaint = new Paint();
+        ourPaint.setAntiAlias(true);
+        ourPaint.setStyle(Paint.Style.FILL);
 
         if (theText != null) {
-            thePaint.setColor(Color.BLACK);
-            thePaint.setTextSize(TheApp.getRealPixels(fontSize));
-            thePaint.setTextAlign(Paint.Align.CENTER);
+            ourPaint.setColor(Color.BLACK);
+            ourPaint.setTextSize(TheApp.getRealPixels(fontSize));
+            ourPaint.setTextAlign(Paint.Align.CENTER);
 
-            final Rect theTextBounds = new Rect();
-            thePaint.setTypeface(theBoldFont);
-            thePaint.getTextBounds(theSanitizedText, 0, theSanitizedText.length(), theTextBounds);
+            final Rect ourTextBounds = new Rect();
+            ourPaint.setTypeface(theBoldFont);
+            ourPaint.getTextBounds(theSanitizedText, 0, theSanitizedText.length(), ourTextBounds);
 
             if (!isValid) {
-                while ((theTextBounds.width() >= theInnerWidth) && (fontSize > 8)) {
-                    thePaint.setTextSize(TheApp.getRealPixels(--fontSize));
-                    thePaint.getTextBounds(theSanitizedText, 0, theSanitizedText.length(), theTextBounds);
+                while ((ourTextBounds.width() >= theInnerWidth) && (fontSize > 8)) {
+                    ourPaint.setTextSize(TheApp.getRealPixels(--fontSize));
+                    ourPaint.getTextBounds(theSanitizedText, 0, theSanitizedText.length(), ourTextBounds);
                 }
             }
 
-            canvas.drawText(theSanitizedText, theBounds.centerX() + 1f, theBounds.centerY() + (theTextBounds.height() / 2), thePaint);
+            aCanvas.drawText(theSanitizedText, ourBounds.centerX() + 1f, ourBounds.centerY() + (ourTextBounds.height() / 2), ourPaint);
             // Draw the semi-circle if needed
-            if (theBgColor != Color.LTGRAY) {
-                thePaint.getTextBounds(theSanitizedText, 0, theSanitizedText.length(), theTextBounds);
-                drawTheSplash(canvas, theBounds, theBgColor, theTextBounds.height());
+            if (ourBgColor != Color.LTGRAY) {
+                ourPaint.getTextBounds(theSanitizedText, 0, theSanitizedText.length(), ourTextBounds);
+                drawTheSplash(aCanvas, ourBounds, ourBgColor, ourTextBounds.height());
             }
         } else if (theDrawable != null) {
-            final Bitmap theBitmap = ((BitmapDrawable) theDrawable).getBitmap();
-            canvas.drawBitmap(theBitmap, theBounds.centerX() - (theBitmap.getWidth() / 2), theBounds.centerY() - (theBitmap.getHeight() / 2), thePaint);
+            final Bitmap ourBitmap = ((BitmapDrawable) theDrawable).getBitmap();
+            aCanvas.drawBitmap(ourBitmap, ourBounds.centerX() - (ourBitmap.getWidth() / 2), ourBounds.centerY() - (ourBitmap.getHeight() / 2), ourPaint);
         }
     }
 }

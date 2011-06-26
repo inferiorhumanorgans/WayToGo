@@ -139,22 +139,29 @@ public abstract class BaseAgency {
     }
 
     /**
-     * 
-     * @param aStopId
+     *
+     * @param aStop The Stop object which we want to represent with an intent.
      * @return An intent that can be used to view predictions for a stop
      */
-    @Deprecated
-    public final Intent getPredictionIntentForStopId(final String aStopId) {
-        final Stop ourStop = getStop(aStopId);
-        return getPredictionIntentForStop(ourStop);
-    }
-
     public final Intent getPredictionIntentForStop(final Stop aStop) {
         return getPredictionIntentForStop(aStop, null);
     }
 
+    /**
+     *
+     * @param aStop The Stop object which we want to represent with an intent.
+     * @param aDirection An optional direction object if we only want
+     * predictions for a specific route/direction combo.
+     * @return An intent that can be used to view predictions for a stop
+     */
     abstract public Intent getPredictionIntentForStop(final Stop aStop, final Direction aDirection);
 
+    /**
+     *
+     * @param aStop
+     * @param aListener
+     * @return The AsyncTask object that we just launched.
+     */
     abstract public AsyncTask fetchPredictionsForStop(final Stop aStop, final PredictionListener aListener);
 
     // Routes

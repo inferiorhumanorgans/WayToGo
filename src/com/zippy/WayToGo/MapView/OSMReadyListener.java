@@ -21,5 +21,5 @@ package com.zippy.WayToGo.MapView;
  * @author alex
  */
 public interface OSMReadyListener {
-    public void finishedWithLayout(boolean isFinished);
+    public void finishedWithLayout(final boolean isFinished);
 }

@@ -26,16 +26,17 @@ import com.zippy.WayToGo.R;
  * @author alex
  */
 public class SmallIconTextView extends IconTextView {
-    public SmallIconTextView(Context aContext) {
+
+    public SmallIconTextView(final Context aContext) {
         this(aContext, null);
     }
 
-    public SmallIconTextView(Context aContext, AttributeSet anAttributeSet) {
+    public SmallIconTextView(final Context aContext, final AttributeSet anAttributeSet) {
         super(aContext, anAttributeSet, R.layout.widget_small_icon_text_view);
-        this.findViewById(R.id.ictv_textview).setBackgroundResource(R.drawable.gradient_box);
-        this.findViewById(R.id.ictv_surface_view).setBackgroundResource(R.drawable.gradient_box);
-        this.findViewById(R.id.ictv_textview).getBackground().setDither(true);
-        this.findViewById(R.id.ictv_surface_view).getBackground().setDither(true);
+        findViewById(R.id.ictv_textview).setBackgroundResource(R.drawable.gradient_box);
+        findViewById(R.id.ictv_surface_view).setBackgroundResource(R.drawable.gradient_box);
+        findViewById(R.id.ictv_textview).getBackground().setDither(true);
+        findViewById(R.id.ictv_surface_view).getBackground().setDither(true);
         theSmallStyle = new TextAppearanceSpan(theContext, android.R.style.TextAppearance_Small_Inverse);
 
     }

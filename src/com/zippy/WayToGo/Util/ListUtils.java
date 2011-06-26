@@ -10,20 +10,20 @@ import java.util.Iterator;
  */
 public class ListUtils {
     //DatabaseUtils.appendEscapedSQLString
-    public static String join( Iterable< ? extends Object > pColl, String separator ) {
-        Iterator< ? extends Object > oIter;
+    public static String join(final Iterable< ? extends Object > pColl, final String separator ) {
+        final Iterator< ? extends Object > oIter;
         if ( pColl == null || ( !( oIter = pColl.iterator() ).hasNext() ) )
             return "";
-        StringBuilder oBuilder = new StringBuilder( String.valueOf( oIter.next() ) );
+        final StringBuilder oBuilder = new StringBuilder( String.valueOf( oIter.next() ) );
         while ( oIter.hasNext() )
             oBuilder.append( separator ).append( oIter.next() );
         return oBuilder.toString();
     }
-    public static String sqlEscapedJoin( Iterable< ? extends Object > pColl, String separator ) {
-        Iterator< ? extends Object > oIter;
+    public static String sqlEscapedJoin(final Iterable< ? extends Object > pColl, final String separator ) {
+        final Iterator< ? extends Object > oIter;
         if ( pColl == null || ( !( oIter = pColl.iterator() ).hasNext() ) )
             return "";
-        StringBuilder oBuilder = new StringBuilder( DatabaseUtils.sqlEscapeString(String.valueOf( oIter.next() )) );
+        final StringBuilder oBuilder = new StringBuilder( DatabaseUtils.sqlEscapeString(String.valueOf( oIter.next() )) );
         while ( oIter.hasNext() )
             oBuilder.append( separator ).append( DatabaseUtils.sqlEscapeString(oIter.next().toString()) );
         return oBuilder.toString();

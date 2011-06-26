@@ -28,6 +28,6 @@ public class StopComparator extends NaturalComparator<Stop> {
 
     @Override
     protected String getSortString(final Stop aStop) {
-        return aStop.getTheName();
+        return aStop.name();
     }
 }

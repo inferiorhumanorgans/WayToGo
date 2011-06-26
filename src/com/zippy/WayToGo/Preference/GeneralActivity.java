@@ -29,13 +29,13 @@ import com.zippy.WayToGo.R;
  */
 public class GeneralActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
-    private final static String LOG_NAME = GeneralActivity.class.getSimpleName();
-    private SharedPreferences prefs;
+    private final static String LOG_NAME = GeneralActivity.class.getCanonicalName();
+    private SharedPreferences thePrefs;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        prefs = (SharedPreferences) PreferenceManager.getDefaultSharedPreferences(this);
+    protected void onCreate(final Bundle aSavedInstanceState) {
+        super.onCreate(aSavedInstanceState);
+        thePrefs = (SharedPreferences) PreferenceManager.getDefaultSharedPreferences(this);
         addPreferencesFromResource(R.layout.activity_prefs);
     }
 

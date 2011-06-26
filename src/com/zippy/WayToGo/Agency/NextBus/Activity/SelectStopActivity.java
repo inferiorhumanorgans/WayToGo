@@ -72,9 +72,9 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
         theDirection = theAgency().getDirectionFromTag(intent.getStringExtra("directionTag"));
 
         registerForContextMenu(theListView);
-        theIconView.setText(theDirection.getTheTitle());
+        theIconView.setText(theDirection.title());
         if (theStops.isEmpty()) {
-            theStops = theAgency().getStopsForDirectionTag(theDirection.getTheTag());
+            theStops = theAgency().getStopsForDirectionTag(theDirection.tag());
             populateListView();
         } else {
             startLocationSearch();
@@ -134,10 +134,10 @@ public class SelectStopActivity extends BaseNextBusActivity implements LocationF
                 showPredictionsForStop(ourStop);
                 return true;
             case R.id.context_directions_to:
-                Assert.assertEquals(false, getDialogContext() == null);
-                Assert.assertEquals(false, theAgency() == null);
-                Assert.assertEquals(false, ourStop == null);
-                Stop.getWalkingDirectionsTo(getDialogContext(), ourStop);
+                Assert.assertNotNull(getDialogContext());
+                Assert.assertNotNull(theAgency());
+                Assert.assertNotNull(ourStop);
+                Stop.launchWalkingDirectionsTo(getDialogContext(), ourStop);
                 return true;
             default:
                 return super.onContextItemSelected(anItem);

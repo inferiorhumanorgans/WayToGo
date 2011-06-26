@@ -30,8 +30,8 @@ public final class MBTARouteComparator extends RouteComparator {
 
     @Override
     protected String getSortString(final Route aRoute) {
-        return aRoute.getTheRawTag();
-/*        String a = aRoute.getTheRawTag();
+        return aRoute.rawTag();
+/*        String a = aRoute.rawTag();
 
         if (MBTA.routeTagMap.containsKey(a)) {
             a = MBTA.routeTagMap.get(a);

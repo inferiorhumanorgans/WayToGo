@@ -142,7 +142,7 @@ public abstract class CommonDBHelper extends SQLiteOpenHelper {
             return;
         }
 
-        theCopyTask = new CopyDBTask(TheApp.getContext(), aListener);
+        theCopyTask = new CopyDBTask(aListener);
         //Log.d(LOG_NAME, "Calling copydbworktask");
         theCopyTask.execute(getDBName());
     }

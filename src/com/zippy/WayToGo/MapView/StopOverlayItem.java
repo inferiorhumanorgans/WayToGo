@@ -26,7 +26,7 @@ import org.osmdroid.views.overlay.OverlayItem;
 public class StopOverlayItem extends OverlayItem {
     private final Stop theStop;
     public StopOverlayItem (final Stop aStop) {
-        super(null,null,aStop.getThePoint());
+        super(null,null,aStop.point());
         theStop=aStop;
     }
 
@@ -36,12 +36,12 @@ public class StopOverlayItem extends OverlayItem {
 
     @Override
     public String getTitle() {
-        return theStop.getTheAgency().getShortName();
+        return theStop.agency().getShortName();
     }
 
     @Override
     public String getSnippet() {
-        return theStop.getTheName();
+        return theStop.name();
     }
 
 }

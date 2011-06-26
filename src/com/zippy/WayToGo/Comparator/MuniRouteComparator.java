@@ -41,12 +41,12 @@ public final class MuniRouteComparator extends RouteComparator {
             theCableCarRoutes = new HashSet<String>(Arrays.asList(theCableCarRoutesArray));
         }
 
-        if (theCableCarRoutes.contains(aRoute.getTheRawTag())) {
-            return CABLE_CAR_PREFIX + aRoute.getTheName();
-        } else if (aRoute.getTheRawTag().contains(theOwlString)) {
-            return OWL_PREFIX + aRoute.getTheName();
+        if (theCableCarRoutes.contains(aRoute.rawTag())) {
+            return CABLE_CAR_PREFIX + aRoute.name();
+        } else if (aRoute.rawTag().contains(theOwlString)) {
+            return OWL_PREFIX + aRoute.name();
         }
-        return aRoute.getTheName();
+        return aRoute.name();
     }
 
 }

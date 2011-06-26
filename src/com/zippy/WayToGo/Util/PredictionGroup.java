@@ -31,28 +31,28 @@ import java.util.HashMap;
  */
 public final class PredictionGroup {
 
-    final private static String LOG_NAME = PredictionGroup.class.getCanonicalName();
-    final private Stop theStop;
-    final private int[] theMinutes;
-    final private String theGUID, theUID;
+    private final static String LOG_NAME = PredictionGroup.class.getCanonicalName();
+    private final Stop theStop;
+    private final int[] theMinutes;
+    private final String theGUID, theUID;
     private final String theRouteTag, theStopTag, theSubStopTag, theDirectionTag;
 
     PredictionGroup(final ArrayList<Prediction> somePredictions) {
-        final Prediction theFirst = somePredictions.get(0);
-        theGUID = theFirst.getGUID();
-        theUID = theFirst.getUID();
-        theRouteTag = theFirst.getRouteTag();
-        theStopTag = theFirst.getStopTag();
-        theSubStopTag = theFirst.getTheSubStopTag();
-        theDirectionTag = theFirst.getDirectionTag();
+        final Prediction ourFirstPrediction = somePredictions.get(0);
+        theGUID = ourFirstPrediction.getGUID();
+        theUID = ourFirstPrediction.getUID();
+        theRouteTag = ourFirstPrediction.routeTag();
+        theStopTag = ourFirstPrediction.stopTag();
+        theSubStopTag = ourFirstPrediction.subStopTag();
+        theDirectionTag = ourFirstPrediction.directionTag();
 
-        final BaseAgency ourAgency = theFirst.getTheAgency();
-        theStop = ourAgency.getStop(theFirst.getStopTag());
+        final BaseAgency ourAgency = ourFirstPrediction.agency();
+        theStop = ourAgency.getStop(ourFirstPrediction.stopTag());
 
         // Put all the minutes into an array for now.
         final int[] allTheMinutes = new int[somePredictions.size()];
         for (int i = 0; i < allTheMinutes.length; i++) {
-            allTheMinutes[i] = somePredictions.get(i).getMinutes();
+            allTheMinutes[i] = somePredictions.get(i).minutes();
         }
 
 
@@ -69,35 +69,35 @@ public final class PredictionGroup {
         System.arraycopy(allTheMinutes, 0, theMinutes, 0, numPredictions);
     }
 
-    public final int[] getTheMinutes() {
+    public final int[] minutes() {
         return theMinutes.clone();
     }
 
-    public final Stop getTheStop() {
+    public final Stop stop() {
         return theStop;
     }
 
-    public final String getTheGUID() {
+    public final String getGUID() {
         return theGUID;
     }
 
-    public final String getTheUID() {
+    public final String getUID() {
         return theUID;
     }
 
-    public final String getTheDirectionTag() {
+    public final String directionTag() {
         return theDirectionTag;
     }
 
-    public final String getTheRouteTag() {
+    public final String routeTag() {
         return theRouteTag;
     }
 
-    public final String getTheStopTag() {
+    public final String stopTag() {
         return theStopTag;
     }
 
-    public final String getTheSubStopTag() {
+    public final String subStopTag() {
         return theSubStopTag;
     }
 
@@ -111,13 +111,13 @@ public final class PredictionGroup {
         // Put them into a hash first;
         final HashMap<String, ArrayList<Prediction>> predictionHash = new HashMap<String, ArrayList<Prediction>>();
         for (final Prediction ourPrediction : somePredictions) {
-            if (ourPrediction.getTheFlags().equals("legit") && !includeLegit) {
+            if (ourPrediction.flags().equals("legit") && !includeLegit) {
                 continue;
             }
 
             // Gross hack: group all so-called legit predictions together.
             final String ourKey;
-            if (ourPrediction.getTheFlags().equals("legit")) {
+            if (ourPrediction.flags().equals("legit")) {
                 ourKey = "legit";
             } else {
                 ourKey = ourPrediction.getGUID();

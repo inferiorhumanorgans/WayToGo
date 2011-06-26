@@ -19,7 +19,6 @@ package com.zippy.WayToGo.Util;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.zippy.WayToGo.Util.StringPairList.StringPair;
 
 /**
  *
@@ -27,12 +26,12 @@ import com.zippy.WayToGo.Util.StringPairList.StringPair;
  */
 public final class Route implements Parcelable {
 
-    final private String theAgencyName;
-    final private String theName;
-    final private String theTag;
-    final private String theRawTag;
-    final private int theColor;
-    final private boolean isEmpty;
+    private final String theAgencyName;
+    private final String theName;
+    private final String theTag;
+    private final String theRawTag;
+    private final int theColor;
+    private final boolean isEmpty;
 
     public Route() {
         theAgencyName = null;
@@ -57,40 +56,37 @@ public final class Route implements Parcelable {
         isEmpty = false;
     }
 
-    public final String getTheAgencyName() {
+    public final String agencyName() {
         return theAgencyName;
     }
 
-    public final String getTheName() {
+    public final String name() {
         return theName;
     }
 
-    public final String getTheTag() {
+    public final String tag() {
         return theTag;
     }
 
-    public final String getTheRawTag() {
+    public final String rawTag() {
         return theRawTag;
     }
 
-    public final int getTheColor() {
+    public final int color() {
         return theColor;
     }
 
+    /**
+     * Empty prediction objects are used by the list adapters to indicate that
+     * there are no predictions available.
+     * @return An empty prediction object
+     */
     public final boolean isEmpty() {
         return isEmpty;
     }
 
-    /**
-     * @deprecated Gross hack
-     * @return
-     */
-    @Deprecated
-    public final StringPair getStringPair() {
-        return new StringPair(theName, theTag);
-    }
+    // Parcelable stuff starts here
 
-    // Parcelable stuff
     public int describeContents() {
         return 0;
     }

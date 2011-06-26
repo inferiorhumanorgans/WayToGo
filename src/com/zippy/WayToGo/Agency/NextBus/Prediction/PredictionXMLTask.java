@@ -51,7 +51,7 @@ public class PredictionXMLTask extends BaseXMLTask implements PredictionInterfac
     public PredictionXMLTask(final Stop aStop, final PredictionListener aListener) {
         super();
         theListener = aListener;
-        theStopId = aStop.getTheId();
+        theStopId = aStop.stopId();
     }
 
     public final String getStopId() {

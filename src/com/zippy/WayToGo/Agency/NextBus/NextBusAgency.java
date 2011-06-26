@@ -90,13 +90,13 @@ public abstract class NextBusAgency extends BaseAgency {
     @Override
     public final Intent getPredictionIntentForStop(final Stop aStop, final Direction aDirection) {
         final Intent theIntent = new Intent("w2g.action.NextBus.PREDICTIONS_ROUTE_SPECIFIC");
-        theIntent.putExtra("stopName", aStop.getTheName());
-        theIntent.putExtra("stopId", aStop.getTheId());
+        theIntent.putExtra("stopName", aStop.name());
+        theIntent.putExtra("stopId", aStop.stopId());
         if (aDirection != null) {
-            theIntent.putExtra("directionTitle", aDirection.getTheTitle());
-            theIntent.putExtra("directionTag", aDirection.getTheTag());
+            theIntent.putExtra("directionTitle", aDirection.title());
+            theIntent.putExtra("directionTag", aDirection.tag());
             theIntent.putExtra("allRoutes", false);
-            theIntent.putExtra("currentRouteTag", aDirection.getTheRouteTag());
+            theIntent.putExtra("currentRouteTag", aDirection.routeTag());
         } else {
             theIntent.putExtra("allRoutes", true);
         }

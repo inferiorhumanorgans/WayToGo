@@ -67,14 +67,14 @@ public class ShowPredictionsAdapter extends ExpandableArrayAdapter<Prediction> {
         }
 
         Drawable ourBadge;
-        final String ourKey = ourPrediction.getRouteTag().intern();
+        final String ourKey = ourPrediction.routeTag().intern();
         if (theBadges.containsKey(ourKey)) {
             ourBadge = theBadges.get(ourKey);
         } else {
             int theBadgeId;
-            Log.d(LOG_NAME, "Trying to find BART badge for color: " + ourPrediction.getRouteTag().substring(1));
+            Log.d(LOG_NAME, "Trying to find BART badge for color: " + ourPrediction.routeTag().substring(1));
             try {
-                final String ourResourceName = "drawable/bart_" + ourPrediction.getRouteTag().substring(1);
+                final String ourResourceName = "drawable/bart_" + ourPrediction.routeTag().substring(1);
                 theBadgeId = ourResources.getIdentifier(ourResourceName, null, "com.zippy.WayToGo");
             } catch (android.content.res.Resources.NotFoundException theEx) {
                 theBadgeId = ourResources.getIdentifier("drawable/bart", null, "com.zippy.WayToGo");

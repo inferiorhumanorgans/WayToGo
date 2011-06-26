@@ -23,12 +23,12 @@ import android.content.ContentValues;
  * @author alex
  */
 public interface RouteConfigNotification {
-    public void addRoute(ContentValues aRoute);
-    public void addStopToRoute(String aRouteTag, String aStopTag);
-    public void addDirection(ContentValues aDirection);
-    public void addStopToDirection(String aDirectionTag, String aStopTag, int aPosition);
-    public void addStop(ContentValues aStop);
-    public void addPath(ContentValues aPath);
+    public void addRoute(final ContentValues aRoute);
+    public void addStopToRoute(final String aRouteTag, final String aStopTag);
+    public void addDirection(final ContentValues aDirection);
+    public void addStopToDirection(final String aDirectionTag, final String aStopTag, final int aPosition);
+    public void addStop(final ContentValues aStop);
+    public void addPath(final ContentValues aPath);
     public void finishedWithRoute();
     public boolean isCancelled();
 }

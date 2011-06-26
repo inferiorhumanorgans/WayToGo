@@ -61,12 +61,12 @@ public class PredictionAdapter extends ArrayAdapter<PredictionSummary> {
         }
         final PredictionSummary theSummary = theItems.get(position);
 
-        if (theSummary.isEmpty() || theSummary.getTheFlags().equals("legit")) {
+        if (theSummary.isEmpty() || theSummary.flags().equals("legit")) {
             v.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
         } else {
             v.setGravity(Gravity.CENTER_VERTICAL);
         }
-        v.setText(theSummary.toText());
+        v.setText(theSummary.toStyledText());
         return v;
     }
 }

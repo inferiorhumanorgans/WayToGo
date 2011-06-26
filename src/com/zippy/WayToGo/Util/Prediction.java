@@ -45,15 +45,19 @@ public final class Prediction {
         theFlags = "";
     }
 
-    public String getTheSubStopTag() {
+    /**
+     * A.K.A. Platform.
+     * @return
+     */
+    public String subStopTag() {
         return theSubStopTag;
     }
 
-    public String getTheFlags() {
+    public String flags() {
         return theFlags;
     }
 
-    public void setTheFlags(String someFlags) {
+    public void setFlags(final String someFlags) {
         if (someFlags == null) {
             theFlags = "";
         } else {
@@ -61,23 +65,23 @@ public final class Prediction {
         }
     }
 
-    public final BaseAgency getTheAgency() {
+    public final BaseAgency agency() {
         return theAgency;
     }
 
-    public final int getMinutes() {
+    public final int minutes() {
         return theMinutes;
     }
 
-    public final String getRouteTag() {
+    public final String routeTag() {
         return theRouteTag;
     }
 
-    public final String getStopTag() {
+    public final String stopTag() {
         return theStopTag;
     }
 
-    public final String getDirectionTag() {
+    public final String directionTag() {
         return theDirectionTag;
     }
 
@@ -86,10 +90,10 @@ public final class Prediction {
      * @return
      */
     public final String getGUID() {
-        Assert.assertEquals(false, theAgency == null);
-        Assert.assertEquals(false, theStopTag == null);
-        Assert.assertEquals(false, theRouteTag == null);
-        Assert.assertEquals(false, theDirectionTag == null);
+        Assert.assertNotNull(theAgency);
+        Assert.assertNotNull(theStopTag);
+        Assert.assertNotNull(theRouteTag);
+        Assert.assertNotNull(theDirectionTag);
 
         return
                 theAgency.getClass().getCanonicalName()
@@ -98,7 +102,7 @@ public final class Prediction {
                 + "/"
                 + theRouteTag
                 + "/"
-                + theAgency.getDirectionFromTag(theDirectionTag).getTheTitle();
+                + theAgency.getDirectionFromTag(theDirectionTag).title();
     }
 
     /**

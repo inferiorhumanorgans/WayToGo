@@ -31,20 +31,19 @@ import org.xml.sax.helpers.DefaultHandler;
 public class PredictionXMLHandler extends DefaultHandler {
 
     private static String LOG_NAME = PredictionXMLHandler.class.getCanonicalName();
-    private final PredictionInterface aTV;
-    private String theRouteTag, theDirectionTag, theStopTag;
-    private int theMinutes;
+    private final PredictionInterface theListener;
+    private String theRouteTag;
     private final NextBusAgency theAgency;
 
     public PredictionXMLHandler(final PredictionInterface theaTV, final NextBusAgency anAgency) {
         super();
-        aTV = theaTV;
+        theListener = theaTV;
         theAgency = anAgency;
     }
 
     @Override
     public void endDocument() throws SAXException {
-        if (aTV.isCancelled()) {
+        if (theListener.isCancelled()) {
             throw new AbortXMLParsingException();
         }
 
@@ -52,27 +51,27 @@ public class PredictionXMLHandler extends DefaultHandler {
     }
 
     @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
-        if (aTV.isCancelled()) {
+    public void endElement(final String aUri, String aLocalName, String aQName) throws SAXException {
+        if (theListener.isCancelled()) {
             throw new AbortXMLParsingException();
         }
-        super.endElement(uri, localName, qName);
+        super.endElement(aUri, aLocalName, aQName);
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-        if (aTV.isCancelled()) {
+        if (theListener.isCancelled()) {
             throw new AbortXMLParsingException();
         }
         super.startElement(uri, localName, qName, atts);
         //Log.i(LOG_NAME, "Start ELEMENT: " + localName);
         if (localName.equals("predictions")) {
             theRouteTag = atts.getValue("routeTag");
-            theStopTag = atts.getValue("stopTag");
+            //theStopTag = atts.getValue("stopTag");
         } else if (localName.equals("prediction")) {
             //BaseAgency anAgency, final String aRouteTag, final String aStopTag, final String aDirectionTag, final int aMinutes
-            final Prediction f = new Prediction(theAgency, theRouteTag, aTV.getStopId(), atts.getValue("dirTag"), Integer.parseInt(atts.getValue("minutes")));
-            aTV.addPrediction(f);
+            final Prediction f = new Prediction(theAgency, theRouteTag, theListener.getStopId(), atts.getValue("dirTag"), Integer.parseInt(atts.getValue("minutes")));
+            theListener.addPrediction(f);
         }
     }
 }

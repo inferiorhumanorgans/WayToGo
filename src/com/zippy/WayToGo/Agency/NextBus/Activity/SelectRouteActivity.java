@@ -41,8 +41,7 @@ import java.util.ArrayList;
  */
 public class SelectRouteActivity extends BaseNextBusActivity implements CopyDBListener, NextBusRouteFetchListener {
 
-    private static final String LOG_NAME = SelectRouteActivity.class.getSimpleName();
-    private boolean needsRefresh = true;
+    private static final String LOG_NAME = SelectRouteActivity.class.getCanonicalName();
 
     @Override
     public void onCreate(final Bundle aSavedInstanceState) {
@@ -170,20 +169,20 @@ public class SelectRouteActivity extends BaseNextBusActivity implements CopyDBLi
         RouteBadgeAdapter theAdapter = (RouteBadgeAdapter) theListView.getAdapter();
         theRoute = theAdapter.getItem(aPosition);
 
-        ArrayList<Direction> theDirections = theAgency().getDirectionsForRouteTag(theRoute.getTheRawTag());
+        ArrayList<Direction> theDirections = theAgency().getDirectionsForRouteTag(theRoute.rawTag());
         if (theDirections.size() <= 1) {
 
             final Direction theDirection = theDirections.get(0);
             final Intent myIntent = new Intent(getParent(), SelectStopActivity.class);
-            myIntent.putExtra("currentRouteTag", theRoute.getTheRawTag());
-            myIntent.putExtra("directionTag", theDirection.getTheTag());
+            myIntent.putExtra("currentRouteTag", theRoute.rawTag());
+            myIntent.putExtra("directionTag", theDirection.tag());
 
             launchIntent(myIntent);
             return;
         }
 
         Intent myIntent = new Intent(this, SelectDirectionActivity.class);
-        myIntent.putExtra("currentRouteTag", theRoute.getTheRawTag());
+        myIntent.putExtra("currentRouteTag", theRoute.rawTag());
         launchIntent(myIntent);
     }
 }

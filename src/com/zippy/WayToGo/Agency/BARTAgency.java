@@ -26,6 +26,7 @@ import com.zippy.WayToGo.Agency.BART.Route.RouteFetchListener;
 import com.zippy.WayToGo.Agency.BART.Station.StationActivity;
 import com.zippy.WayToGo.Agency.BART.Route.RouteTask;
 import com.zippy.WayToGo.Agency.BART.Station.StationTask;
+import com.zippy.WayToGo.BaseActivityGroup;
 import com.zippy.WayToGo.R;
 import com.zippy.WayToGo.Util.Direction;
 import com.zippy.WayToGo.Util.Stop;
@@ -109,7 +110,7 @@ public final class BARTAgency extends BaseAgency {
     public final synchronized void addStations(final Collection<ContentValues> someStations) {
         Log.d(LOG_NAME, "Batch adding stations.");
         theDBHelper.beginTransaction();
-        for (ContentValues ourStation : someStations) {
+        for (final ContentValues ourStation : someStations) {
             Log.d(LOG_NAME, "Adding: " + ourStation);
             addStation(ourStation);
         }
@@ -143,15 +144,14 @@ public final class BARTAgency extends BaseAgency {
     @Override
     public final Intent getPredictionIntentForStop(final Stop aStop, final Direction aDirection) {
         final Intent ourIntent = new Intent("w2g.action.BART.PREDICTIONS_FOR_STATION");
-        ourIntent.putExtra("stationTitle", aStop.getTheName());
-        ourIntent.putExtra("stationTag", aStop.getTheId());
+        ourIntent.putExtra("stationTitle", aStop.name());
+        ourIntent.putExtra("stationTag", aStop.stopId());
         ourIntent.putExtra("AgencyClassName", this.getClass().getCanonicalName());
         return ourIntent;
     }
 
-    public static class ActivityGroup extends com.zippy.WayToGo.ActivityGroup {
+    public static class ActivityGroup extends BaseActivityGroup {
 
-        //private static String LOG_NAME = ActivityGroup.class.getCanonicalName();
         @Override
         public void onResume() {
             super.onResume();
