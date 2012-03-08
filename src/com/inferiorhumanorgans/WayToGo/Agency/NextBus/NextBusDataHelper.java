@@ -342,6 +342,9 @@ public abstract class NextBusDataHelper extends CommonDBHelper {
 
         theCursor.close();
 
+        if ((ret == null) || (theCursor.getCount() == 0)) {
+            return new Direction(theAgency.getClass().getCanonicalName(), "??", aDirectionTag, aDirectionTag, aDirectionTag);
+        }
         return ret;
     }
 
