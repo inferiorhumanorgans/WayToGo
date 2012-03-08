@@ -40,10 +40,12 @@ import com.inferiorhumanorgans.WayToGo.Comparator.BookmarkByDistanceComparator;
 import com.inferiorhumanorgans.WayToGo.MainActivity;
 import com.inferiorhumanorgans.WayToGo.R;
 import com.inferiorhumanorgans.WayToGo.TheApp;
+import com.inferiorhumanorgans.WayToGo.Util.PredictionGroup;
 import com.inferiorhumanorgans.WayToGo.Util.Stop;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -82,6 +84,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
     public void onResume() {
         Log.d(LOG_NAME, "onResume");
         super.onResume();
+
         theFinder.init();
 
         if (theAdapter == null) {
@@ -135,7 +138,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
                 theProgressDialog.show();
             }
         } else {
-            Collections.sort(theAdapter.getArray(), new BookmarkByDistanceComparator(theLocation));
+            Collections.sort(theAdapter.getBookmarks(), new BookmarkByDistanceComparator(theLocation));
             theAdapter.setTheLocation(theLocation);
         }
     }
@@ -240,7 +243,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
 
         theLocation = aLocation;
 
-        Collections.sort(theAdapter.getArray(), new BookmarkByDistanceComparator(theLocation));
+        Collections.sort(theAdapter.getBookmarks(), new BookmarkByDistanceComparator(theLocation));
         theAdapter.setTheLocation(theLocation);
         lastLocationUpdate = System.currentTimeMillis();
     }
@@ -275,7 +278,9 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
         runOnUiThread(new Runnable() {
 
             public void run() {
+                final Bookmark ourBookmark = theAdapter.getBookmarks().get(0);
                 theAdapter.rotate();
+                final ArrayList<PredictionGroup> ourGroups  = theAdapter.getPredictionGroups(ourBookmark);
             }
         });
     }
@@ -347,7 +352,7 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
                 if (getParent() != null) {
                     getParent().setProgressBarIndeterminateVisibility(true);
                 }
-                for (final Bookmark ourBookmark : theAdapter.getArray()) {
+                for (final Bookmark ourBookmark : theAdapter.getBookmarks()) {
                     final Stop ourStop = ourBookmark.getTheStop();
                     Log.d(LOG_NAME, "Adding task");
                     pendingTasks.add(ourStop.agency().fetchPredictionsForStop(ourStop, theAdapter));
@@ -383,4 +388,5 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
         pendingTasks.clear();
         theAdapter.clearPredictions();
     }
+
 }

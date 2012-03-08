@@ -72,8 +72,12 @@ public class BookmarkAdapter extends ArrayAdapter<Bookmark> implements Predictio
         notifyDataSetChanged();
     }
 
-    public ArrayList<Bookmark> getArray() {
+    public ArrayList<Bookmark> getBookmarks() {
         return theItems;
+    }
+
+    public ArrayList<PredictionGroup> getPredictionGroups(final Bookmark aBookmark) {
+        return thePredictionGroups.get(aBookmark.getTheStop().getGUID());
     }
 
     @Override
