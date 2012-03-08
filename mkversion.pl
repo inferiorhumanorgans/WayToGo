@@ -13,7 +13,7 @@ print VERSION_FILE $version . "\n";
 close(VERSION_FILE);
 
 {
-	open(INFILE, "<AndroidManifest.xml.in");
+	open(INFILE, "<versioning/AndroidManifest.xml.in");
 	open(OUTFILE, ">AndroidManifest.xml");
 
 	while (<INFILE>) {
@@ -25,7 +25,7 @@ close(VERSION_FILE);
 }
 
 {
-	open(INFILE, "<res/values/version.xml.in");
+	open(INFILE, "<versioning/version.xml.in");
 	open(OUTFILE, ">res/values/version.xml");
 
 	while (<INFILE>) {
