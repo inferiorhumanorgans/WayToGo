@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="le_version_number">123</integer>
-    <string name="le_version_name">0.8 Git (Build 123)</string>
-</resources>
