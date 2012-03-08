@@ -121,20 +121,22 @@ public class BookmarkAdapter extends ArrayAdapter<Bookmark> implements Predictio
         }
 
         final StringBuilder thePredictionString = new StringBuilder();
-        //Log.d(LOG_NAME, "Refreshing: " + theBookmark.stop().getGUID());
-        if (thePredictionGroups.containsKey(theBookmark.getTheStop().getGUID())) {
-            //Log.d(LOG_NAME, "FOUND SOMETHING");
-            synchronized (lock1) {
+        //Log.d(LOG_NAME, "Refreshing: " + theBookmark.getTheStop().getGUID());
+
+        synchronized (lock1) {
+            final PredictionGroup aPredictionGroup;
+            if (!thePredictionGroups.containsKey(theBookmark.getTheStop().getGUID())) {
+                aPredictionGroup = null;
+            } else {
+                //Log.d(LOG_NAME, "FOUND SOMETHING");
                 final ArrayList<PredictionGroup> ourGroups = thePredictionGroups.get(theBookmark.getTheStop().getGUID());
                 if (ourGroups.isEmpty()) {
                     return v;
                 }
-                final PredictionGroup aPredictionGroup = ourGroups.get(0);
-                final PredictionSummary summary = new PredictionSummary(theContext, aPredictionGroup);
-                thePredictionString.append(summary.toStyledText().toString());
+                aPredictionGroup = ourGroups.get(0);
             }
-        } else {
-            //Log.d(LOG_NAME, "Found nothing");
+            final PredictionSummary summary = new PredictionSummary(theContext, aPredictionGroup);
+            thePredictionString.append(summary.toStyledText().toString());
         }
 
         final StringBuilder theText = new StringBuilder();
