@@ -169,16 +169,18 @@ public class XMLHandler extends DefaultHandler {
              * String aDirectionTag
              * int aMinutes
              */
-            final Prediction ourPred = new Prediction(
+            if (theEstimateValues.getAsInteger(TAG_MINUTES) != -1) {
+                final Prediction ourPred = new Prediction(
                     TheApp.theAgencies.get("com.inferiorhumanorgans.WayToGo.Agency.BARTAgency"),
                     theEstimateValues.getAsString(TAG_HEXCOLOR),
                     theStationName,
                     "Platform " + theEstimateValues.getAsInteger(TAG_PLATFORM),
                     theEstimateValues.getAsString(TAG_DESTINATION),
                     theEstimateValues.getAsInteger(TAG_MINUTES));
-            ourPred.setFlags(String.valueOf(theEstimateValues.getAsInteger(TAG_LENGTH)));
-            //Log.d(LOG_NAME, "Creating BART prediction from: " + theEstimateValues);
-            theTV.addPrediction(ourPred);
+                ourPred.setFlags(String.valueOf(theEstimateValues.getAsInteger(TAG_LENGTH)));
+                //Log.d(LOG_NAME, "Creating BART prediction from: " + theEstimateValues);
+                theTV.addPrediction(ourPred);
+            }
             theEstimateValues.clear();
             inEstimate = false;
         } else if (localName.equals(TAG_MINUTES)) {
@@ -186,7 +188,11 @@ public class XMLHandler extends DefaultHandler {
             if (theText.equals("Arrived")) {
                 theEstimateValues.put(TAG_MINUTES, 0);
             } else {
-                theEstimateValues.put(TAG_MINUTES, Integer.parseInt(theText));
+                try {
+                    theEstimateValues.put(TAG_MINUTES, Integer.parseInt(theText));
+                } catch (NumberFormatException ex) {
+                    theEstimateValues.put(TAG_MINUTES, -1);
+                }
             }
             inMinutes = false;
             theInnerText = null;
