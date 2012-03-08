@@ -25,11 +25,11 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import com.zippy.WayToGo.Agency.BaseAgency;
-import com.zippy.WayToGo.MainActivity;
-import com.zippy.WayToGo.MapView.StopOverlayItem;
-import com.zippy.WayToGo.R;
-import com.zippy.WayToGo.Util.Stop;
+import com.inferiorhumanorgans.WayToGo.Agency.BaseAgency;
+import com.inferiorhumanorgans.WayToGo.MainActivity;
+import com.inferiorhumanorgans.WayToGo.MapView.StopOverlayItem;
+import com.inferiorhumanorgans.WayToGo.R;
+import com.inferiorhumanorgans.WayToGo.Util.Stop;
 import java.util.ArrayList;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.util.GeoPoint;
@@ -167,7 +167,7 @@ public class BalloonItemizedOverlay<Item extends OverlayItem> extends ItemizedOv
         if (theContext instanceof Activity) {
             final Activity ourActivity = (Activity) theContext;
             final MainActivity ourMain = (MainActivity) ourActivity.getParent();
-            com.zippy.WayToGo.BaseActivityGroup ag = (com.zippy.WayToGo.BaseActivityGroup) ourMain.getActivityForTabTag(ourAgency.getClass().getCanonicalName());
+            com.inferiorhumanorgans.WayToGo.BaseActivityGroup ag = (com.inferiorhumanorgans.WayToGo.BaseActivityGroup) ourMain.getActivityForTabTag(ourAgency.getClass().getCanonicalName());
             if (ag != null) {
                 Log.d(LOG_NAME, "Creating on activity group: " + ag);
                 ag.startChildActivity(ourIntent.toUri(0), ourIntent);

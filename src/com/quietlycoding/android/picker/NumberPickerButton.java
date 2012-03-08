@@ -21,7 +21,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.ImageButton;
-import com.zippy.WayToGo.R;
+import com.inferiorhumanorgans.WayToGo.R;
 
 /**
  * This class exists purely to cancel long click events.

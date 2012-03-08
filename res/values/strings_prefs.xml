@@ -19,12 +19,12 @@
         <item>None</item>
     </string-array>
     <string-array name="pref_tabs_values_list">
-        <item>com.zippy.WayToGo.Agency.ACTransit</item>
-        <item>com.zippy.WayToGo.Agency.BARTAgency</item>
-        <item>com.zippy.WayToGo.Agency.Caltrain</item>
-        <!--<item>com.zippy.WayToGo.Agency.LA Metro</item>-->
-        <!--<item>com.zippy.WayToGo.Agency.MBTA</item>-->
-        <item>com.zippy.WayToGo.Agency.SFMuni</item>
+        <item>com.inferiorhumanorgans.WayToGo.Agency.ACTransit</item>
+        <item>com.inferiorhumanorgans.WayToGo.Agency.BARTAgency</item>
+        <item>com.inferiorhumanorgans.WayToGo.Agency.Caltrain</item>
+        <!--<item>com.inferiorhumanorgans.WayToGo.Agency.LA Metro</item>-->
+        <!--<item>com.inferiorhumanorgans.WayToGo.Agency.MBTA</item>-->
+        <item>com.inferiorhumanorgans.WayToGo.Agency.SFMuni</item>
         <item>Map</item>
         <item>Favorites</item>
         <item>None</item>
@@ -43,22 +43,22 @@
     <string name="pref_tab3_summary">What to show on the third tab.</string>
     <string name="pref_tab3_title">Tab 3</string>
     <string name="pref_tab3_key">tab3Contents</string>
-    <string name="pref_tab3_default">com.zippy.WayToGo.Agency.SFMuni</string>
+    <string name="pref_tab3_default">com.inferiorhumanorgans.WayToGo.Agency.SFMuni</string>
 
     <string name="pref_tab4_summary">What to show on the fourth tab.</string>
     <string name="pref_tab4_title">Tab 4</string>
     <string name="pref_tab4_key">tab4Contents</string>
-    <string name="pref_tab4_default">com.zippy.WayToGo.Agency.BARTAgency</string>
+    <string name="pref_tab4_default">com.inferiorhumanorgans.WayToGo.Agency.BARTAgency</string>
 
     <string name="pref_tab5_summary">What to show on the fifth tab.</string>
     <string name="pref_tab5_title">Tab 5</string>
     <string name="pref_tab5_key">tab5Contents</string>
-    <string name="pref_tab5_default">com.zippy.WayToGo.Agency.ACTransit</string>
+    <string name="pref_tab5_default">com.inferiorhumanorgans.WayToGo.Agency.ACTransit</string>
 
     <string name="pref_tab6_summary">What to show on the sixth tab.</string>
     <string name="pref_tab6_title">Tab 6</string>
     <string name="pref_tab6_key">tab6Contents</string>
-    <string name="pref_tab6_default">com.zippy.WayToGo.Agency.Caltrain</string>
+    <string name="pref_tab6_default">com.inferiorhumanorgans.WayToGo.Agency.Caltrain</string>
 
     <string name="pref_tab7_summary">What to show on the seventh tab.</string>
     <string name="pref_tab7_title">Tab 7</string>

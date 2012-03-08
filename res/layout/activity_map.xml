@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <com.zippy.WayToGo.MapView.OSMView
+    <com.inferiorhumanorgans.WayToGo.MapView.OSMView
         android:id="@+id/osm_map_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

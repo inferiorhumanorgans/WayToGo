@@ -19,3 +19,5 @@ Fix the stopadapter to have a ZoomToClosest function
 Fix the stopadapter to have a prefs listener to invalidate data on distance units change
 Move stop/route comparators into the agency
 Fix map thread pool getting exhausted...
+Add "no predictions" text for an expandable prediction view.
+Add "no predictions" text for the favorites.

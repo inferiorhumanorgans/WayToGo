@@ -2,7 +2,7 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.zippy.WayToGo.Widget.BadgeView
+    <com.inferiorhumanorgans.WayToGo.Widget.BadgeView
         android:id="@+id/ictv_surface_view"
         android:layout_width="64dip"
         android:layout_height="fill_parent"

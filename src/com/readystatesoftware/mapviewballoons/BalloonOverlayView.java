@@ -23,9 +23,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.zippy.WayToGo.MapView.StopOverlayItem;
+import com.inferiorhumanorgans.WayToGo.MapView.StopOverlayItem;
 
-import com.zippy.WayToGo.R;
+import com.inferiorhumanorgans.WayToGo.R;
 
 import org.osmdroid.views.overlay.OverlayItem;
 

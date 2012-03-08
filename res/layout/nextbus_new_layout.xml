@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <com.zippy.WayToGo.Widget.SmallIconTextView
+    <com.inferiorhumanorgans.WayToGo.Widget.SmallIconTextView
         android:id="@+id/nb_icon_view"
         android:layout_width="fill_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
