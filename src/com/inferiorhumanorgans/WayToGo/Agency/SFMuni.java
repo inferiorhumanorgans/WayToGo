@@ -291,7 +291,8 @@ public class SFMuni extends NextBusAgency {
                     .replaceAll("\\s(Geary|Sloat|Park\\sPresidio|Bayshore)(?!\\s?+Blvd)(\\s&|$)", " $1 Blvd$2")
                     .replaceAll("\\s(Mission|Main|Market|Judah|Steuart|Powell|Turk|Lyon|Quintara|Kearny|Fillmore|Jackson|Church|Union|Duboce|Fulton|Vicente|Wawona|Bay|Ortega|Munich|La\\sPlaya|Divisidero|California|Cabrillo|Bryant|Polk)(?!\\s?+St)(\\s\\&|$)", " $1 St$2")
                     .replaceFirst("\\s&(Van Ness)$", " & $1 Ave")
-                    .replaceAll("Park Presidio Ave", "Park Presidio Blvd");
+                    .replaceAll("Park Presidio Ave", "Park Presidio Blvd")
+                    .replaceFirst("via Downtown$", "");
         }
 
         @Override
