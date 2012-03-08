@@ -49,8 +49,6 @@
 <!-- extension targets. Uncomment the ones where you want to do custom work
      in between standard targets -->
 <!--
-    <target name="-pre-build">
-    </target>
     <target name="-pre-compile">
     </target>
 
@@ -81,5 +79,8 @@
     -->
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
-
+<target name="-pre-build">
+        <echo>Creating version resources</echo>
+        <exec executable="./mkversion.pl" />
+</target>
 </project>
