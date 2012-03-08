@@ -45,7 +45,6 @@ import com.inferiorhumanorgans.WayToGo.Util.Stop;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
