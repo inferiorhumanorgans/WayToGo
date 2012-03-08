@@ -126,6 +126,10 @@ public class LocationFinder {
 
     protected void finishLocationSearch() {
         Log.d(LOG_NAME, "Finished with location search!!!");
+        if (theLocationTimer != null) {
+            theLocationTimer.cancel();
+            theLocationTimer.purge();
+        }
 
         mHandler.post(new Runnable() {
 
@@ -134,6 +138,11 @@ public class LocationFinder {
                     theLocationTimer.cancel();
                     theLocationTimer.purge();
                 }
+                if (theGPSService == null) {
+                    theListener.onLocationNotFound();
+                    return;
+                }
+
                 if (theLocationTimerCount > (TheApp.MAX_GPS_WAIT * 4)) {
                     Log.e(LOG_NAME, "Timed out, let's hope we don't do it again. Is fix is: " + theGPSService.isGPSFix());
                 }
