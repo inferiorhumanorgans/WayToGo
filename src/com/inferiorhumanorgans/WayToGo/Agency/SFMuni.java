@@ -40,12 +40,13 @@ public class SFMuni extends NextBusAgency {
 
     private static final String LOG_NAME = SFMuni.class.getCanonicalName();
 
+    protected static final String theLongName = "San Francisco Municipal Railway";
+    protected static final String theShortName = "Muni";
+    protected static final String theURL = "http://www.sfmta.com";
+
     public SFMuni() {
         super();
         theNBName = "sf-muni";
-        theURL = "http://www.sfmta.com";
-        theShortName = "Muni";
-        theLongName = "San Francisco Muni";
 
         /*
          * We look it up manually in case we're running a build without icons.

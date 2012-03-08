@@ -40,6 +40,11 @@ import java.util.Collection;
 public final class BARTAgency extends BaseAgency {
 
     private static final String LOG_NAME = BARTAgency.class.getCanonicalName();
+
+    protected static final String theLongName = "Bay Area Rapid Transit";
+    protected static final String theShortName = "BART";
+    protected static final String theURL = "http://www.bart.gov/";
+
     protected DataHelper theDBHelper = null;
     private StationTask theStationFetcher = null;
     private RouteTask theRouteFetcher = null;
@@ -54,9 +59,6 @@ public final class BARTAgency extends BaseAgency {
     @Override
     public void init(final Context aContext) {
         super.init(aContext);
-        theURL = "http://www.bart.gov/";
-        theShortName = "BART";
-        theLongName = "BART";
 
         /*
          * We look it up manually in case we're running a build without icons.

@@ -32,12 +32,15 @@ import com.inferiorhumanorgans.WayToGo.TheApp;
  */
 public class Caltrain extends GTFSAgency {
 
+    private static final String LOG_NAME = Caltrain.class.getCanonicalName();
+
+    protected static final String theLongName = "Caltrain";
+    protected static final String theShortName = "Caltrain";
+    protected static final String theURL = "http://www.caltrain.com";
+
     public Caltrain() {
         super();
         theGTFSName = "caltrain";
-        theURL = "http://www.caltrain.com";
-        theShortName = "Caltrain";
-        theLongName = "Caltrain";
 
         /*
          * We look it up manually in case we're running a build without icons.

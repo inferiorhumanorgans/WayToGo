@@ -29,12 +29,15 @@ import com.inferiorhumanorgans.WayToGo.BaseActivityGroup;
  */
 public class LAMetro extends NextBusAgency {
 
+    private static final String LOG_NAME = LAMetro.class.getCanonicalName();
+
+    protected static final String theLongName = "Los Angeles County Metropolitan Transportation Authority";
+    protected static final String theShortName = "LA Metro";
+    protected static final String theURL = "http://www.metro.net/";
+
     public LAMetro() {
         super();
         theNBName = "lametro";
-        theURL = "http://www.metro.net/";
-        theShortName = "LA Metro";
-        theLongName = "Los Angeles County Metropolitan Transportation Authority";
     }
 
     @Override

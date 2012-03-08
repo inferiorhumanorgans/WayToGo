@@ -19,11 +19,11 @@ package com.inferiorhumanorgans.WayToGo.Agency;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import com.inferiorhumanorgans.WayToGo.Util.CopyDBListener;
 import com.inferiorhumanorgans.WayToGo.Util.Direction;
 import com.inferiorhumanorgans.WayToGo.Util.Route;
 import com.inferiorhumanorgans.WayToGo.Util.Stop;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import org.osmdroid.util.BoundingBoxE6;
 
@@ -34,9 +34,7 @@ import org.osmdroid.util.BoundingBoxE6;
 public abstract class BaseAgency {
 
     private final static String LOG_NAME = BaseAgency.class.getCanonicalName();
-    protected String theURL;
-    protected String theShortName;
-    protected String theLongName;
+
     protected Context theContext;
     private CommonDBHelper theCommonDBHelper;
     protected int theLogoId = 0;
@@ -44,6 +42,10 @@ public abstract class BaseAgency {
     public static final int AGENCY_DB_CLOSED = 1;
     public static final int AGENCY_DB_MISSING = 2;
     protected static final boolean TRACE_FINISH = false;
+
+    protected static final String theLongName = "Base Agency";
+    protected static final String theShortName = "Base";
+    protected static final String theURL = "http://example.com/";
 
     public BaseAgency() {
     }
@@ -95,10 +97,44 @@ public abstract class BaseAgency {
 
     /**
      *
+     * @param anAgencyClassName
+     * @param aPropertyName
+     * @return A property value as a string
+     */
+    public static String getProperty(final String anAgencyClassName, final String aPropertyName) {
+        String theValue = null;
+
+        // Let's not bother unless we've got a proper transit agency to work with
+        if (!anAgencyClassName.startsWith("com.inferiorhumanorgans.WayToGo.Agency.")) {
+            return null;
+        }
+
+        try {
+            final Class theAgencyClass = Class.forName(anAgencyClassName);
+            final Field theField = theAgencyClass.getDeclaredField(aPropertyName);
+            theField.setAccessible(true);
+            theValue = (String) theField.get(null);
+        } catch (ClassNotFoundException ex) {
+            //Logger.getLogger(TabsActivity.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchFieldException ex) {
+            //Logger.getLogger(TabsActivity.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            //Logger.getLogger(TabsActivity.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            //Logger.getLogger(TabsActivity.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            //Logger.getLogger(TabsActivity.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return theValue;
+    }
+
+    /**
+     *
      * @return A long name for the agency. Ex: San Francisco Municipal Railway
      */
     public final String getLongName() {
-        return theLongName;
+        return getProperty(this.getClass().getCanonicalName(), "theLongName");
     }
 
     /**
@@ -106,14 +142,14 @@ public abstract class BaseAgency {
      * @return a short name for the agency Ex: Muni
      */
     public final String getShortName() {
-        return theShortName;
+        return getProperty(this.getClass().getCanonicalName(), "theShortName");
     }
 
     /**
      * @return The URL for the agency's main web site
      */
     public final String getURL() {
-        return theURL;
+        return getProperty(this.getClass().getCanonicalName(), "theURL");
     }
 
     // Stops

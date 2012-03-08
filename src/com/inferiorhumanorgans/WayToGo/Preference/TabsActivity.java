@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.util.Log;
+import com.inferiorhumanorgans.WayToGo.Agency.BaseAgency;
 import com.inferiorhumanorgans.WayToGo.R;
 import com.inferiorhumanorgans.WayToGo.TheApp;
 
@@ -79,7 +80,13 @@ public class TabsActivity extends PreferenceActivity implements OnSharedPreferen
         final int defaultId = theResources.getIdentifier("string/pref_tab" + aNumber + "_default", null, "com.inferiorhumanorgans.WayToGo");
         final String theDefault = TheApp.getResString(defaultId);
         final String theType = TheApp.getPrefs().getString(theKey, theDefault);
-        final String theSummary = TheApp.getResString(summaryId) + "\nCurrently: " + theType;
+
+        String theAgencyName = BaseAgency.getProperty(theType, "theShortName");
+        if (theAgencyName == null) {
+            theAgencyName = theType;
+        }
+        final String theSummary = TheApp.getResString(summaryId) + "\nCurrently: " + theAgencyName;
+
         theScreen.findPreference(theKey).setSummary(theSummary);
     }
 }

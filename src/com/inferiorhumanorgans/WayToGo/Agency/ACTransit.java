@@ -31,12 +31,15 @@ import com.inferiorhumanorgans.WayToGo.TheApp;
  */
 public class ACTransit extends NextBusAgency {
 
+    private static final String LOG_NAME = ACTransit.class.getCanonicalName();
+
+    protected static final String theLongName = "AC Transit";
+    protected static final String theShortName = "AC Transit";
+    protected static final String theURL = "http://www.actransit.org/";
+
     public ACTransit() {
         super();
         theNBName = "actransit";
-        theURL = "http://www.actransit.org/";
-        theShortName = "AC Transit";
-        theLongName = "AC Transit";
 
         /*
          * We look it up manually in case we're running a build without icons.

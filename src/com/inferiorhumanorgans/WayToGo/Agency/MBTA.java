@@ -37,12 +37,15 @@ import java.util.Map;
  */
 public class MBTA extends NextBusAgency {
 
+    private static final String LOG_NAME = MBTA.class.getCanonicalName();
+
+    protected static final String theLongName = "Massachusetts Bay Transportation Authority";
+    protected static final String theShortName = "MBTA";
+    protected static final String theURL = "http://www.mbta.com/";
+
     public MBTA() {
         super();
         theNBName = "mbta";
-        theURL = "http://www.mbta.com/";
-        theShortName = "MBTA";
-        theLongName = "Massachusetts Bay Transportation Authority";
     }
 
     @Override
