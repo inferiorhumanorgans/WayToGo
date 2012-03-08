@@ -1,10 +1,7 @@
 Requiem for a build:
 
-Some key pieces of the commercial version of WayToGo have
-been ommitted from the open source version.
-
-The following dependencies were used unmodified.  Their
-jars should be placed in the libs directory:
+The following dependencies were used unmodified.  More information can be found
+at their respective sites:
 
 ACRA:
 	<http://code.google.com/p/acra/>
