@@ -278,7 +278,12 @@ public class BookmarkActivity extends ListActivity implements LocationFinder.Lis
         runOnUiThread(new Runnable() {
 
             public void run() {
+                if (theAdapter.getBookmarks().isEmpty()) {
+                    return;
+                }
+
                 final Bookmark ourBookmark = theAdapter.getBookmarks().get(0);
+
                 theAdapter.rotate();
                 final ArrayList<PredictionGroup> ourGroups  = theAdapter.getPredictionGroups(ourBookmark);
             }
