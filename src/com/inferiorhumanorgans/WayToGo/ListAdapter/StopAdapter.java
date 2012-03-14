@@ -75,7 +75,7 @@ public class StopAdapter extends ArrayAdapter<Stop> {
 
     /**
      *
-     * @return The index of the closest stop, or Integer.MAX_VALUE if one can't be found
+     * @return The index of the closest stop, or Integer.MIN_VALUE if one can't be found
      */
     public int highlightClosest() {
         int ret = Integer.MIN_VALUE;
